@@ -15,4 +15,4 @@ Launch the web app with auto reloading:
     
 **NB**: if bower or grunt is not present in your path, find it locally with 
 
-   find . -name bower | grep /bin/
+    find . -name bower | grep /bin/
