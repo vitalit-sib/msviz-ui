@@ -347,6 +347,19 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
+      unitDev: {
+        configFile: 'test/karma.conf.js',
+        singleRun: false
+      },
+      unitJunit: {
+        configFile: 'test/karma.conf.js',
+        reporters: ['progress', 'junit'],
+        junitReporter: {
+          outputFile: 'test-unit-results.xml',
+          suite: ''
+        },
+        singleRun: true
+      },
       unit: {
         configFile: 'test/karma.conf.js',
         singleRun: true
@@ -354,6 +367,21 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-ngdocs');
+
+  grunt.registerTask('testcommon', [
+    'newer:jshint',
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'connect:test'
+  ]);
+
+  grunt.registerTask('test-unit-dev', [
+    'testcommon',
+    'karma:unitDev'
+  ]);
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
