@@ -11,9 +11,10 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.select',
-    'matches',
     'thirdparties',
-    'environment'
+    'environment',
+    'matches',
+    'sequences'
   ])
   .config(function ($routeProvider) {
     $routeProvider
