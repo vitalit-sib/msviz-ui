@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches', ['thirdparties', 'environment'])
+angular.module('matches')
 /**
  * @ngdoc object
  * @name matches.object:searchIdSet
@@ -57,32 +57,37 @@ angular.module('matches', ['thirdparties', 'environment'])
   })
 /**
  * @ngdoc service
- * @name matches.service:psmService
+ * @name matches.service:searchService
  * @description
- * Access to PSMS
+ * Access to Searches
  *
  */
-  .service('psmService', function ($http, EnvConfig) {
-    var PSMService = function () {
+  .service('searchService', function (httpProxy) {
+    var SearchService = function () {
       return this;
     };
+
     /**
      * @ngdoc method
-     * @name matches.service:psmService#findAllBySearchIdsAndProteinId
-     * @methodOf matches.service:psmService
-     * @description get the list of PSMS for one protein on a list of searchId
-     * @param {SearchIdSet} searchIds the protein list
-     * @param {string} proteinId the protein Id
-     * @returns {httpPromise} of a list of PSMs
+     * @name matches.service:searchService#findAllSearchIds
+     * @methodOf matches.service:searchService
+     * @description get the list of all searchIds
+     * @returns {httpPromise} of an array of string
      */
-    PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
-      var uri = '/matches/psms/' + searchIds.list().join(',') + '/' + proteinId;
-      return $http.get(EnvConfig.backendUrl + uri)
-        .then(function (resp) {
-          return resp.data;
-        });
+    SearchService.prototype.list = function () {
+      return httpProxy.get('/match/searches');
     };
 
-    return new PSMService();
+    return new SearchService();
+  })
+  .directive('matchesSearchSelect', function () {
+    var link = function (scope, elm) {
+
+    };
+    return {
+      restrict: 'E',
+      link: link,
+      templateUrl: 'views/matches/searches/matchesSearchSelect.html'
+    };
   })
 ;

@@ -9,6 +9,8 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui/build/angular-ui.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -24,9 +26,8 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+          <li><a href="docs/index.html">JavaScript API</a></li>
+          <li swagger-doc></li>
         </ul>
         <h3 class="text-muted">msvizUi</h3>
       </div>
@@ -69,9 +70,12 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui/build/angular-ui.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/angularytics/dist/angularytics.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -79,7 +83,11 @@
     <script src="scripts/utils/thirdparties.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/modules/matches.js"></script>
+    <script src="scripts/modules/environment.js"></script>
+    <script src="scripts/modules/matches/matches.js"></script>
+    <script src="scripts/modules/matches/psm.js"></script>
+    <script src="scripts/modules/matches/searches.js"></script>
+    <script src="scripts/modules/matches/proteins.js"></script>
     <!-- endbuild -->
 </body>
 </html>

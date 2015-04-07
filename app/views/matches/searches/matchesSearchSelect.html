@@ -1,0 +1,6 @@
+<ui-select ng-model="searches.selected" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+  <ui-select-match placeholder="Select or look for a search">{{$select.selected}}</ui-select-match>
+  <ui-select-choices repeat="s in searches.all | filter: $select.search">
+    <span ng-bind-html="s | highlight: $select.search"></span>
+  </ui-select-choices>
+</ui-select>

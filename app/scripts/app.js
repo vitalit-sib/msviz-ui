@@ -1,13 +1,6 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name msvizUiApp
- * @description
- * # msvizUiApp
- *
- * Main module of the application.
- */
+
 angular
   .module('msvizUiApp', [
     'ngAnimate',
@@ -17,8 +10,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ui.select',
     'matches',
-    'thirparties',
+    'thirdparties',
     'environment'
   ])
   .config(function ($routeProvider) {

@@ -364,6 +364,16 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+    ngdocs: {
+      options: {
+        dest: 'dist/docs',
+        html5Mode: false
+      },
+      api: {
+        src: ['app/scripts/**/*.js'],
+        title: 'API Documentation'
+      }
     }
   });
 
