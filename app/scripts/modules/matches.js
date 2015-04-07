@@ -25,7 +25,7 @@ angular.module('matches', ['thirdparties', 'environment'])
     SearchIdSet.prototype.add = function (id) {
       var _this = this;
 
-      _this.list[id] = true;
+      _this._list[id] = true;
 
       return _this;
     };
@@ -35,11 +35,23 @@ angular.module('matches', ['thirdparties', 'environment'])
      * @name matches.object:searchIdSet#list
      * @methodOf matches.object:searchIdSet
      * @description get the unique list of search ids
-     * @returns {array} an array of string
+     * @returns {Array} an array of string
      */
     SearchIdSet.prototype.list = function () {
       return _.values(this._list);
     };
+
+    /**
+     * @ngdoc method
+     * @name matches.object:searchIdSet#size
+     * @methodOf matches.object:searchIdSet
+     * @description count the number of (unique) search Ids
+     * @returns {Number} n
+     */
+    SearchIdSet.prototype.size = function () {
+      return _.size(this._list);
+    };
+
 
     return SearchIdSet;
   })
@@ -64,7 +76,6 @@ angular.module('matches', ['thirdparties', 'environment'])
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
-      //TODO: add json header
       var uri = '/matches/psms/' + searchIds.list().join(',') + '/' + proteinId;
       return $http.get(EnvConfig.backendUrl + uri)
         .then(function (resp) {

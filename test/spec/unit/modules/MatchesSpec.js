@@ -29,7 +29,19 @@ describe('eqtl', function () {
       expect(SearchIdSet).not.toBeUndefined();
     });
 
+    it('size', function(){
+      var set = new SearchIdSet();
+      expect(set.size()).toBe(0);
 
+      set.add('PAF');
+      expect(set.size()).toBe(1);
+
+      set.add('PIF');
+      expect(set.size()).toBe(2);
+
+      set.add('PAF');
+      expect(set.size()).toBe(2);
+    })
   });
 
   describe('psmService', function () {
