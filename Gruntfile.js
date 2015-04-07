@@ -1,4 +1,4 @@
-// Generated on 2014-12-05 using generator-angular 0.10.0
+// Generated on 2015-03-16 using generator-angular 0.10.0
 'use strict';
 
 // # Globbing
@@ -80,6 +80,10 @@ module.exports = function (grunt) {
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
+              ),
+              connect().use(
+                '/docs',
+                connect.static('./dist/docs')
               ),
               connect.static(appConfig.app)
             ];
@@ -164,7 +168,7 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       }
     },
 
@@ -204,7 +208,7 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/images']
       }
     },
 
@@ -308,7 +312,8 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*'
+            'fonts/{,*/}*.*',
+            'docs/{,*/}*.*'
           ]
         }, {
           expand: true,
@@ -375,28 +380,12 @@ module.exports = function (grunt) {
         title: 'API Documentation'
       }
     }
+
+
   });
 
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngdocs');
-
-  grunt.registerTask('testcommon', [
-    'newer:jshint',
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test'
-  ]);
-
-  grunt.registerTask('test-unit-dev', [
-    'testcommon',
-    'karma:unitDev'
-  ]);
-
-  grunt.registerTask('test-unit-junit', [
-    'testcommon',
-    'karma:unitJunit'
-  ]);
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -418,12 +407,21 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', [
+  grunt.registerTask('testcommon', [
+    'newer:jshint',
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
-    'karma'
+    'connect:test'
+  ]);
+  grunt.registerTask('test-unit-dev', [
+    'testcommon',
+    'karma:unitDev'
+  ]);
+
+  grunt.registerTask('test-unit-junit', [
+    'testcommon',
+    'karma:unitJunit'
   ]);
 
   grunt.registerTask('build', [
@@ -434,8 +432,9 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'ngAnnotate',
+    'ngdocs',
     'copy:dist',
-    'cdnify',
+//    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
@@ -448,4 +447,5 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-};
+}
+;
