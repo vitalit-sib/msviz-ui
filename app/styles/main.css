@@ -1,3 +1,10 @@
+g.feature.psm line{
+  stroke:blue;
+  stroke-width:4;
+  stroke-opacity: 0.9;
+}
+
+
 /* Space out content a bit */
 body {
   padding-top: 20px;

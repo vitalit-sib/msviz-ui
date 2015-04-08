@@ -19,7 +19,7 @@ angular.module('msvizUiApp')
     $scope.proteinMatch = {};
 
     $scope.$watch('searches.selected', function (searchIds) {
-      if (searchIds === undefined || _.size(searchIds)===0) {
+      if (searchIds === undefined || _.size(searchIds) === 0) {
         return;
       }
       $scope.searchIdSet = new SearchIdSet().add(searchIds);
@@ -40,7 +40,6 @@ angular.module('msvizUiApp')
         .then(function (args) {
           $scope.proteinMatch.protein = args[0];
           $scope.proteinMatch.psms = args[1];
-          console.info('CHANGED proteinMatch', $scope.proteinMatch);
         });
     };
   });

@@ -29,31 +29,59 @@ angular.module('matches')
 
     return new PSMService();
   })
-  .factory('MatchesPsmPvizView', function(_, pviz){
-    var MatchesPsmPvizView = function(elm, protein, psms){
+  .service('pvizCustomPsm', function (pviz) {
+    pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.4;
+
+    pviz.FeatureDisplayer.setCustomHandler('psm', {
+      appender: function (viewport, svgGroup, features, type) {
+        var sel = svgGroup.selectAll("g.feature.internal.data." + type)
+          .data(features)
+          .enter()
+          .append("g")
+          .attr("class", "feature internal data " + type);
+        sel.append('line');
+        return sel;
+      },
+      positioner: function (viewport, d3selection) {
+        d3selection.attr('transform', function (ft) {
+          return 'translate(0,' + 0.4*viewport.scales.y(0.5 + ft.displayTrack) + ')';
+        });
+
+        d3selection.selectAll('line')
+          .attr('x1', function (ft) {
+            return viewport.scales.x(ft.start-0.4);
+          })
+          .attr('x2', function (ft) {
+            return viewport.scales.x(ft.end+0.4);
+          });
+        return d3selection;
+      }
+    });
+
+  })
+  .factory('MatchesPsmPvizView', function (_, pviz, pvizCustomPsm) {
+    var MatchesPsmPvizView = function (elm, protein, psms) {
       var _this = this;
 
-      console.info('pviz', pviz);
       var seqEntry = new pviz.SeqEntry({sequence: protein.sequence});
       var view = new pviz.SeqEntryAnnotInteractiveView({
-        model : seqEntry,
-        el : elm
+        model: seqEntry,
+        el: elm
       });
       view.render();
 
-      var features = _.map(psms, function(psm){
-        console.log(psm);
+      var features = _.map(psms, function (psm) {
         return {
-          category:psm.searchId,
-          type:'psm',
-          start:psm.proteinList[0].startPos,
-          end:psm.proteinList[0].endPos
+          groupSet: psm.searchId,
+          category: 'psms',
+          categoryName: '',
+          type: 'psm',
+          start: psm.proteinList[0].startPos - 1,
+          end: psm.proteinList[0].endPos - 1
         }
       });
+
       seqEntry.addFeatures(features);
-
-      console.log('rendering', view);
-
       return _this;
     };
 
@@ -61,7 +89,7 @@ angular.module('matches')
   })
   .directive('matchesPsmPviz', function (MatchesPsmPvizView) {
     var link = function (scope, elm) {
-      scope.$watch('proteinMatch.psms', function(){
+      scope.$watch('proteinMatch.psms', function () {
         if (scope.proteinMatch.protein === undefined) {
           return;
         }
