@@ -42,6 +42,14 @@ describe('eqtl', function () {
       set.add('PAF');
       expect(set.size()).toBe(2);
     })
+
+    it('add multiple', function(){
+      var set = new SearchIdSet();
+      expect(set.size()).toBe(0);
+
+      set.add(['PAF', 'PIF', 'POF', 'PIF']);
+      expect(set.size()).toBe(3);
+    })
   });
 
   describe('psmService', function () {

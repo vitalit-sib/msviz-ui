@@ -44,7 +44,7 @@ angular.module('matches')
       var features = _.map(psms, function(psm){
         console.log(psm);
         return {
-          category:'psm',
+          category:psm.searchId,
           type:'psm',
           start:psm.proteinList[0].startPos,
           end:psm.proteinList[0].endPos

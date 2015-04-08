@@ -8,22 +8,22 @@
  * Controller of the msvizUiApp
  */
 angular.module('msvizUiApp')
-  .controller('MainCtrl', function ($scope, $q, searchService, psmService, SearchIdSet, matchesProteinRefService, sequenceService) {
+  .controller('MainCtrl', function ($scope, $q, _, searchService, psmService, SearchIdSet, matchesProteinRefService, sequenceService) {
     searchService.list().then(function (data) {
       $scope.searches.all = data.searchIds;
     });
 
 
-    $scope.searches = {};
+    $scope.searches = {selected: []};
     $scope.proteinRefs = {};
     $scope.proteinMatch = {};
 
-    $scope.$watch('searches.selected', function (searchId) {
-      if (searchId === undefined) {
+    $scope.$watch('searches.selected', function (searchIds) {
+      if (searchIds === undefined || _.size(searchIds)===0) {
         return;
       }
-      $scope.searchIdSet = new SearchIdSet().add(searchId);
-      matchesProteinRefService.findBySearchId(searchId)
+      $scope.searchIdSet = new SearchIdSet().add(searchIds);
+      matchesProteinRefService.findBySearchId(searchIds[0])
         .then(function (protRefs) {
           $scope.proteinRefs.all = protRefs;
         });
@@ -40,7 +40,7 @@ angular.module('msvizUiApp')
         .then(function (args) {
           $scope.proteinMatch.protein = args[0];
           $scope.proteinMatch.psms = args[1];
-          console.info('CHANGED proteinMatch',$scope.proteinMatch);
+          console.info('CHANGED proteinMatch', $scope.proteinMatch);
         });
     };
   });

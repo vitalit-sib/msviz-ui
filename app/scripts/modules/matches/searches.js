@@ -18,12 +18,19 @@ angular.module('matches')
      * @ngdoc method
      * @name matches.object:searchIdSet#add
      * @methodOf matches.object:searchIdSet
-     * @description add a searchId to the list
-     * @param {string} id the search id
+     * @description add one or multiple searchId to the list
+     * @param {string|Array} id the search id
      * @returns {SearchIdSet} this
      */
     SearchIdSet.prototype.add = function (id) {
       var _this = this;
+
+      if (_.isArray(id)){
+        _.each(id, function(i){
+          _this.add(i);
+        });
+        return _this;
+      }
 
       _this._list[id] = true;
 
