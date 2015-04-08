@@ -22,6 +22,7 @@ angular.module('thirdparties', [])
  * provide pviz as 'pviz'
  */
   .service('pviz', function ($window) {
+
     return $window.pviz;
   })
 ;

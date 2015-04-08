@@ -40,6 +40,7 @@ angular.module('msvizUiApp')
         .then(function (args) {
           $scope.proteinMatch.protein = args[0];
           $scope.proteinMatch.psms = args[1];
+          console.info('CHANGED proteinMatch',$scope.proteinMatch);
         });
     };
   });
