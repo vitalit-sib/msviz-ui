@@ -11,4 +11,17 @@ angular.module('thirdparties', [])
  */
   .service('d3', function ($window) {
     return $window.d3;
-  });
+  })
+/**
+ * provide fishtones as 'fishtones'
+ */
+  .service('fishtones', function ($window) {
+    return $window.fishtones;
+  })
+/**
+ * provide pviz as 'pviz'
+ */
+  .service('pviz', function ($window) {
+    return $window.pviz;
+  })
+;

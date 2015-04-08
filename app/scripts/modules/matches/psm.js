@@ -23,9 +23,24 @@ angular.module('matches')
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
-      return httpProxy.get('/matches/psms/' + searchIds.list().join(',') + '/' + proteinId);
+      return httpProxy.get('/match/psms/' + searchIds.list().join(',') + '/by-ac/' + proteinId);
     };
 
+
     return new PSMService();
+  })
+  .directive('matchesPsmPviz', function (pviz) {
+    var link = function (scope, elm) {
+      if (scope.proteinMatch.protein === undefined) {
+        return;
+      }
+      var seqEntry = new pviz.SeqEntry({sequence: scope.proteinMatch.protein.sequence});
+
+    };
+    return {
+      restrict: 'E',
+      link: link,
+      template: '<div></div>'
+    };
   })
 ;

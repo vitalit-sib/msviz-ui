@@ -38,7 +38,7 @@ angular.module('matches')
      * @returns {Array} an array of string
      */
     SearchIdSet.prototype.list = function () {
-      return _.values(this._list);
+      return _.keys(this._list);
     };
 
     /**
