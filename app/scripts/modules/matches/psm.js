@@ -44,15 +44,15 @@ angular.module('matches')
       },
       positioner: function (viewport, d3selection) {
         d3selection.attr('transform', function (ft) {
-          return 'translate(0,' + 0.4*viewport.scales.y(0.5 + ft.displayTrack) + ')';
+          return 'translate(0,' + 0.4 * viewport.scales.y(0.5 + ft.displayTrack) + ')';
         });
 
         d3selection.selectAll('line')
           .attr('x1', function (ft) {
-            return viewport.scales.x(ft.start-0.4);
+            return viewport.scales.x(ft.start - 0.4);
           })
           .attr('x2', function (ft) {
-            return viewport.scales.x(ft.end+0.4);
+            return viewport.scales.x(ft.end + 0.4);
           });
         return d3selection;
       }
@@ -77,7 +77,8 @@ angular.module('matches')
           categoryName: '',
           type: 'psm',
           start: psm.proteinList[0].startPos - 1,
-          end: psm.proteinList[0].endPos - 1
+          end: psm.proteinList[0].endPos - 1,
+          data:psm
         }
       });
 
@@ -87,8 +88,23 @@ angular.module('matches')
 
     return MatchesPsmPvizView;
   })
-  .directive('matchesPsmPviz', function (MatchesPsmPvizView) {
+/**
+ * @ngdoc directive
+ * @name matches.directive:matchesPsmPviz
+ * @description pviz one protein among multiple searches
+ */
+  .directive('matchesPsmPviz', function (pviz, MatchesPsmPvizView) {
     var link = function (scope, elm) {
+      pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
+        if(scope.detailedPSM === ft.data){
+          return;
+        }
+        scope.detailedPSM = ft.data;
+        scope.$apply();
+      });
+      pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
+        scope.$broadcast('psmAddSelected', ft.data);
+      });
       scope.$watch('proteinMatch.psms', function () {
         if (scope.proteinMatch.protein === undefined) {
           return;
@@ -99,8 +115,23 @@ angular.module('matches')
     };
     return {
       restrict: 'E',
+      object:{
+        proteinMatch : '='
+      },
       link: link,
-      template: '<div id="haha" style="width:100%; height:400px"></div>'
+      template: '<div style="width:100%; height:400px"></div>'
+    };
+  })
+
+      /**
+ * @ngdoc directive
+ * @name matches.directive:matchesPsmOneLiner
+ * @description psm super short summary
+ */
+  .directive('matchesPsmOneLiner', function (pviz) {
+    return {
+      restrict: 'E',
+      template: '<div class="psm-one-liner">{{detailedPSM.pep.sequence}} <small>({{detailedPSM.matchInfo.scoreMap["Mascot:score"]}})</small></div>'
     };
   })
 ;

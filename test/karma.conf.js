@@ -27,6 +27,8 @@ module.exports = function(config) {
       'bower_components/angularytics/dist/angularytics.min.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'bower_components/lodash/lodash.min.js',
+      'bower_components/fishtones/dist/fishtones-js-bundle-min.js',
+      'bower_components/pviz/dist/pviz-bundle.min.js',
       'app/scripts/**/*.js',
       'test/spec/unit/**/*Spec.js'
     ],

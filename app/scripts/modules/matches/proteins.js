@@ -26,6 +26,11 @@ angular.module('matches')
     };
     return new MatchesProteinRefService();
   })
+/**
+ * @ngdoc directive
+ * @name matches.directive:matchesProteinRefSelect
+ * @description select a protein among thegiven list
+ */
   .directive('matchesProteinRefSelect', function () {
     var link = function (scope, elm) {
     };
