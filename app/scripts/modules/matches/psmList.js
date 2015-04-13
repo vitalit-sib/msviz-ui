@@ -40,6 +40,10 @@ angular.module('matches')
 
     };
 
+    $scope.removeSelectedPSM = function(psm){
+      $scope.selectedMatches = _.filter($scope.selectedMatches, function(e){return e !== psm});
+    }
+
   })
 /**
  * @ngdoc directive
