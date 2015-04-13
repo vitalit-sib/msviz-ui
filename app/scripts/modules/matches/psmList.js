@@ -14,6 +14,15 @@ angular.module('matches')
         richSeq: new fishtones.dry.RichSequence().fromString(pvizPsm.pep.sequence)
       };
 
+      _.each(pvizPsm.pep.modificationNames, function(mods, i){
+        _.each(mods, function(modName) {
+          console.log('adding modif', i-1, modName);
+          pvizPsm.fishTones.richSeq.addModification(i-1,fishtones.dry.ResidueModificationDictionary.get(modName));
+
+        });
+      });
+      console.log(pvizPsm.fishTones.richSeq);
+
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
       spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
@@ -58,7 +67,7 @@ angular.module('matches')
       new fishtones.match.MatchSpectrumView({
         model    : psm,
         el: elm,
-        tol      : 300,
+        tol      : 1000,
         xZoomable: true
       }).render();
 
