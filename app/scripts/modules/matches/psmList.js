@@ -16,18 +16,20 @@ angular.module('matches')
 
       _.each(pvizPsm.pep.modificationNames, function(mods, i){
         _.each(mods, function(modName) {
-          console.log('adding modif', i-1, modName);
           pvizPsm.fishTones.richSeq.addModification(i-1,fishtones.dry.ResidueModificationDictionary.get(modName));
 
         });
       });
-      console.log(pvizPsm.fishTones.richSeq);
 
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
       spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
         var sp = new fishtones.wet.ExpMSMSSpectrum({
           precMoz: spectrum.ref.precursor.moz,
+          precIntensity:spectrum.ref.precursor.intensity,
+          retentionTime:spectrum.ref.precursor.retentionTime,
+          precCharge:spectrum.ref.precursor.charge,
+          scanNumber : spectrum.ref.scanNumber,
           mozs: spectrum.peaks.mozs,
           intensities: spectrum.peaks.intensities,
           intensityRanks: spectrum.peaks.intensityRanks

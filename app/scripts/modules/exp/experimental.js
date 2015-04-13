@@ -23,7 +23,7 @@ angular.module('experimental', ['thirdparties', 'environment'])
      * @returns {httpPromise} of an ExpMSMSSpectrum
      */
     SprectrumService.prototype.findByRunIdAndId = function (runId, id) {
-      return httpProxy.get('/exp/spectrum/' + runId + '/' + id+'?sortByMoz=true');
+      return httpProxy.get('/exp/spectrum/' + runId + '/' + id+'?sortByMoz=true&mostIntense=200');
     };
 
 
