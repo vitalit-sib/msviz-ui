@@ -1,6 +1,6 @@
 'use strict';
-angular.module('matches')
-  .controller('PsmListCtrl', function ($scope, $q, _, fishtones, spectrumService) {
+angular.module('matches-list', ['thirdparties', 'environment', 'matches', 'fishtones-wrapper'])
+  .controller('PsmListCtrl', function ($scope, $q, _, fishtones, spectrumService, fishtonifyService, ssmService) {
     $scope.$on('psmAddSelected', function (event, pvizPsm) {
       $scope.addSelectedPSM(pvizPsm);
     });
@@ -24,25 +24,30 @@ angular.module('matches')
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
       spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
-        var sp = new fishtones.wet.ExpMSMSSpectrum({
-          precMoz: spectrum.ref.precursor.moz,
-          precIntensity:spectrum.ref.precursor.intensity,
-          retentionTime:spectrum.ref.precursor.retentionTime,
-          precCharge:spectrum.ref.precursor.charge,
-          scanNumber : spectrum.ref.scanNumber,
-          mozs: spectrum.peaks.mozs,
-          intensities: spectrum.peaks.intensities,
-          intensityRanks: spectrum.peaks.intensityRanks
-        });
+        var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
+        pvizPsm.type='PSM';
         $scope.selectedMatches.push(pvizPsm);
       });
 
     };
 
+
+    $scope.getSimSpectra=function(spectrumRef){
+      ssmService.findSimilarSpectra(spectrumRef).then(function(spspMatches){
+        var ssms = {
+            type:'SSM',
+            ref:spectrumRef,
+            matches:spspMatches
+          };
+        $scope.selectedMatches.push(ssms);
+
+      })
+    };
+
     $scope.removeSelectedPSM = function(psm){
       $scope.selectedMatches = _.filter($scope.selectedMatches, function(e){return e !== psm});
-    }
+    };
 
   })
 /**
@@ -53,13 +58,13 @@ angular.module('matches')
   .directive('matchesPsmListDetails', function (pviz) {
     return {
       restrict: 'E',
-      templateUrl: 'views/matches/searches/matchesPsmListDetails.html'
+      templateUrl: 'views/matches/searches/matchesListDetails.html'
     };
   })
 /**
  * @ngdoc object
  * @name  matches.view:MatchesFishtonesPsmSpectrumView
- * @description wrapper around the fisthones/d3 view
+ * @description wrapper around the fisthones/d3 view for psm
  */
   .factory('MatchesFishtonesPsmSpectrumView', function (_, fishtones) {
     var MatchesFishtonesPsmSpectrumView = function (elm, ftPSM) {
@@ -83,6 +88,34 @@ angular.module('matches')
     return MatchesFishtonesPsmSpectrumView;
   })
 /**
+ * @ngdoc object
+ * @name  matches.view:MatchesFishtonesSSMSpectrumView
+ * @description wrapper around the fisthones/d3 view for SSM
+ */
+  .factory('MatchesFishtonesSSMSpectrumView', function (_, fishtones, fishtonifyService) {
+    var MatchesFishtonesSSMSpectrumView = function (elm, ssm) {
+      var _this = this;
+      var alg = new fishtones.match.SpectraPairAlignment({
+        spectrumA: fishtonifyService.convertSpectrum(ssm.sp1),
+        spectrumB: fishtonifyService.convertSpectrum(ssm.sp2)
+      });
+
+      var view = new fishtones.match.SpectraPairAlignmentView({
+        el      : elm,
+        model   : alg,
+        fragTol : 50,
+        enhanced: true
+      });
+
+      view.xZoomable()
+      view.render();
+
+      return _this;
+    };
+
+    return MatchesFishtonesSSMSpectrumView;
+  })
+/**
  * @ngdoc directive
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
@@ -101,5 +134,23 @@ angular.module('matches')
       template: '<div ></div>'
     };
   })
+/**
+ * @ngdoc directive
+ * @name matches.directive:matchesFishtonesSsms
+ * @description a list of SSM
+ */
+  .directive('matchesFishtonesSsm', function (pviz, MatchesFishtonesSSMSpectrumView) {
+    var link = function (scope, elm) {
+      var view = new MatchesFishtonesSSMSpectrumView(elm, scope['fishtonesssm']);
 
+    };
+    return {
+      link: link,
+      scope: {
+        'fishtonesssm': '='
+      },
+      restrict: 'A',
+      template: '<div ></div>'
+    };
+  })
 ;

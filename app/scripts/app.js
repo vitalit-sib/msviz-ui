@@ -13,7 +13,10 @@ angular
     'ui.select',
     'thirdparties',
     'environment',
+    'fishtones-wrapper',
     'matches',
+    'matches-list',
+    'ssm',
     'sequences',
     'experimental'
   ])
