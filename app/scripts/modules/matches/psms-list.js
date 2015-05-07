@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-list', ['thirdparties', 'environment', 'matches', 'fishtones-wrapper'])
+angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-wrapper'])
   .controller('PsmListCtrl', function ($scope, $q, _, fishtones, spectrumService, fishtonifyService, ssmService) {
     $scope.$on('psmAddSelected', function (event, pvizPsm) {
       $scope.addSelectedPSM(pvizPsm);

@@ -1,17 +1,16 @@
 'use strict';
 
-describe('eqtl', function () {
+describe('searches', function () {
   var psmService, SearchSet, EnvConfig;
   var $httpBackend, $rootScope, _;
 
-  beforeEach(module('matches'));
+  beforeEach(module('matches-search'));
   beforeEach(module('environment'));
   beforeEach(module('thirdparties'));
 
   beforeEach(inject(function ($injector) {
     // Set up the mock http service responses
 
-    psmService = $injector.get('psmService');
     SearchSet = $injector.get('SearchSet');
     EnvConfig = $injector.get('EnvConfig');
 
@@ -69,11 +68,6 @@ describe('eqtl', function () {
     });
   });
 
-  describe('psmService', function () {
-    it('service is available', function () {
-      expect(psmService).not.toBeUndefined();
-    });
-  });
 
   var prout = {
     centric: 'SNP'

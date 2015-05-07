@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches')
+angular.module('matches-proteins', ['thirdparties', 'environment'])
 
 /**
  * @ngdoc service

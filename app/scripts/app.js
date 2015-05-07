@@ -14,11 +14,14 @@ angular
     'thirdparties',
     'environment',
     'fishtones-wrapper',
-    'matches',
-    'matches-list',
+    'matches-psms',
+    'matches-psms-list',
+    'matches-proteins',
+    'matches-search',
+    'matches-search-results-filter',
     'ssm',
     'sequences',
-    'experimental'
+    'experimental',
   ])
   .config(function ($routeProvider) {
     $routeProvider

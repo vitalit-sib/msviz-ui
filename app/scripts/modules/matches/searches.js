@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches')
+angular.module('matches-search', ['thirdparties', 'environment'])
 /**
  * @ngdoc object
  * @name matches.object:searchSet

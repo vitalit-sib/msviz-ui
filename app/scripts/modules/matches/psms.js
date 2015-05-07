@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches')
+angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrapper'])
 /**
  * @ngdoc service
  * @name matches.service:psmService
