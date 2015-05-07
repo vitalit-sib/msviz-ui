@@ -8,9 +8,9 @@
  * Controller of the msvizUiApp
  */
 angular.module('msvizUiApp')
-  .controller('MainCtrl', function ($scope, $q, _, searchService, psmService, SearchIdSet, matchesProteinRefService, sequenceService) {
+  .controller('MainCtrl', function ($scope, $q, _, searchService, psmService, SearchSet, matchesProteinRefService, sequenceService) {
     searchService.list().then(function (data) {
-      $scope.searches.all = data.searchIds;
+      $scope.searches.all = data;
     });
 
 
@@ -18,12 +18,12 @@ angular.module('msvizUiApp')
     $scope.proteinRefs = {};
     $scope.proteinMatch = {};
 
-    $scope.$watch('searches.selected', function (searchIds) {
-      if (searchIds === undefined || _.size(searchIds) === 0) {
+    $scope.$watch('searches.selected', function (searches) {
+      if (searches === undefined || _.size(searches) === 0) {
         return;
       }
-      $scope.searchIdSet = new SearchIdSet().add(searchIds);
-      matchesProteinRefService.findBySearchId(searchIds[0])
+      $scope.searchSet = new SearchSet().add(searches);
+      matchesProteinRefService.findBySearchId(searches[0].searchId)
         .then(function (protRefs) {
           $scope.proteinRefs.all = protRefs;
         });
@@ -34,11 +34,11 @@ angular.module('msvizUiApp')
       $q.all(
         [
           sequenceService.get($scope.proteinRefs.selected.AC, $scope.proteinRefs.selected.source),
-          psmService.findAllBySearchIdsAndProteinId($scope.searchIdSet, $scope.proteinRefs.selected.AC)
+          psmService.findAllBySearchIdsAndProteinId(_.pluck($scope.searchSet.list(), 'searchId'), $scope.proteinRefs.selected.AC)
         ]
       )
         .then(function (args) {
-          $scope .proteinMatch.protein = args[0];
+          $scope.proteinMatch.protein = args[0];
           $scope.proteinMatch.psms = args[1];
         });
     };

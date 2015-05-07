@@ -2,12 +2,12 @@
 angular.module('matches')
 /**
  * @ngdoc object
- * @name matches.object:searchIdSet
+ * @name matches.object:searchSet
  * @description a list of search IDs. Cannot be just a list of string or could come with more details
  *
  */
-  .factory('SearchIdSet', function (_) {
-    var SearchIdSet = function () {
+  .factory('SearchSet', function (_) {
+    var SearchSet = function () {
       var _this = this;
       _this._list = {};
 
@@ -16,51 +16,64 @@ angular.module('matches')
 
     /**
      * @ngdoc method
-     * @name matches.object:searchIdSet#add
-     * @methodOf matches.object:searchIdSet
+     * @name matches.object:searchSet#add
+     * @methodOf matches.object:searchSet
      * @description add one or multiple searchId to the list
-     * @param {string|Array} id the search id
-     * @returns {SearchIdSet} this
+     * @param {string|Array} searches one or a list of searches
+     * @returns {SearchSet} this
      */
-    SearchIdSet.prototype.add = function (id) {
+    SearchSet.prototype.add = function (searches) {
       var _this = this;
 
-      if (_.isArray(id)){
-        _.each(id, function(i){
+      if (_.isArray(searches)){
+        _.each(searches, function(i){
           _this.add(i);
         });
         return _this;
       }
 
-      _this._list[id] = true;
+      _this._list[searches.searchId] = searches;
 
       return _this;
     };
 
     /**
      * @ngdoc method
-     * @name matches.object:searchIdSet#list
-     * @methodOf matches.object:searchIdSet
+     * @name matches.object:searchSet#list
+     * @methodOf matches.object:searchSet
      * @description get the unique list of search ids
      * @returns {Array} an array of string
      */
-    SearchIdSet.prototype.list = function () {
-      return _.keys(this._list);
+    SearchSet.prototype.list = function () {
+      return _.values(this._list);
     };
 
     /**
      * @ngdoc method
-     * @name matches.object:searchIdSet#size
-     * @methodOf matches.object:searchIdSet
+     * @name matches.object:searchSet#listIds
+     * @methodOf matches.object:searchSet
+     * @description return a sorted list of searchIds
+     * @param {String} mkString if present returns a string by joining the ids with the passed value. If not present, return a array of ids.
+     * @returns {Array|String} an array of ids or a string
+     */
+    SearchSet.prototype.listIds = function (mkString) {
+      var ids = _.keys(this._list).sort();
+      return mkString?ids.join(mkString):ids;
+    };
+
+    /**
+     * @ngdoc method
+     * @name matches.object:searchSet#size
+     * @methodOf matches.object:searchSet
      * @description count the number of (unique) search Ids
      * @returns {Number} n
      */
-    SearchIdSet.prototype.size = function () {
+    SearchSet.prototype.size = function () {
       return _.size(this._list);
     };
 
 
-    return SearchIdSet;
+    return SearchSet;
   })
 /**
  * @ngdoc service
@@ -82,7 +95,7 @@ angular.module('matches')
      * @returns {httpPromise} of an array of string
      */
     SearchService.prototype.list = function () {
-      return httpProxy.get('/match/searches');
+      return httpProxy.get('/search');
     };
 
     return new SearchService();

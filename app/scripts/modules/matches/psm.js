@@ -23,7 +23,7 @@ angular.module('matches')
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
-      return httpProxy.get('/match/psms/' + searchIds.list().join(',') + '/by-ac/' + proteinId);
+      return httpProxy.get('/match/psms/' + searchIds.join(',') + '/by-ac/' + proteinId);
     };
 
 
