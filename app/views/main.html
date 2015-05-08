@@ -1,14 +1,5 @@
 <div>
-  <div class="row">
-    <div class="col-sm-6">
-      Search:
-      <matches-search-select></matches-search-select>
-    </div>
-    <div class="col-sm-6">
-      Protein:
-      <matches-protein-ref-select ng-show="proteinRefs.all"></matches-protein-ref-select>
-    </div>
-  </div>
+  <search-results-filter filter="searchResultsFilter"></search-results-filter>
   <div class="row">
     <div class="col-sm-12">
       <matches-psm-pviz></matches-psm-pviz>

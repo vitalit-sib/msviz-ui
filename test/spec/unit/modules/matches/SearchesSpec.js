@@ -1,7 +1,7 @@
 'use strict';
 
 describe('searches', function () {
-  var psmService, SearchSet, EnvConfig;
+  var SearchSet, EnvConfig;
   var $httpBackend, $rootScope, _;
 
   beforeEach(module('matches-search'));
@@ -57,14 +57,29 @@ describe('searches', function () {
       expect(set.size()).toBe(3);
     });
 
+    it('clear', function () {
+      var set = new SearchSet().add([paf, pif, pof, pif2]);
+      expect(set.size()).toBe(3);
+      set.clear();
+      expect(set.size()).toBe(0);
+    });
+
+    it('remove', function () {
+      var set = new SearchSet().add([paf, pif, pof, pif2]);
+      expect(set.size()).toBe(3);
+      set.remove(pif);
+      expect(set.size()).toBe(2);
+
+    });
+
     it('listIds as list', function () {
       var set = new SearchSet().add([paf, pof, pif]);
-      expect(set.listIds()).toEqual(['PAF', 'PIF', 'POF'])
+      expect(set.listIds()).toEqual(['PAF', 'PIF', 'POF']);
     });
 
     it('listIds(",") gives a string', function () {
       var set = new SearchSet().add([paf, pof, pif]);
-      expect(set.listIds(',')).toEqual('PAF,PIF,POF')
+      expect(set.listIds(',')).toEqual('PAF,PIF,POF');
     });
   });
 

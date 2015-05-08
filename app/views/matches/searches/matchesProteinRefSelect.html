@@ -1,6 +1,0 @@
-<ui-select ng-model="proteinRefs.selected" on-select="showProtein()" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
-  <ui-select-match placeholder="Select or look for a protein AC">{{$select.selected.AC}} <small>({{$select.selected.source}})</small></ui-select-match>
-  <ui-select-choices repeat="p in proteinRefs.all | filter: $select.search">
-    <span ng-bind-html="p.AC | highlight: $select.search"></span>
-  </ui-select-choices>
-</ui-select>

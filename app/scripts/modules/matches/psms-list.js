@@ -14,9 +14,9 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         richSeq: new fishtones.dry.RichSequence().fromString(pvizPsm.pep.sequence)
       };
 
-      _.each(pvizPsm.pep.modificationNames, function(mods, i){
-        _.each(mods, function(modName) {
-          pvizPsm.fishTones.richSeq.addModification(i-1,fishtones.dry.ResidueModificationDictionary.get(modName));
+      _.each(pvizPsm.pep.modificationNames, function (mods, i) {
+        _.each(mods, function (modName) {
+          pvizPsm.fishTones.richSeq.addModification(i - 1, fishtones.dry.ResidueModificationDictionary.get(modName));
 
         });
       });
@@ -26,27 +26,29 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
         var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
-        pvizPsm.type='PSM';
+        pvizPsm.type = 'PSM';
         $scope.selectedMatches.push(pvizPsm);
       });
 
     };
 
 
-    $scope.getSimSpectra=function(spectrumRef){
-      ssmService.findSimilarSpectra(spectrumRef).then(function(spspMatches){
+    $scope.getSimSpectra = function (spectrumRef) {
+      ssmService.findSimilarSpectra(spectrumRef).then(function (spspMatches) {
         var ssms = {
-            type:'SSM',
-            ref:spectrumRef,
-            matches:spspMatches
-          };
+          type: 'SSM',
+          ref: spectrumRef,
+          matches: spspMatches
+        };
         $scope.selectedMatches.push(ssms);
 
-      })
+      });
     };
 
-    $scope.removeSelectedPSM = function(psm){
-      $scope.selectedMatches = _.filter($scope.selectedMatches, function(e){return e !== psm});
+    $scope.removeSelectedPSM = function (psm) {
+      $scope.selectedMatches = _.filter($scope.selectedMatches, function (e) {
+        return e !== psm;
+      });
     };
 
   })
@@ -55,7 +57,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  * @name matches.directive:matchesPsmListDetails
  * @description show the list of the selected peptides
  */
-  .directive('matchesPsmListDetails', function (pviz) {
+  .directive('matchesPsmListDetails', function () {
     return {
       restrict: 'E',
       templateUrl: 'views/matches/searches/matchesListDetails.html'
@@ -76,9 +78,9 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         expSpectrum: ftPSM.spectrum
       });
       new fishtones.match.MatchSpectrumView({
-        model    : psm,
+        model: psm,
         el: elm,
-        tol      : 1000,
+        tol: 1000,
         xZoomable: true
       }).render();
 
@@ -101,13 +103,13 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       });
 
       var view = new fishtones.match.SpectraPairAlignmentView({
-        el      : elm,
-        model   : alg,
-        fragTol : 50,
+        el: elm,
+        model: alg,
+        fragTol: 50,
         enhanced: true
       });
 
-      view.xZoomable()
+      view.xZoomable();
       view.render();
 
       return _this;
@@ -122,8 +124,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  */
   .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
     var link = function (scope, elm) {
-      var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
-
+      new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
     };
     return {
       link: link,
@@ -141,8 +142,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  */
   .directive('matchesFishtonesSsm', function (pviz, MatchesFishtonesSSMSpectrumView) {
     var link = function (scope, elm) {
-      var view = new MatchesFishtonesSSMSpectrumView(elm, scope['fishtonesssm']);
-
+      new MatchesFishtonesSSMSpectrumView(elm, scope.fishtonesssm);
     };
     return {
       link: link,

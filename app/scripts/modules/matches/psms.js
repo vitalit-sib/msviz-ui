@@ -18,14 +18,47 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
      * @name matches.service:psmService#findAllBySearchIdsAndProteinId
      * @methodOf matches.service:psmService
      * @description get the list of PSMS for one protein on a list of searchId
-     * @param {SearchIdSet} searchIds the protein list
-     * @param {string} proteinId the protein Id
+     * @param {Array} searchIds a list of search ids
+     * @param {String} proteinId the protein Id
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
-      return httpProxy.get('/match/psms/' + searchIds.join(',') + '/by-ac/' + proteinId);
+      var uri = '/match/psms/' + searchIds.join(',') + '/by-ac/' + proteinId;
+
+      return httpProxy.get(uri);
     };
 
+
+    /**
+     * @ngdoc method
+     * @name matches.service:psmService#findAllProteinRefsBySearchIds
+     * @methodOf matches.service:psmService
+     * @description get the list of proteins based on a list of searchIds and evenutally with a modification
+     * @param {Array} searchIds a list of search ids
+     * @param {String} withModif optional modification name
+     * @returns {httpPromise} of a list of PSMs
+     */
+    PSMService.prototype.findAllProteinRefsBySearchIds = function (searchIds, withModif) {
+      var uri = '/match/proteins/' + searchIds.join(',');
+      if(withModif){
+        uri += '?withModif='+withModif;
+      }
+
+      return httpProxy.get(uri);
+    };
+
+
+    /**
+     * @ngdoc method
+     * @name matches.service:psmService#findAllModificationsBySearchIds
+     * @methodOf matches.service:psmService
+     * @description get a count of modifications for a set of searchIds
+     * @param {Array} searchIds a list of search ids
+     * @returns {httpPromise} of a map modifName -> count
+     */
+    PSMService.prototype.findAllModificationsBySearchIds = function (searchIds) {
+      return httpProxy.get('/match/modifications/' + searchIds.join(','));
+    };
 
     return new PSMService();
   })
@@ -34,11 +67,11 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
 
     pviz.FeatureDisplayer.setCustomHandler('psm', {
       appender: function (viewport, svgGroup, features, type) {
-        var sel = svgGroup.selectAll("g.feature.internal.data." + type)
+        var sel = svgGroup.selectAll('g.feature.internal.data.' + type)
           .data(features)
           .enter()
-          .append("g")
-          .attr("class", "feature internal data " + type);
+          .append('g')
+          .attr('class', 'feature internal data ' + type);
         sel.append('line');
         return sel;
       },
@@ -59,7 +92,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
     });
 
   })
-  .factory('MatchesPsmPvizView', function (_, pviz, pvizCustomPsm) {
+  .factory('MatchesPsmPvizView', function (_, pviz) {
     var MatchesPsmPvizView = function (elm, protein, psms) {
       var _this = this;
 
@@ -78,8 +111,8 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
           type: 'psm',
           start: psm.proteinList[0].startPos - 1,
           end: psm.proteinList[0].endPos - 1,
-          data:psm
-        }
+          data: psm
+        };
       });
 
       seqEntry.addFeatures(features);
@@ -96,7 +129,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
   .directive('matchesPsmPviz', function (pviz, MatchesPsmPvizView) {
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
-        if(scope.detailedPSM === ft.data){
+        if (scope.detailedPSM === ft.data) {
           return;
         }
         scope.detailedPSM = ft.data;
@@ -109,26 +142,25 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         if (scope.proteinMatch.protein === undefined) {
           return;
         }
-        var view = new MatchesPsmPvizView(elm, scope.proteinMatch.protein, scope.proteinMatch.psms);
-
-      })
+        new MatchesPsmPvizView(elm, scope.proteinMatch.protein, scope.proteinMatch.psms);
+      });
     };
     return {
       restrict: 'E',
-      object:{
-        proteinMatch : '='
+      object: {
+        proteinMatch: '='
       },
       link: link,
       template: '<div style="width:100%; height:400px"></div>'
     };
   })
 
-      /**
+/**
  * @ngdoc directive
  * @name matches.directive:matchesPsmOneLiner
  * @description psm super short summary
  */
-  .directive('matchesPsmOneLiner', function (pviz) {
+  .directive('matchesPsmOneLiner', function () {
     return {
       restrict: 'E',
       template: '<div class="psm-one-liner">{{detailedPSM.pep.sequence}} <small>({{detailedPSM.matchInfo.scoreMap["Mascot:score"]}})</small></div>'
