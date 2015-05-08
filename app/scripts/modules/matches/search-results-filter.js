@@ -66,8 +66,8 @@ angular.module('matches-search-results-filter', ['thirdparties', 'matches-search
      * @ngdoc function
      * @name matches.SearchResultsFilter:SearchResultsFilter#countAvailableSearches
      * @methodOf matches.SearchResultsFilter:SearchResultsFilter
-     * @description return a list of searchIds (or a join string)
-     * @return {Number}
+     * @description how many searches can be selected?
+     * @return {Number} the number of them
      *
      */
     SearchResultsFilter.prototype.countAvailableSearches = function () {
