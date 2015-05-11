@@ -138,11 +138,11 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         scope.$broadcast('psmAddSelected', ft.data);
       });
-      scope.$watch('proteinMatch.psms', function () {
-        if (scope.proteinMatch.protein === undefined) {
+      scope.$watch('proteinMatch', function (protMatch) {
+        if (protMatch === undefined) {
           return;
         }
-        new MatchesPsmPvizView(elm, scope.proteinMatch.protein, scope.proteinMatch.psms);
+        new MatchesPsmPvizView(elm, protMatch.protein, protMatch.psms);
       });
     };
     return {

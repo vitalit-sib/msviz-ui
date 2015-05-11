@@ -8,12 +8,10 @@
  * Controller of the msvizUiApp
  */
 angular.module('msvizUiApp')
-  .controller('MainCtrl', function ($scope, $q, _, searchService, psmService, SearchSet, proteinMatchesRefService, sequenceService, SearchResultsFilter) {
+  .controller('MainCtrl', function ($scope, $q, _, psmService, ProteinMatch, sequenceService, SearchResultsFilter) {
 
-    $scope.proteinMatch = {};
 
     var showProtein = function () {
-      console.log('showProtein');
       var prot = $scope.searchResultsFilter.getSelectedProtein();
       $q.all(
         [
@@ -22,8 +20,7 @@ angular.module('msvizUiApp')
         ]
       )
         .then(function (args) {
-          $scope.proteinMatch.protein = args[0];
-          $scope.proteinMatch.psms = args[1];
+          $scope.proteinMatch = new ProteinMatch(args[0], args[1], {selectedModification: $scope.searchResultsFilter.getSelectedModification()});
         });
     };
 

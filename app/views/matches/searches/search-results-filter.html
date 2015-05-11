@@ -15,8 +15,9 @@
           <span ng-bind-html="s.searchId | highlight: $select.search"></span>
         </ui-select-choices>
       </ui-select>
-      <label>Modification ({{filter._available.modifications.length}})</label>
+      <label ng-show="filter._available.modifications">Modification ({{filter._available.modifications.length}})</label>
       <ui-select ng-model="_tmpSelectedModification"
+                 ng-show="filter._available.modifications"
                  theme="bootstrap"
                  ng-disabled="disabled"
                  on-select="filter.setSelectedModification($item.value)"
@@ -28,8 +29,9 @@
           <span>{{modif.name}}</span><span ng-if="modif.count"> ({{modif.count}})</span>
         </ui-select-choices>
       </ui-select>
-      <label>Protein: ({{filter._available.proteins.length}})</label>
+      <label ng-show="filter._available.proteins">Protein: ({{filter._available.proteins.length}})</label>
       <ui-select ng-model="_tmpSelectedProtein"
+                 ng-show="filter._available.proteins"
                  on-select="filter.setSelectedProtein($item)"
                  theme="bootstrap"
                  ng-disabled="disabled"

@@ -147,6 +147,11 @@ angular.module('matches-search-results-filter', ['thirdparties', 'matches-search
             tmp.push({value: modif, name: modif, count: count});
           });
           _this._available.modifications = tmp;
+          console.log(_this.getSelectedModification(), modifCount);
+          if(!modifCount[_this.getSelectedModification()]){
+            console.log('modif not avail', _this._selected.modification);
+            delete _this._selected.modification;
+          }
         });
 
       return _this;
@@ -198,6 +203,12 @@ angular.module('matches-search-results-filter', ['thirdparties', 'matches-search
       psmService.findAllProteinRefsBySearchIds(_this.getSelectedSearchIds(), _this._selected.modification)
         .then(function (lProt) {
           _this._available.proteins = lProt;
+
+          if(!_.find(lProt, function(p){
+              return _.isEqual(p, _this._selected.protein);
+            })){
+            delete _this._selected.protein;
+          }
         });
 
       return _this;
