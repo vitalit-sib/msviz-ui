@@ -7,7 +7,7 @@ angular.module('fishtones-wrapper', ['thirdparties'])
  * convert spectrum, matches etc. into fishTones ready object
  *
  */
-  .service('fishtonifyService', function () {
+  .service('fishtonifyService', function (fishtones) {
     var FishtonifyService = function () {
       return this;
     };
