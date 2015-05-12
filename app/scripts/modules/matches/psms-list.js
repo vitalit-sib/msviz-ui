@@ -77,12 +77,13 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         richSequence: ftPSM.richSeq,
         expSpectrum: ftPSM.spectrum
       });
-      new fishtones.match.MatchSpectrumView({
+      var view = new fishtones.match.MatchSpectrumView({
         model: psm,
         el: elm,
         tol: 1000,
         xZoomable: true
-      }).render();
+      });
+      view.render();
 
       return _this;
     };
@@ -124,7 +125,8 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  */
   .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
     var link = function (scope, elm) {
-      new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
+      var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
+      return view;
     };
     return {
       link: link,
@@ -142,7 +144,8 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  */
   .directive('matchesFishtonesSsm', function (pviz, MatchesFishtonesSSMSpectrumView) {
     var link = function (scope, elm) {
-      new MatchesFishtonesSSMSpectrumView(elm, scope.fishtonesssm);
+      var view = new MatchesFishtonesSSMSpectrumView(elm, scope.fishtonesssm);
+      return view;
     };
     return {
       link: link,

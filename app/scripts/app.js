@@ -21,7 +21,7 @@ angular
     'matches-search-results-filter',
     'ssm',
     'sequences',
-    'experimental',
+    'experimental'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -18,7 +18,7 @@ angular.module('matches-search-results-filter', ['thirdparties', 'matches-search
  * @params {Object} opts optinal arguments
  * * onComplete:function(this) will be call once all the field have been set
  */
-  .factory('SearchResultsFilter', function (_, SearchSet, searchService, psmService) {
+  .factory('SearchResultsFilter', function (_, SearchSet, searchService, psmService) { //NOSONAR
     var SearchResultsFilter = function (opts) {
       var _this = this;
 

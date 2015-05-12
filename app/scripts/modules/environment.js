@@ -8,7 +8,6 @@ angular.module('environment', ['angularytics'])
  * configure handler with backendUrl pointer. For the moment, the url is either set to localhost or swissqt depending on the current page location
  */
   .config(function (AngularyticsProvider) {
-//    AngularyticsProvider.setEventHandlers(['Console', 'GoogleUniversal']);
     AngularyticsProvider.setEventHandlers(['Console', 'GoogleUniversal']);
   })
   .service('EnvConfig', function ($location, Angularytics) {
@@ -25,9 +24,7 @@ angular.module('environment', ['angularytics'])
       };
     }
 
-//    if (isProd) {
       Angularytics.init();
-//    }
   })
 /**
  * @ngdoc service

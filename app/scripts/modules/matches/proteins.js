@@ -30,10 +30,13 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
  * @ngdoc object
  * @name proteinMatches.object:ProteinMatch
  * @description a match with a protein decription and a list of PSM
- * @param {Object} protein
+ * @param {Object} protein the protein AC + sequence
+ * @param {Array} psms the list of PSM
+ * @param {Object} optional parameters
+ * * targetModification as a string eventually pointing to the modificaiton to be enhanced
  *
  */
-  .factory('ProteinMatch', function (_) {
+  .factory('ProteinMatch', function (_) { //NOSONAR
     var ProteinMatch = function (protein, psms, opts) {
       var _this = this;
       opts = _.extend({}, opts);

@@ -9,7 +9,6 @@ angular.module('fishtones-wrapper', ['thirdparties'])
  */
   .service('fishtonifyService', function () {
     var FishtonifyService = function () {
-      var _this = this;
       return this;
     };
 

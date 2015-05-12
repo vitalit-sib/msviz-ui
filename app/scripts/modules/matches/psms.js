@@ -150,7 +150,6 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       var _this = this;
 
       _this.protMatch = protMatch;
-//      pvizCustomPsm.yo;
 
       var seqEntry = new pviz.SeqEntry({sequence: protMatch.getProtein().sequence});
       var view = new pviz.SeqEntryAnnotInteractiveView({
@@ -234,7 +233,8 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         if (protMatch === undefined) {
           return;
         }
-        new ProteinMatchesGlobalPvizView(elm, protMatch);
+        var view = new ProteinMatchesGlobalPvizView(elm, protMatch);
+        return view;
       });
     };
     return {
