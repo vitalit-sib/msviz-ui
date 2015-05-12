@@ -147,9 +147,7 @@ angular.module('matches-search-results-filter', ['thirdparties', 'matches-search
             tmp.push({value: modif, name: modif, count: count});
           });
           _this._available.modifications = tmp;
-          console.log(_this.getSelectedModification(), modifCount);
           if(!modifCount[_this.getSelectedModification()]){
-            console.log('modif not avail', _this._selected.modification);
             delete _this._selected.modification;
           }
         });

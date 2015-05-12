@@ -40,8 +40,8 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
      */
     PSMService.prototype.findAllProteinRefsBySearchIds = function (searchIds, withModif) {
       var uri = '/match/proteins/' + searchIds.join(',');
-      if(withModif){
-        uri += '?withModif='+withModif;
+      if (withModif) {
+        uri += '?withModif=' + withModif;
       }
 
       return httpProxy.get(uri);
@@ -91,19 +91,77 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       }
     });
 
+    pviz.FeatureDisplayer.setCustomHandler('aaInfo', {
+      appender: function (viewport, svgGroup, features, type) {
+        var sel = svgGroup.selectAll('g.feature.internal.data.' + type)
+          .data(features)
+          .enter()
+          .append('g')
+          .attr('class', 'feature internal data ' + type);
+        sel.append('line')
+          .style('stroke-width', function (aai) {
+            var d = aai.data.depth;
+            if(d<=2){
+              return d;
+            }
+            if(d<=4){
+              return 3;
+            }
+            return 4;
+          });
+        return sel;
+      },
+      positioner: function (viewport, d3selection) {
+        d3selection.attr('transform', function (ft) {
+          return 'translate(0,' + 0.4 * viewport.scales.y(0.5 + ft.displayTrack) + ')';
+        });
+
+        d3selection.selectAll('line')
+          .attr('x1', function (ft) {
+            return viewport.scales.x(ft.start - 0.5);
+          })
+          .attr('x2', function (ft) {
+            return viewport.scales.x(ft.end + 0.5);
+          });
+        return d3selection;
+      }
+    });
   })
-  .factory('MatchesPsmPvizView', function (_, pviz) {
-    var MatchesPsmPvizView = function (elm, protein, psms) {
+/**
+ * @ngdoc object
+ * @name matches.object:ProteinMatchesGlobalPvizView
+ * @description the proteinMatchOverview
+ */
+  .factory('ProteinMatchesGlobalPvizView', function (_, pviz, pvizCustomPsm) {
+    var ProteinMatchesGlobalPvizView = function (elm, protMatch) {
       var _this = this;
 
-      var seqEntry = new pviz.SeqEntry({sequence: protein.sequence});
+      _this.protMatch = protMatch;
+//      pvizCustomPsm.yo;
+
+      var seqEntry = new pviz.SeqEntry({sequence: protMatch.getProtein().sequence});
       var view = new pviz.SeqEntryAnnotInteractiveView({
         model: seqEntry,
         el: elm
       });
       view.render();
 
-      var features = _.map(psms, function (psm) {
+
+      seqEntry.addFeatures(_this.getFeaturesPSMs());
+      seqEntry.addFeatures(_this.getFeaturesAAInfos());
+      return _this;
+    };
+
+    /**
+     * @ngdoc object
+     * @name matches.object:ProteinMatchesGlobalPvizView#getFeaturesPSMs
+     * @methodOf matches.object:ProteinMatchesGlobalPvizView
+     * @description build the list of pviz ready features for PSMS
+     * @return {Array} of PSM features
+     */
+    ProteinMatchesGlobalPvizView.prototype.getFeaturesPSMs = function () {
+      var _this = this;
+      return _.map(_this.protMatch.getMyPSMs(), function (psm) {
         return {
           groupSet: psm.searchId,
           category: 'psms',
@@ -115,18 +173,39 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         };
       });
 
-      seqEntry.addFeatures(features);
-      return _this;
     };
 
-    return MatchesPsmPvizView;
+    /**
+     * @ngdoc object
+     * @name matches.object:ProteinMatchesGlobalPvizView#getFeaturesAAInfos
+     * @methodOf matches.object:ProteinMatchesGlobalPvizView
+     * @description build the list of pviz ready features for amino acid level info
+     * @return {Array} of PSM features
+     */
+    ProteinMatchesGlobalPvizView.prototype.getFeaturesAAInfos = function () {
+      var _this = this;
+      return _.map(_this.protMatch.getAminoAcidInfo(), function (aai) {
+        return {
+          groupSet: aai.searchId,
+          category: 'aaInfos',
+          categoryName: '',
+          type: 'aaInfo',
+          start: aai.pos - 1,
+          end: aai.pos - 1,
+          data: aai
+        };
+      });
+
+    };
+
+    return ProteinMatchesGlobalPvizView;
   })
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmPviz
  * @description pviz one protein among multiple searches
  */
-  .directive('matchesPsmPviz', function (pviz, MatchesPsmPvizView) {
+  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView) {
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
         if (scope.detailedPSM === ft.data) {
@@ -142,7 +221,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         if (protMatch === undefined) {
           return;
         }
-        new MatchesPsmPvizView(elm, protMatch.protein, protMatch.psms);
+        new ProteinMatchesGlobalPvizView(elm, protMatch);
       });
     };
     return {

@@ -37,10 +37,120 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
     var ProteinMatch = function (protein, psms, opts) {
       var _this = this;
       opts = _.extend({}, opts);
-      _this.protein = protein;
-      _this.psms = psms;
+      _this._protein = protein;
+      _this._psms = psms;
+      _this._targetModification = opts.targetModification;
       return _this;
     };
+
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getProtein()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description {Object} get the matched protein
+     */
+    ProteinMatch.prototype.getProtein = function () {
+      return this._protein;
+    };
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getPSMs()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description get the PSMs
+     * @return  {Array} of psms
+     */
+    ProteinMatch.prototype.getPSMs = function () {
+      return this._psms;
+    };
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getTargetModification()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description if ever this proteinMatch has a target modification
+     * @return  {String} modification name
+     */
+    ProteinMatch.prototype.getTargetModification = function () {
+      return this._targetModification;
+    };
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getMyPSMs()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description get the PSMs, but tweak them and keep only the proteinRef that match the protein's one
+     * @return {Array} of psms
+     */
+    ProteinMatch.prototype.getMyPSMs = function () {
+      var _this = this;
+      var ids = _this.getProtein().proteinRef.identifiers;
+      return _.map(_this.getPSMs(), function (psm) {
+        var newPSM = _.extend({}, psm);
+        newPSM.proteinList = _.filter(psm.proteinList, function (p) {
+          return _.contains(ids, p.proteinRef.AC);
+        });
+        return newPSM;
+      });
+    };
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getAminoAcidInfo()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description For each amino acid covered by a PSM, get the position, coverage depth, the list of psms, eventually the selectedModification
+     * @return {Array} a list of amino acid
+     */
+    ProteinMatch.prototype.getAminoAcidInfo = function () {
+      var _this = this;
+      var ret = {};
+
+      var tModif = _this.getTargetModification();
+      var protIds= _this.getProtein().proteinRef.identifiers;
+      _.each(_this.getMyPSMs(), function (psm) {
+        _.each(psm.proteinList, function (prot) {
+          for (var pos = prot.startPos; pos <= prot.endPos; pos++) {
+            var aa;
+            if (!ret[psm.searchId]) {
+              ret[psm.searchId] = [];
+            }
+
+            if (ret[psm.searchId][pos] == undefined) {
+              aa = ret[psm.searchId][pos] = {searchId: psm.searchId, pos: pos, psms: [], depth: 0};
+            } else {
+              aa = ret[psm.searchId][pos];
+            }
+
+            if(tModif){
+              var posModif;
+              if(pos === prot.startPos){
+                posModif=[0,1];
+              }else if(pos === prot.endPos){
+                posModif=[pos-prot.startPos+1,pos-prot.startPos+2];
+              }else{
+                posModif = [pos-prot.startPos+1];
+              }
+              if(_.some(posModif, function(p){
+                   return _.contains(psm.pep.modificationNames[p], tModif);
+                })){
+                aa.nbTargetModification=aa.nbTargetModification?(aa.nbTargetModification+1):1;
+              }
+            }
+            aa.psms.push(psm);
+            aa.depth++;
+          }
+        });
+      });
+      return _.chain(ret)
+        .values()
+        .flatten()
+        .filter(function (aa) {
+          return aa !== undefined;
+        })
+        .value();
+    };
+
 
     return ProteinMatch;
   })

@@ -1,0 +1,11 @@
+g.data.psms.psm line {
+  stroke: blue;
+}
+
+g.data.aaInfos.aaInfo line {
+  stroke: blue;
+}
+
+g.data.aaInfos.aaInfo circle {
+  fill: red;
+}
