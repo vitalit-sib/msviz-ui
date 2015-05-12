@@ -132,7 +132,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         d3selection.selectAll('circle')
           .attr('cx', function (ft) {
             return viewport.scales.x(ft.start);
-          })
+          });
         return d3selection;
       }
     });
