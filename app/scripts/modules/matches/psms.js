@@ -101,14 +101,20 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         sel.append('line')
           .style('stroke-width', function (aai) {
             var d = aai.data.depth;
-            if(d<=2){
+            if (d <= 2) {
               return d;
             }
-            if(d<=4){
+            if (d <= 4) {
               return 3;
             }
             return 4;
           });
+        sel.filter(function (aai) {
+          return aai.data.nbTargetModification;
+        })
+          .classed('has-target-modif', true)
+          .append('circle')
+          .attr('r', 5);
         return sel;
       },
       positioner: function (viewport, d3selection) {
@@ -123,6 +129,10 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
           .attr('x2', function (ft) {
             return viewport.scales.x(ft.end + 0.5);
           });
+        d3selection.selectAll('circle')
+          .attr('cx', function (ft) {
+            return viewport.scales.x(ft.start);
+          })
         return d3selection;
       }
     });

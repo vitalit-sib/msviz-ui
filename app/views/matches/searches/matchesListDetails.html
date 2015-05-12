@@ -16,7 +16,7 @@
     <div ng-if="match.type==='PSM'">
       <div>
         {{match.fishTones.richSeq.toString()}}
-        <small>(mascot score={{match.matchInfo.scoreMap["Mascot:score"]}})</small>
+        <small>(mascot score={{match.matchInfo.score.mainScore}})</small>
       </div>
       <div>
         <button class="btn btn-default" ng-click="getSimSpectra(match.spectrumId)">similar spectra</button>
