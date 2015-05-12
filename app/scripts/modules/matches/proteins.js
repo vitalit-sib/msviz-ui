@@ -29,8 +29,8 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
 /**
  * @ngdoc object
  * @name proteinMatches.object:ProteinMatch
- * @description
- *
+ * @description a match with a protein decription and a list of PSM
+ * @param {Object} protein
  *
  */
   .factory('ProteinMatch', function (_) {
@@ -107,34 +107,36 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
       var ret = {};
 
       var tModif = _this.getTargetModification();
-      var protIds= _this.getProtein().proteinRef.identifiers;
+
       _.each(_this.getMyPSMs(), function (psm) {
+        var isModifAtPos = function (p) {
+          return _.contains(psm.pep.modificationNames[p], tModif);
+        };
         _.each(psm.proteinList, function (prot) {
-          for (var pos = prot.startPos; pos <= prot.endPos; pos++) {
+          var pos;
+          for (pos = prot.startPos; pos <= prot.endPos; pos++) {
             var aa;
             if (!ret[psm.searchId]) {
               ret[psm.searchId] = [];
             }
 
-            if (ret[psm.searchId][pos] == undefined) {
+            if (ret[psm.searchId][pos] === undefined) {
               aa = ret[psm.searchId][pos] = {searchId: psm.searchId, pos: pos, psms: [], depth: 0};
             } else {
               aa = ret[psm.searchId][pos];
             }
 
-            if(tModif){
+            if (tModif) {
               var posModif;
-              if(pos === prot.startPos){
-                posModif=[0,1];
-              }else if(pos === prot.endPos){
-                posModif=[pos-prot.startPos+1,pos-prot.startPos+2];
-              }else{
-                posModif = [pos-prot.startPos+1];
+              if (pos === prot.startPos) {
+                posModif = [0, 1];
+              } else if (pos === prot.endPos) {
+                posModif = [pos - prot.startPos + 1, pos - prot.startPos + 2];
+              } else {
+                posModif = [pos - prot.startPos + 1];
               }
-              if(_.some(posModif, function(p){
-                   return _.contains(psm.pep.modificationNames[p], tModif);
-                })){
-                aa.nbTargetModification=aa.nbTargetModification?(aa.nbTargetModification+1):1;
+              if (_.some(posModif, isModifAtPos)) {
+                aa.nbTargetModification = aa.nbTargetModification ? (aa.nbTargetModification + 1) : 1;
               }
             }
             aa.psms.push(psm);

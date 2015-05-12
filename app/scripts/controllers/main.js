@@ -20,7 +20,7 @@ angular.module('msvizUiApp')
         ]
       )
         .then(function (args) {
-          $scope.proteinMatch = new ProteinMatch(args[0], args[1], {selectedModification: $scope.searchResultsFilter.getSelectedModification()});
+          $scope.proteinMatch = new ProteinMatch(args[0], args[1], {targetModification: $scope.searchResultsFilter.getSelectedModification()});
         });
     };
 
