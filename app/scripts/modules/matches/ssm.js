@@ -22,7 +22,7 @@ angular.module('ssm', ['fishtones-wrapper'])
      * @returns {httpPromise} of a list of SSM
      */
     SSMService.prototype.findSimilarSpectra = function (spectrumRef) {
-      return httpProxy.get('/match/sim/' + spectrumRef.runId+'/'+spectrumRef.id+'/0.3/0.2')
+      return httpProxy.get('/match/sim/' + spectrumRef.runId+'/'+spectrumRef.id+'/0.3/0.2');
     };
 
 
