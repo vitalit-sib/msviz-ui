@@ -55,7 +55,6 @@ describe('searches', function () {
       };
       it('size', function () {
         var pm = new ProteinMatch(mockProtMatchACTBL.prot, mockProtMatchACTBL.psms);
-        var psms = pm.getMyPSMs();
         expect(pm.getPSMs().length).toEqual(26);
       });
       it('check refAC', function () {
@@ -68,7 +67,6 @@ describe('searches', function () {
       });
       it('check that original PSM proteinRef where not modified', function () {
         var pm = new ProteinMatch(mockProtMatchACTBL.prot, mockProtMatchACTBL.psms);
-        var psms = pm.getPSMs();
         var acs = getRefs(pm.getPSMs());
         expect(acs.length).toBe(7);
       });
