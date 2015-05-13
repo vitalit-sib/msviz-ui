@@ -11,3 +11,7 @@ form.search-results-filter div.form-control{
 form.search-results-filter div.ui-select-container{
   display: inline-block;
 }
+
+div.psm-one-liner.rejected{
+  text-decoration: line-through;
+}

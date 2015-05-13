@@ -10,16 +10,8 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       if (_.contains($scope.selectedMatches, pvizPsm)) {
         return;
       }
-      pvizPsm.fishTones = {
-        richSeq: new fishtones.dry.RichSequence().fromString(pvizPsm.pep.sequence)
-      };
+      pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
 
-      _.each(pvizPsm.pep.modificationNames, function (mods, i) {
-        _.each(mods, function (modName) {
-          pvizPsm.fishTones.richSeq.addModification(i - 1, fishtones.dry.ResidueModificationDictionary.get(modName));
-
-        });
-      });
 
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
@@ -29,9 +21,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         pvizPsm.type = 'PSM';
         $scope.selectedMatches.push(pvizPsm);
       });
-
     };
-
 
     $scope.getSimSpectra = function (spectrumRef) {
       ssmService.findSimilarSpectra(spectrumRef).then(function (spspMatches) {

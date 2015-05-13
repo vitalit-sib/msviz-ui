@@ -1,6 +1,9 @@
 g.data.psms.psm line {
   stroke: blue;
 }
+g.data.psms.psm:hover line {
+  stroke-width: 4;
+}
 
 g.data.aaInfos.aaInfo line {
   stroke: blue;

@@ -7,8 +7,9 @@ angular.module('fishtones-wrapper', ['thirdparties'])
  * convert spectrum, matches etc. into fishTones ready object
  *
  */
-  .service('fishtonifyService', function (fishtones) {
+  .service('fishtonifyService', function (_, fishtones) {
     var FishtonifyService = function () {
+      this.richSeqShortcuter = new  fishtones.dry.RichSequenceShortcuter();
       return this;
     };
 
@@ -33,5 +34,27 @@ angular.module('fishtones-wrapper', ['thirdparties'])
       });
     };
 
+    /**
+     * @ngdoc method
+     * @name fishtones-wrapper.service:fishtonifyService#buildRichSeq
+     * @methodOf fishtones-wrapper.service:fishtonifyService
+     * @description convert a psm into a RichSequence object
+     * @param {Object} psm the input psm with pep info
+     * @returns {RichSequence} rich sequence, in the fishTones way
+     */
+    FishtonifyService.prototype.buildRichSeq = function (psm) {
+      var _this = this;
+      var rs = new fishtones.dry.RichSequence().fromString(psm.pep.sequence);
+      _.each(psm.pep.modificationNames, function (mods, i) {
+        _.each(mods, function (modName) {
+          rs.addModification(i - 1, fishtones.dry.ResidueModificationDictionary.get(modName));
+        });
+      });
+
+      return {
+        richSeq:rs,
+        richSeqShortcut: _this.richSeqShortcuter.richSeqToString(rs)
+      };
+    };
     return new FishtonifyService();
   });

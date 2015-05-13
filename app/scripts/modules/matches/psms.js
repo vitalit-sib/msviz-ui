@@ -12,7 +12,6 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       return this;
     };
 
-
     /**
      * @ngdoc method
      * @name matches.service:psmService#findAllBySearchIdsAndProteinId
@@ -28,6 +27,20 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       return httpProxy.get(uri);
     };
 
+    /**
+     * @ngdoc method
+     * @name matches.service:psmService#findAllBySearchIdAndSpectrumId
+     * @methodOf matches.service:psmService
+     * @description get the list of PSMS for one searchId and a spectrumId
+     * @param {String} searchId one search id
+     * @param {String} spectrumId unique specrtum id
+     * @returns {httpPromise} of a list of PSMs
+     */
+    PSMService.prototype.findAllBySearchIdAndSpectrumId = function (searchId, spectrumId) {
+      var uri = '/match/psms/' + searchId + '/by-spectrum/' + spectrumId;
+
+      return httpProxy.get(uri);
+    };
 
     /**
      * @ngdoc method
@@ -247,16 +260,45 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       template: '<div style="width:100%; height:400px"></div>'
     };
   })
+  .controller('MatchesPSMCtrl', function ($scope, _, psmService, fishtonifyService) {
+    $scope.loadPSMSForSpectrum = function () {
+      psmService.findAllBySearchIdAndSpectrumId($scope.psm.searchId, $scope.psm.spectrumId.id)
+        .then(function (psms) {
+          if (psms.length > 1) {
+            _.each(psms, function (psm) {
+              _.each(fishtonifyService.buildRichSeq(psm), function (v, k) {
+                psm[k] = v;
+              });
+            });
+            $scope.psm4spectrum = psms;
+          }
+        });
+    };
+    $scope.loadPSMSForSpectrum();
+  })
+/**
+ * @ngdoc directive
+ * @name matches.directive:matchesPsmBox
+ * @description psm box
+ */
+  .directive('matchesPsmBox', function () {
+    return {
+      restrict: 'E',
+      scope: {psm: '='},
+      templateUrl: 'views/matches/searches/matches-psm-box.html'
+    };
+  })
 
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmOneLiner
  * @description psm super short summary
  */
-  .directive('matchesPsmOneLiner', function () {
+  .
+  directive('matchesPsmOneLiner', function () {
     return {
       restrict: 'E',
-      template: '<div class="psm-one-liner">{{detailedPSM.pep.sequence}} <small>({{detailedPSM.matchInfo.scoreMap["Mascot:score"]}})</small></div>'
+      templateUrl: 'views/matches/searches/matches-psm-one-liner.html'
     };
   })
 ;
