@@ -12,7 +12,16 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       return this;
     };
 
-    var addFishtonesObjects = function (psms) {
+    /**
+     * @ngdoc method
+     * @name matches.service:psmService#addFishtonesObjects
+     * @methodOf matches.service:psmService
+     * @description add fishTones property with richRSeq & co
+     * @param {Array} psms a list of PSM
+     * @returns {Array} the same list of psms
+     */
+
+    PSMService.prototype.addFishtonesObjects = function (psms) {
       _.each(psms, function(psm){
         psm.fishTones = fishtonifyService.buildRichSeq(psm);
       });
@@ -29,9 +38,9 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
+      var _this = this;
       var uri = '/match/psms/' + searchIds.join(',') + '/by-ac/' + proteinId;
-
-      return httpProxy.get(uri).then(addFishtonesObjects);
+      return httpProxy.get(uri).then(_this.addFishtonesObjects);
     };
 
     /**
@@ -44,9 +53,9 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
      * @returns {httpPromise} of a list of PSMs
      */
     PSMService.prototype.findAllBySearchIdAndSpectrumId = function (searchId, spectrumId) {
+      var _this = this;
       var uri = '/match/psms/' + searchId + '/by-spectrum/' + spectrumId;
-
-      return httpProxy.get(uri).then(addFishtonesObjects);
+      return httpProxy.get(uri).then(_this.addFishtonesObjects);
     };
 
     /**
@@ -267,16 +276,11 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       template: '<div style="width:100%; height:400px"></div>'
     };
   })
-  .controller('MatchesPSMCtrl', function ($scope, _, psmService, fishtonifyService) {
+  .controller('MatchesPSMCtrl', function ($scope, _, psmService) {
     $scope.loadPSMSForSpectrum = function () {
       psmService.findAllBySearchIdAndSpectrumId($scope.psm.searchId, $scope.psm.spectrumId.id)
         .then(function (psms) {
           if (psms.length > 1) {
-            _.each(psms, function (psm) {
-              _.each(fishtonifyService.buildRichSeq(psm), function (v, k) {
-                psm[k] = v;
-              });
-            });
             $scope.psm4spectrum = psms;
           }
         });
