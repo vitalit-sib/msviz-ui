@@ -7,9 +7,16 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
  * Access to PSMS
  *
  */
-  .service('psmService', function ($http, EnvConfig, httpProxy) {
+  .service('psmService', function (_, $http, EnvConfig, httpProxy, fishtonifyService) {
     var PSMService = function () {
       return this;
+    };
+
+    var addFishtonesObjects = function (psms) {
+      _.each(psms, function(psm){
+        psm.fishTones = fishtonifyService.buildRichSeq(psm);
+      });
+      return psms;
     };
 
     /**
@@ -24,7 +31,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
     PSMService.prototype.findAllBySearchIdsAndProteinId = function (searchIds, proteinId) {
       var uri = '/match/psms/' + searchIds.join(',') + '/by-ac/' + proteinId;
 
-      return httpProxy.get(uri);
+      return httpProxy.get(uri).then(addFishtonesObjects);
     };
 
     /**
@@ -39,7 +46,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
     PSMService.prototype.findAllBySearchIdAndSpectrumId = function (searchId, spectrumId) {
       var uri = '/match/psms/' + searchId + '/by-spectrum/' + spectrumId;
 
-      return httpProxy.get(uri);
+      return httpProxy.get(uri).then(addFishtonesObjects);
     };
 
     /**
@@ -74,12 +81,12 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
     };
 
     return new PSMService();
-  })
-  .service('pvizCustomPsm', function (pviz) {
-    pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.4;
+    })
+    .service('pvizCustomPsm', function (pviz) {
+      pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.4;
 
-    pviz.FeatureDisplayer.setCustomHandler('psm', {
-      appender: function (viewport, svgGroup, features, type) {
+      pviz.FeatureDisplayer.setCustomHandler('psm', {
+        appender: function (viewport, svgGroup, features, type) {
         var sel = svgGroup.selectAll('g.feature.internal.data.' + type)
           .data(features)
           .enter()
@@ -95,7 +102,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
 
         d3selection.selectAll('line')
           .attr('x1', function (ft) {
-            return viewport.scales.x(ft.start - 0.4);
+            return viewport.scales.x(ft.start - 0.4)+1;
           })
           .attr('x2', function (ft) {
             return viewport.scales.x(ft.end + 0.4);
