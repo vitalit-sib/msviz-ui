@@ -1,7 +1,22 @@
 g.data.psms.psm line {
   stroke: blue;
 }
+
 g.data.psms.psm:hover line {
+  stroke-width: 4;
+}
+
+g.data.psms.psm circle {
+  fill: blue;
+  stroke: blue;
+}
+
+g.data.psms.psm circle.is-target {
+  fill: red;
+  stroke: red;
+}
+
+g.data.psms.psm:hover circle {
   stroke-width: 4;
 }
 
@@ -11,4 +26,9 @@ g.data.aaInfos.aaInfo line {
 
 g.data.aaInfos.aaInfo circle {
   fill: red;
+}
+
+g.data.aaModif text {
+  font-family: monospace;
+  font-size: 80%;
 }

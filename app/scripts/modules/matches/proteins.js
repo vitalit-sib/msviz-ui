@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-proteins', ['thirdparties', 'environment'])
+angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-iso-modif'])
 
 /**
  * @ngdoc service
@@ -36,7 +36,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
  * * targetModification as a string eventually pointing to the modificaiton to be enhanced
  *
  */
-  .factory('ProteinMatch', function (_) { //NOSONAR
+  .factory('ProteinMatch', function (_, psmIsoModifBuilder) { //NOSONAR
     var ProteinMatch = function (protein, psms, opts) {
       var _this = this;
       opts = _.extend({}, opts);
@@ -100,6 +100,19 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
 
     /**
      * @ngdoc method
+     * @name matches.object:PSMIsoModif:getMyPSMIsoModif
+     * @methoOf matches.object:PSMIsoModif
+     * @description the list PSM grouped by Iso Modif (same set of modifi by sequence
+     * @return {Array} list of PSMIsoModif
+     */
+    ProteinMatch.prototype.getMyPSMIsoModif = function () {
+      var _this = this;
+      return psmIsoModifBuilder.buildList(_this.getMyPSMs());
+    };
+
+
+    /**
+     * @ngdoc method
      * @name proteinMatches.object:ProteinMatch#getAminoAcidInfo()
      * @methodOf proteinMatches.object:ProteinMatch
      * @description For each amino acid covered by a PSM, get the position, coverage depth, the list of psms, eventually the selectedModification
@@ -111,6 +124,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
 
       var tModif = _this.getTargetModification();
 
+      var seqArray = _this.getProtein().sequence.split('');
       _.each(_this.getMyPSMs(), function (psm) {
         var isModifAtPos = function (p) {
           return _.contains(psm.pep.modificationNames[p], tModif);
@@ -124,7 +138,13 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
             }
 
             if (ret[psm.searchId][pos] === undefined) {
-              aa = ret[psm.searchId][pos] = {searchId: psm.searchId, pos: pos, psms: [], depth: 0};
+              aa = ret[psm.searchId][pos] = {
+                searchId: psm.searchId,
+                aa: seqArray[pos - 1],
+                pos: pos,
+                psms: [],
+                depth: 0
+              };
             } else {
               aa = ret[psm.searchId][pos];
             }
@@ -156,6 +176,19 @@ angular.module('matches-proteins', ['thirdparties', 'environment'])
         .value();
     };
 
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getTargetAminoAcidWithTargetModif
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description get a list of amino acid info for all amino acid where the targeted modif has been found
+     * @return {Array} of objects
+     */
+    ProteinMatch.prototype.getTargetAminoAcidWithTargetModif = function () {
+      var _this = this;
+      return _.filter(_this.getAminoAcidInfo(), function (aai) {
+        return aai.nbTargetModification;
+      });
+    };
 
     return ProteinMatch;
   })
