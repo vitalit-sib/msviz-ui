@@ -19,7 +19,7 @@ describe('PSMIsoModif', function () {
       expect(PSMIsoModif).not.toBeUndefined();
     });
     it('check mock', function () {
-      expect(mockPSMS_OSBL8_20_76.length).toBe(57);
+      expect(mockPSMSOSBL82076.length).toBe(57);
     });
 
   });
@@ -27,13 +27,13 @@ describe('PSMIsoModif', function () {
   describe('buildList', function () {
     describe('count', function () {
       it('count iso mockPSMS_OSBL8_20_76', function () {
-        expect(psmIsoModifBuilder.buildList(mockPSMS_OSBL8_20_76).length).toBe(10);
+        expect(psmIsoModifBuilder.buildList(mockPSMSOSBL82076).length).toBe(10);
       });
       it('count iso mockPSMS_2psm_1phospho', function () {
-        expect(psmIsoModifBuilder.buildList(mockPSMS_2psm_1phospho).length).toBe(1);
+        expect(psmIsoModifBuilder.buildList(mockPSMS2psm1phospho).length).toBe(1);
       });
       it('count iso mockPSMS_1psm_1phospho', function () {
-        expect(psmIsoModifBuilder.buildList(mockPSMS_1psm_1phospho).length).toBe(1);
+        expect(psmIsoModifBuilder.buildList(mockPSMS1psm1phospho).length).toBe(1);
       });
     });
   });
@@ -41,53 +41,53 @@ describe('PSMIsoModif', function () {
   describe('buildOnePSMIsoModif', function () {
     describe('one psm', function () {
       it('countPSM', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_1psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS1psm1phospho);
         expect(isoPSM.countPSM()).toBe(1);
         expect(isoPSM.hasUniquePSM()).toBe(true);
       });
       it('varModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_1psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS1psm1phospho);
         expect(isoPSM.getVarModif()).toEqual({});
       });
       it('fixModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_1psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS1psm1phospho);
         expect(isoPSM.getFixModif()).toEqual({Phospho: {pos: [11]}});
       });
     });
     describe('two psm', function () {
       it('countPSM', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_2psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS2psm1phospho);
         expect(isoPSM.countPSM()).toBe(2);
         expect(isoPSM.hasUniquePSM()).toBe(false);
       });
       it('varModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_2psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS2psm1phospho);
         expect(isoPSM.getVarModif()).toEqual({Phospho: {pos: [5,11], count:1}});
       });
       it('fixModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_2psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS2psm1phospho);
         expect(isoPSM.getFixModif()).toEqual({});
       });
     });
     describe('three psm', function () {
       it('countPSM', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_3psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS3psm1phospho);
         expect(isoPSM.countPSM()).toBe(3);
         expect(isoPSM.hasUniquePSM()).toBe(false);
       });
       it('varModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_3psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS3psm1phospho);
         expect(isoPSM.getVarModif()).toEqual({Phospho: {pos: [5,11], count:1}});
       });
       it('fixModif', function () {
-        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS_3psm_1phospho);
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMS3psm1phospho);
         expect(isoPSM.getFixModif()).toEqual({Oxidation:{pos:[5]}});
       });
     });
   });
 
 
-  var mockPSMS_2psm_1phospho = [
+  var mockPSMS2psm1phospho = [
     {
       'searchId': 'mascot:F002453',
       'spectrumId': {
@@ -227,7 +227,7 @@ describe('PSMIsoModif', function () {
       ]
     }
   ];
-  var mockPSMS_3psm_1phospho = [
+  var mockPSMS3psm1phospho = [
     {
       'searchId': 'mascot:F002453',
       'spectrumId': {
@@ -434,7 +434,7 @@ describe('PSMIsoModif', function () {
       ]
     }
   ];
-  var mockPSMS_1psm_1phospho = [
+  var mockPSMS1psm1phospho = [
     {
       'searchId': 'mascot:F002453',
       'spectrumId': {
@@ -506,7 +506,7 @@ describe('PSMIsoModif', function () {
     }
   ];
 
-  var mockPSMS_OSBL8_20_76 = [
+  var mockPSMSOSBL82076 = [
     {
       'searchId': 'mascot:F002453',
       'spectrumId': {

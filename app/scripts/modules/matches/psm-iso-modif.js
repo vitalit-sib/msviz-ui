@@ -23,9 +23,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getPSMs
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description the list of underlying PSM
-     * @return {Array} list of PSM
+     * @returns {Array} list of PSM
      */
     PSMIsoModif.prototype.getPSMs = function () {
       return this._psms;
@@ -34,9 +34,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getFixModif
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description modification present on all PSMS
-     * @return {Object} a map {modif -> {pos:[i1,...]}}
+     * @returns {Object} a map {modif -> {pos:[i1,...]}}
      */
     PSMIsoModif.prototype.getFixModif = function () {
       return this._fixModif;
@@ -44,9 +44,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getVarModif
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description modification present on all PSMS, but with different positions combinations
-     * @return {Object} a map {modif -> {count:n, pos:[i1,i2,...]}} where n is of course lower than the number of potential positions
+     * @returns {Object} a map {modif -> {count:n, pos:[i1,i2,...]}} where n is of course lower than the number of potential positions
      */
     PSMIsoModif.prototype.getVarModif = function () {
       return this._varModif;
@@ -55,9 +55,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:countPSM
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description get the number of PSM used to build
-     * @return {Number} nb PSM
+     * @returns {Number} nb PSM
      */
     PSMIsoModif.prototype.countPSM = function () {
       return this._psms.length;
@@ -66,9 +66,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getProteinRef
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description get the proteinRef (the first proteinRef of the first PSM, as they should all be equivalent)
-     * @return {Number} nb PSM
+     * @returns {Number} nb PSM
      */
     PSMIsoModif.prototype.getProteinRef = function () {
       return this._psms[0].proteinList.proteinRef;
@@ -78,9 +78,9 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:hasUniquePSM
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description check if there only on psms
-     * @return {PSM} undefined if multiple PSMS are contained, or the one if there is only one
+     * @returns {PSM} undefined if multiple PSMS are contained, or the one if there is only one
      */
     PSMIsoModif.prototype.hasUniquePSM = function () {
       return this._psms.length === 1;
@@ -116,10 +116,10 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.service:psmIsoModifBuilder:buildList
-     * @methoOf matches.service:psmIsoModifBuilder
+     * @methodOf matches.service:psmIsoModifBuilder
      * @description build the list of PSMIsoModif
-     * @params {Array} psms a list of psms
-     * @return {Array} of PSMIsoModif
+     * @param {Array} psms a list of psms
+     * @returns {Array} of PSMIsoModif
      */
     PSMIsoModifBuilder.prototype.buildList = function (psms) {
       var _this = this;
@@ -137,10 +137,10 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
                 return a.modif + ':' + a.count;
               })
               .value()
-              .join(";");
+              .join(';');
         })
-        .map(function (psm, k) {
-          return _this.buildOnePSMIsoModif(psm)
+        .map(function (psm) {
+          return _this.buildOnePSMIsoModif(psm);
         })
         .value();
 
@@ -148,13 +148,12 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
     /**
      * @ngdoc method
      * @name matches.service:psmIsoModifBuilder:buildOnePSMIsoModif
-     * @methoOf matches.service:psmIsoModifBuilder
+     * @methodOf matches.service:psmIsoModifBuilder
      * @description from a list of PSM with the equivalent sequence of modif set, build a PSMIsoModif
-     * @return {PSMIsoModif} a single psmIsoModif
+     * @returns {PSMIsoModif} a single psmIsoModif
      *
      */
     PSMIsoModifBuilder.prototype.buildOnePSMIsoModif = function (psms) {
-      var _this = this;
 
       var modPos = {};
       var n = psms[0].pep.sequence.length + 2;

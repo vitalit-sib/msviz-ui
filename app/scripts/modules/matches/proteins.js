@@ -101,7 +101,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
     /**
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getMyPSMIsoModif
-     * @methoOf matches.object:PSMIsoModif
+     * @methodOf matches.object:PSMIsoModif
      * @description the list PSM grouped by Iso Modif (same set of modifi by sequence
      * @return {Array} list of PSMIsoModif
      */
