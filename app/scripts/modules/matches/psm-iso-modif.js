@@ -58,7 +58,7 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
      * @name matches.object:PSMIsoModif:getDescription()
      * @methodOf matches.object:PSMIsoModif
      * @description return the built in description
-     * @returns {String}
+     * @returns {String} a description
      */
     PSMIsoModif.prototype.getDescription = function () {
       var _this = this;
