@@ -468,10 +468,10 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
   .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView) {
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
-        scope.$broadcast('show-match', {type: 'psm', bean: ft.data})
+        scope.$broadcast('show-match', {type: 'psm', bean: ft.data});
       });
       pviz.FeatureDisplayer.addMouseoverCallback(['psmIsoModif'], function (ft) {
-        scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data})
+        scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data});
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         scope.$broadcast('psmAddSelected', ft.data);

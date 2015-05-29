@@ -9,7 +9,7 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
  * * {Map} fixModif a map of modifications appearing across all peptides, in the format modif -> {pos: [i1,...]}
  * * {Map} varModif a map of modifications appearing in peptides, but at different position, in the format modif -> {count:n, pos:[i1, i2, ...]}. Here the
  */
-  .factory('PSMIsoModif', function () {
+  .factory('PSMIsoModif', function (_) {
     var PSMIsoModif = function (args) {
       var _this = this;
       _this._psms = args.psms;
