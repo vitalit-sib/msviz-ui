@@ -15,6 +15,7 @@ angular
     'environment',
     'fishtones-wrapper',
     'matches-psms',
+    'matches-basket',
     'matches-psms-list',
     'matches-proteins',
     'matches-search',
