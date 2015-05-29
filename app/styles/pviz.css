@@ -20,6 +20,28 @@ g.data.psms.psm:hover circle {
   stroke-width: 4;
 }
 
+g.data.psmIsoModifs.psmIsoModif line {
+  stroke: green;
+}
+
+g.data.psmIsoModifs.psmIsoModif:hover line {
+  stroke-width: 4;
+}
+
+g.data.psmIsoModifs.psmIsoModif circle, g.data.psmIsoModifs.psmIsoModif path {
+  fill: green;
+  stroke: green;
+}
+
+g.data.psmIsoModifs.psmIsoModif circle.is-target, g.data.psmIsoModifs.psmIsoModif path.is-target {
+  fill: red;
+  stroke: red;
+}
+
+g.data.psmIsoModifs.psmIsoModif:hover circle, g.data.psmIsoModifs.psmIsoModif:hover path {
+  stroke-width: 4;
+}
+
 g.data.aaInfos.aaInfo line {
   stroke: blue;
 }

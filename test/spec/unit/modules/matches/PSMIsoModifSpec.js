@@ -84,6 +84,17 @@ describe('PSMIsoModif', function () {
         expect(isoPSM.getFixModif()).toEqual({Oxidation:{pos:[5]}});
       });
     });
+    describe('3 modif only bug', function(){
+      it('countPSM', function () {
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMATS1Bug);
+        expect(isoPSM.countPSM()).toBe(4);
+        expect(isoPSM.hasUniquePSM()).toBe(false);
+      });
+      it('varModif', function () {
+        var isoPSM = psmIsoModifBuilder.buildOnePSMIsoModif(mockPSMATS1Bug);
+        expect(isoPSM.getVarModif()).toEqual({Phospho: {pos: [0,1,3,4], count:1}});
+      });
+    });
   });
 
 
@@ -4423,6 +4434,244 @@ describe('PSMIsoModif', function () {
           'nextAA': 'G',
           'startPos': 58,
           'endPos': 76,
+          'isDecoy': false
+        }
+      ]
+    }
+  ];
+
+  var mockPSMATS1Bug = [
+    {
+      'searchId': 'mascot:F002453',
+      'spectrumId': {
+        'id': '20150318_Petricevic_7371A.12478.12478.2',
+        'runId': 'mascot:F002453'
+      },
+      'pep': {
+        'sequence': 'YSGSSAALERIR',
+        'molMass': 1388.64494325,
+        'modificationNames': [
+          [],
+          [],
+          [
+            'Phospho'
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      'matchInfo': {
+        'score': {
+          'mainScore': 16.17,
+          'scoreMap': {
+            'Mascot:delta score': 56.28,
+            'Mascot:expectation value': 0.0304092356671178,
+            'Mascot:score': 16.17
+          }
+        },
+        'numMissedCleavages': -1,
+        'massDiff': -1,
+        'rank': 1,
+        'totalNumIons': -1,
+        'chargeState': 2,
+        'isRejected': false
+      },
+      'proteinList': [
+        {
+          'proteinRef': {
+            'AC': 'ATS1_HUMAN',
+            'identifiers': [],
+            'source': 'SwissProt_2014_08.fasta'
+          },
+          'previousAA': 'R',
+          'nextAA': 'S',
+          'startPos': 801,
+          'endPos': 812,
+          'isDecoy': false
+        }
+      ]
+    },
+    {
+      'searchId': 'mascot:F002453',
+      'spectrumId': {
+        'id': '20150318_Petricevic_7371A.12478.12478.2',
+        'runId': 'mascot:F002453'
+      },
+      'pep': {
+        'sequence': 'YSGSSAALERIR',
+        'molMass': 1388.64494325,
+        'modificationNames': [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            'Phospho'
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      'matchInfo': {
+        'score': {
+          'mainScore': 10.61,
+          'scoreMap': {
+            'Mascot:delta score': 15.64,
+            'Mascot:expectation value': 0.109397023138399,
+            'Mascot:score': 10.61
+          }
+        },
+        'numMissedCleavages': -1,
+        'massDiff': -1,
+        'rank': 2,
+        'totalNumIons': -1,
+        'chargeState': 2,
+        'isRejected': false
+      },
+      'proteinList': [
+        {
+          'proteinRef': {
+            'AC': 'ATS1_HUMAN',
+            'identifiers': [],
+            'source': 'SwissProt_2014_08.fasta'
+          },
+          'previousAA': 'R',
+          'nextAA': 'S',
+          'startPos': 801,
+          'endPos': 812,
+          'isDecoy': false
+        }
+      ]
+    },
+    {
+      'searchId': 'mascot:F002453',
+      'spectrumId': {
+        'id': '20150318_Petricevic_7371A.12478.12478.2',
+        'runId': 'mascot:F002453'
+      },
+      'pep': {
+        'sequence': 'YSGSSAALERIR',
+        'molMass': 1388.64494325,
+        'modificationNames': [
+          [],
+          [],
+          [],
+          [],
+          [
+            'Phospho'
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      'matchInfo': {
+        'score': {
+          'mainScore': 10.61,
+          'scoreMap': {
+            'Mascot:delta score': 15.64,
+            'Mascot:expectation value': 0.109397023138399,
+            'Mascot:score': 10.61
+          }
+        },
+        'numMissedCleavages': -1,
+        'massDiff': -1,
+        'rank': 3,
+        'totalNumIons': -1,
+        'chargeState': 2,
+        'isRejected': false
+      },
+      'proteinList': [
+        {
+          'proteinRef': {
+            'AC': 'ATS1_HUMAN',
+            'identifiers': [],
+            'source': 'SwissProt_2014_08.fasta'
+          },
+          'previousAA': 'R',
+          'nextAA': 'S',
+          'startPos': 801,
+          'endPos': 812,
+          'isDecoy': false
+        }
+      ]
+    },
+    {
+      'searchId': 'mascot:F002453',
+      'spectrumId': {
+        'id': '20150318_Petricevic_7371A.12478.12478.2',
+        'runId': 'mascot:F002453'
+      },
+      'pep': {
+        'sequence': 'YSGSSAALERIR',
+        'molMass': 1388.64494325,
+        'modificationNames': [
+          [],
+          [
+            'Phospho'
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      'matchInfo': {
+        'score': {
+          'mainScore': 10.61,
+          'scoreMap': {
+            'Mascot:expectation value': 0.109397023138399,
+            'Mascot:score': 10.61
+          }
+        },
+        'numMissedCleavages': -1,
+        'massDiff': -1,
+        'rank': 4,
+        'totalNumIons': -1,
+        'chargeState': 2,
+        'isRejected': false
+      },
+      'proteinList': [
+        {
+          'proteinRef': {
+            'AC': 'ATS1_HUMAN',
+            'identifiers': [],
+            'source': 'SwissProt_2014_08.fasta'
+          },
+          'previousAA': 'R',
+          'nextAA': 'S',
+          'startPos': 801,
+          'endPos': 812,
           'isDecoy': false
         }
       ]

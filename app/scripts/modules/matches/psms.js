@@ -91,7 +91,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
 
     return new PSMService();
   })
-  .service('pvizCustomPsm', function (pviz) {
+  .service('pvizCustomPsm', function (_, pviz) {
     pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.4;
 
     pviz.FeatureDisplayer.setCustomHandler('psm', {
@@ -132,6 +132,71 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         d3selection.selectAll('circle')
           .attr('cx', function (ft) {
             return viewport.scales.x(ft.pos);
+          });
+        return d3selection;
+      }
+    });
+    pviz.FeatureDisplayer.setCustomHandler('psmIsoModif', {
+      appender: function (viewport, svgGroup, features, type) {
+        var sel = svgGroup.selectAll('g.feature.internal.data.' + type)
+          .data(features)
+          .enter()
+          .append('g')
+          .attr('class', 'feature internal data ' + type);
+        sel.append('line');
+
+
+        sel.selectAll('circle')
+          .data(function (psm) {
+            return _.filter(psm.modif, function (m) {
+              return m.isFix;
+            });
+          })
+          .enter()
+          .append('circle')
+          .attr({
+            r: 2,
+            class: function (m) {
+              return m.isTarget ? 'is-target' : '';
+            }
+          });
+        sel.selectAll('path')
+          .data(function (psm) {
+            return _.filter(psm.modif, function (m) {
+              return m.isVar;
+            });
+          })
+          .enter()
+          .append('g')
+          .attr('class', 'fixModif')
+          .append('path')
+          .attr({
+            d: 'M0,-3,L3,3,L-3,3L0,-3',
+            class: function (m) {
+              return m.isTarget ? 'is-target' : '';
+            }
+          });
+        return sel;
+      },
+      positioner: function (viewport, d3selection) {
+        d3selection.attr('transform', function (ft) {
+          return 'translate(0,' + 0.4 * viewport.scales.y(0.5 + ft.displayTrack) + ')';
+        });
+
+        d3selection.selectAll('line')
+          .attr('x1', function (ft) {
+            return viewport.scales.x(ft.start - 0.4) + 1;
+          })
+          .attr('x2', function (ft) {
+            return viewport.scales.x(ft.end + 0.4);
+          });
+        d3selection.selectAll('circle')
+          .attr('cx', function (ft) {
+            return viewport.scales.x(ft.pos);
+          });
+        d3selection.selectAll('g.fixModif')
+          .attr('transform', function (ft) {
+            return 'translate(' + viewport.scales.x(ft.pos) + ',0)';
           });
         return d3selection;
       }
@@ -233,6 +298,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
 
       seqEntry.addFeatures(_this.getFeaturesAATargetModif());
       seqEntry.addFeatures(_this.getFeaturesPSMs());
+      seqEntry.addFeatures(_this.getFeaturesPSMIsoModifs());
       seqEntry.addFeatures(_this.getFeaturesAAInfos());
       return _this;
     };
@@ -258,8 +324,8 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
               if (_.size(mods) === 0) {
                 return;
               }
-              var x = Math.max(0, i - 1);
-              x = Math.min(len - 1, x);
+              var x = Math.max(-0.3, i - 1);
+              x = Math.min(len - 0.7, x);
               modif.push({
                 pos: x + prot.startPos - 1,
                 modifNames: mods,
@@ -284,6 +350,66 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
       return fts;
     };
 
+    /**
+     * @ngdoc object
+     * @name matches.object:ProteinMatchesGlobalPvizView#getFeaturesPSMIsoModifs
+     * @methodOf matches.object:ProteinMatchesGlobalPvizView
+     * @description buid features for PSMIsoModif
+     * @return {Array} of PSMIsoModif
+     */
+    ProteinMatchesGlobalPvizView.prototype.getFeaturesPSMIsoModifs = function () {
+      var _this = this;
+
+      var tModif = _this.protMatch.getTargetModification();
+
+      var fts = _.chain(_this.protMatch.getMyPSMIsoModif())
+        .map(function (psmIso) {
+          return _.map(psmIso.getProteinList(), function (prot) {
+            var modif = [];
+            var len = prot.endPos - prot.startPos + 1;
+            var aaPos = function (i) {
+              var x = Math.max(-0.3, i);
+              x = Math.min(len - 0.7, x);
+              return x - 1;
+            };
+            _.each(psmIso.getFixModif(), function (modDetails, modifName) {
+              _.each(modDetails.pos, function (p) {
+                modif.push({
+                  pos: aaPos(p) + prot.startPos,
+                  modifName: modifName,
+                  text: modifName,
+                  isTarget: modifName === tModif,
+                  isFix: true
+                });
+              });
+            });
+            _.each(psmIso.getVarModif(), function (modDetails, modifName) {
+              _.each(modDetails.pos, function (p) {
+                modif.push({
+                  pos: aaPos(p) + prot.startPos,
+                  modifName: modifName,
+                  text: modifName,
+                  isTarget: modifName === tModif,
+                  isVar: true
+                });
+              });
+            });
+            return {
+              category: 'psmIsoModifs',
+              categoryName: '',
+              type: 'psmIsoModif',
+              start: prot.startPos - 1,
+              end: prot.endPos - 1,
+              data: psmIso,
+              modif: modif
+            };
+          });
+        })
+        .flatten()
+        .value();
+
+      return fts;
+    };
     /**
      * @ngdoc object
      * @name matches.object:ProteinMatchesGlobalPvizView#getFeaturesAAInfos
@@ -339,15 +465,13 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
  * @name matches.directive:matchesPsmPviz
  * @description pviz one protein among multiple searches
  */
-  .
-  directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView) {
+  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView) {
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
-        if (scope.detailedPSM === ft.data) {
-          return;
-        }
-        scope.detailedPSM = ft.data;
-        scope.$apply();
+        scope.$broadcast('show-match', {type: 'psm', bean: ft.data})
+      });
+      pviz.FeatureDisplayer.addMouseoverCallback(['psmIsoModif'], function (ft) {
+        scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data})
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         scope.$broadcast('psmAddSelected', ft.data);
@@ -394,15 +518,33 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
   })
 
 /**
+ * @ngdoc controller
+ * @name matches.controller:detailedMatchCtrl
+ * @description controller to handled the detailed item (moused over
+ * @param {Object} args a map containing
+ *  * type : (psm|psmIsoModif)
+ *  * bean: the object
+ */
+  .controller('detailedMatchCtrl', function ($scope) {
+    $scope.$on('show-match', function (undefined, args) {
+      delete $scope.psm;
+      delete $scope.psmIsoModif;
+
+
+      $scope[args.type] = args.bean;
+      $scope.$apply();
+
+    });
+  })
+/**
  * @ngdoc directive
  * @name matches.directive:matchesPsmOneLiner
  * @description psm super short summary
  */
-  .
-  directive('matchesPsmOneLiner', function () {
+  .directive('matchesOneLiner', function () {
     return {
       restrict: 'E',
-      templateUrl: 'views/matches/searches/matches-psm-one-liner.html'
+      templateUrl: 'views/matches/searches/matches-one-liner.html'
     };
   })
 ;

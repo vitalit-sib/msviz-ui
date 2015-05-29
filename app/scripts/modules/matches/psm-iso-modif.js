@@ -15,6 +15,7 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
       _this._psms = args.psms;
       _this._fixModif = args.fixModif;
       _this._varModif = args.varModif;
+      _this._description = args.description;
 
       return _this;
     };
@@ -54,6 +55,33 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
 
     /**
      * @ngdoc method
+     * @name matches.object:PSMIsoModif:getDescription()
+     * @methodOf matches.object:PSMIsoModif
+     * @description return the built in description
+     * @returns {String}
+     */
+    PSMIsoModif.prototype.getDescription = function () {
+      var _this = this;
+      if(_this._description === undefined){
+        var descr = _this._psms[0].pep.sequence + ' x' + _this.countPSM();
+        if (_.size(_this._fixModif)) {
+          descr += ' fixed:' + _.map(_this._fixModif, function (d, mod) {
+              return mod + '@(' + d.pos.join('/') + ')';
+            }).join(', ');
+        }
+        if (_.size(_this._varModif)) {
+          descr += ' variables:' + _.map(_this._varModif, function (d, mod) {
+              return mod + ' ' + d.count + '@(' + d.pos.join('/') + ')';
+            }).join(', ');
+        }
+        _this._description=descr;
+      }
+
+      return _this._description;
+    };
+
+    /**
+     * @ngdoc method
      * @name matches.object:PSMIsoModif:countPSM
      * @methodOf matches.object:PSMIsoModif
      * @description get the number of PSM used to build
@@ -65,13 +93,13 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
 
     /**
      * @ngdoc method
-     * @name matches.object:PSMIsoModif:getProteinRef
+     * @name matches.object:PSMIsoModif:proteinList
      * @methodOf matches.object:PSMIsoModif
-     * @description get the proteinRef (the first proteinRef of the first PSM, as they should all be equivalent)
+     * @description get the proteinList (the proteinList of the first PSM, as they should all be equivalent)
      * @returns {Number} nb PSM
      */
-    PSMIsoModif.prototype.getProteinRef = function () {
-      return this._psms[0].proteinList.proteinRef;
+    PSMIsoModif.prototype.getProteinList = function () {
+      return this._psms[0].proteinList;
     };
 
 
@@ -181,7 +209,7 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
       _.each(modPos, function (count, modif) {
         var av = [];
         var af = [];
-        var countVar=0;
+        var countVar = 0;
         _.each(count, function (c, i) {
           if (c === 0) {
             return;
@@ -197,10 +225,10 @@ angular.module('matches-psm-iso-modif', ['thirdparties'])
           fixModif[modif] = {pos: af};
         }
         if (_.size(av) > 0) {
-
           varModif[modif] = {pos: av, count: countVar / nbPsm};
         }
       });
+
 
       return new PSMIsoModif({
         psms: psms,
