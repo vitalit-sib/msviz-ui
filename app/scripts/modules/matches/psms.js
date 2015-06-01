@@ -465,7 +465,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
  * @name matches.directive:matchesPsmPviz
  * @description pviz one protein among multiple searches
  */
-  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtonifyService, spectrumService) {
+  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtones, fishtonifyService, spectrumService) {
 
     var addSelectedPSM = function(scope, pvizPsm){
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
@@ -489,7 +489,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data});
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
-        addSelectedPSM(scope, ft.data)
+        addSelectedPSM(scope, ft.data);
       });
       scope.$watch('proteinMatch', function (protMatch) {
         if (protMatch === undefined) {

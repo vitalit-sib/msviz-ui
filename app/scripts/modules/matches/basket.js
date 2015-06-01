@@ -1,6 +1,6 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _, fishtones, spectrumService, fishtonifyService, ssmService) {
+  .controller('MatchesBasketCtrl', function ($scope, $q, _, ssmService) {
     $scope.selectedItems = [];
 
     $scope.$on('basket-add', function (event, item) {
