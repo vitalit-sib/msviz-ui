@@ -465,7 +465,22 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
  * @name matches.directive:matchesPsmPviz
  * @description pviz one protein among multiple searches
  */
-  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView) {
+  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtonifyService, spectrumService) {
+
+    var addSelectedPSM = function(scope, pvizPsm){
+      pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
+
+
+      pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
+
+      spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
+        var sp = fishtonifyService.convertSpectrum(spectrum);
+        pvizPsm.fishTones.spectrum = sp;
+        scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});
+      });
+    };
+
+
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
         scope.$broadcast('show-match', {type: 'psm', bean: ft.data});
@@ -474,7 +489,7 @@ angular.module('matches-psms', ['thirdparties', 'environment', 'fishtones-wrappe
         scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data});
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
-        scope.$broadcast('psmAddSelected', ft.data);
+        addSelectedPSM(scope, ft.data)
       });
       scope.$watch('proteinMatch', function (protMatch) {
         if (protMatch === undefined) {

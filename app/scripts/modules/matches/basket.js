@@ -1,26 +1,17 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
   .controller('MatchesBasketCtrl', function ($scope, $q, _, fishtones, spectrumService, fishtonifyService, ssmService) {
-    $scope.$on('psmAddSelected', function (event, pvizPsm) {
-      $scope.addSelectedPSM(pvizPsm);
+    $scope.selectedItems = [];
+
+    $scope.$on('basket-add', function (event, item) {
+      $scope.addSelected(item);
     });
 
-    $scope.selectedMatches = [];
-    $scope.addSelectedPSM = function (pvizPsm) {
-      if (_.contains($scope.selectedMatches, pvizPsm)) {
+    $scope.addSelected = function (item) {
+      if (_.contains($scope.selectedItems, item)) {
         return;
       }
-      pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
-
-
-      pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
-
-      spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
-        var sp = fishtonifyService.convertSpectrum(spectrum);
-        pvizPsm.fishTones.spectrum = sp;
-        pvizPsm.type = 'PSM';
-        $scope.selectedMatches.push(pvizPsm);
-      });
+      $scope.selectedItems.push(item);
     };
 
     $scope.getSimSpectra = function (spectrumRef) {
@@ -30,13 +21,13 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
           ref: spectrumRef,
           matches: spspMatches
         };
-        $scope.selectedMatches.push(ssms);
+        $scope.selectedItems.push(ssms);
 
       });
     };
 
     $scope.removeSelectedPSM = function (psm) {
-      $scope.selectedMatches = _.filter($scope.selectedMatches, function (e) {
+      $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
         return e !== psm;
       });
     };
@@ -47,10 +38,10 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
  * @name matches.directive:matchesPsmListDetails
  * @description show the list of the selected peptides
  */
-  .directive('matchesBasket', function () {
+  .directive('matchesBasketDetailsAll', function () {
     return {
       restrict: 'E',
-      templateUrl: 'views/matches/searches/matches-basket.html'
+      templateUrl: 'views/matches/basket/detailed-all.html'
     };
   })
 
