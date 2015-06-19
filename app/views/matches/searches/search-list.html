@@ -1,0 +1,29 @@
+<h1>Searches</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>SearchId</th>
+      <th>Title</th>
+      <th>Database</th>
+      <th>Username</th>
+      <th>Enzyme</th>
+      <th>Parent Tolerance</th>
+      <th>Fragment Tolerance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="search in searches" ng-click="">
+      <td>{{search.searchId}}</td>
+      <td>{{search.title}}</td>
+      <td ng-repeat="elem in search.database"><pre>
+        ID: {{elem.id}}
+        Version: {{elem.version}}
+        Entries: {{elem.entries}}</pre></td>
+      <td>{{search.username}}</td>
+      <td>{{search.enzyme}}</td>
+      <td>{{search.parentTolerance}}</td>
+      <td>{{search.fragmentTolerance}}</td>
+    </tr>
+    </tbody>
+
+  </table>
