@@ -34,7 +34,7 @@ angular
         templateUrl: 'views/matches/searches/search-list.html',
         controller: 'SearchListCtrl'
       })
-      .when('/wewe', {
+      .when('/proteins/:searchId', {
         templateUrl: 'views/matches/searches/proteinsID-list.html',
         controller: 'ProteinIDsListCtrl'
       })

@@ -133,10 +133,5 @@ angular.module('matches-search', ['thirdparties', 'environment'])
       $scope.searches=data;
     })
 
-    $scope.displayProteins= function(searchId){
-      proteinMatchesRefService.list().then(function(data){
-        $scope.proteinIDs=data;
-      })
-    }
   })
 ;

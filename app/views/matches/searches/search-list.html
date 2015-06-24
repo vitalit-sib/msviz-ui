@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="search in searches" ng-click="displayProteins(search.searchID)">
-      <td>{{search.searchId}}</td>
+    <tr ng-repeat="search in searches">
+      <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
       <td ng-repeat="elem in search.database">
         {{elem.id}} <small>({{elem.version}}, {{elem.entries}} prot.)</small>
