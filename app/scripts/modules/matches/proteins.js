@@ -26,6 +26,12 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
     };
     return new ProteinMatchesRefService();
   })
+
+  .controller('ProteinIDsListCtrl', function($scope, proteinMatchesRefService){
+    proteinMatchesRefService.list().then(function(data){
+      $scope.proteinIDs=data;
+    })
+  })
 /**
  * @ngdoc object
  * @name proteinMatches.object:ProteinMatch

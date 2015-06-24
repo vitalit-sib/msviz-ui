@@ -127,4 +127,16 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     };
 
     return new SearchService();
-  });
+  })
+  .controller('SearchListCtrl', function($scope, searchService){
+    searchService.list().then(function(data){
+      $scope.searches=data;
+    })
+
+    $scope.displayProteins= function(searchId){
+      proteinMatchesRefService.list().then(function(data){
+        $scope.proteinIDs=data;
+      })
+    }
+  })
+;

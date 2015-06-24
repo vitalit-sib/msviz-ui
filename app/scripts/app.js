@@ -30,6 +30,14 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/searches', {
+        templateUrl: 'views/matches/searches/search-list.html',
+        controller: 'SearchListCtrl'
+      })
+      .when('/wewe', {
+        templateUrl: 'views/matches/searches/proteinsID-list.html',
+        controller: 'ProteinIDsListCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

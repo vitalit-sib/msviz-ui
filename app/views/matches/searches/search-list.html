@@ -12,13 +12,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="search in searches" ng-click="">
+    <tr ng-repeat="search in searches" ng-click="displayProteins(search.searchID)">
       <td>{{search.searchId}}</td>
       <td>{{search.title}}</td>
-      <td ng-repeat="elem in search.database"><pre>
-        ID: {{elem.id}}
-        Version: {{elem.version}}
-        Entries: {{elem.entries}}</pre></td>
+      <td ng-repeat="elem in search.database">
+        {{elem.id}} <small>({{elem.version}}, {{elem.entries}} prot.)</small>
+      </td>
       <td>{{search.username}}</td>
       <td>{{search.enzyme}}</td>
       <td>{{search.parentTolerance}}</td>

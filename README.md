@@ -4,7 +4,7 @@ msviz-ui
 msviz-ui, the all purpose visualization app for MSViz.
 
 ## Development
-Prerequisite: node
+Prerequisite: node and eventually `npm install -g bower` and `npm install -g grunt-cli`
 
     npm install
     bower install 
