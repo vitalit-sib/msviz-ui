@@ -2,6 +2,7 @@
   <table class="table table-striped">
     <thead>
     <tr>
+      <th>Select</th>
       <th>SearchId</th>
       <th>Title</th>
       <th>Database</th>
@@ -13,6 +14,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="search in searches">
+      <td><input type="checkbox" ng-model="checkboxModel.value1"></td>
       <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
       <td ng-repeat="elem in search.database">

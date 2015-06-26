@@ -22,7 +22,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
      * @returns {httpPromise} of an array of protein Id
      */
     ProteinMatchesRefService.prototype.findBySearchId = function (searchId) {
-      return httpProxy.get('/match/proteins/' + searchId);
+      return httpProxy.get('/match/protein-matches/' + searchId);
     };
     return new ProteinMatchesRefService();
   })
@@ -31,7 +31,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
     console.log('routeParams', $routeParams)
     $scope.searchId = $routeParams.searchId;
     proteinMatchesRefService.findBySearchId($scope.searchId).then(function(data){
-      $scope.proteinIDs=data;
+      $scope.proteins=data;
     })
   })
 /**

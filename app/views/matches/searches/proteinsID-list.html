@@ -4,12 +4,20 @@
   <tr>
     <th>AC</th>
     <th>Source</th>
+    <th>Score</th>
+    <th>Number of Sequences</th>
+    <th>Number of PSMs</th>
+    <th>Threshold</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="protein in proteinIDs">
-    <td>{{protein.AC}}</td>
-    <td>{{protein.source}}</td>
+  <tr ng-repeat="protein in proteins">
+    <td>{{protein.mainProt.proteinAC}}</td>
+    <td>{{protein.mainProt.source}}</td>
+    <td>{{protein.mainProt.score.mainScore}}</td>
+    <td>{{protein.mainProt.nrSequences}}</td>
+    <td>{{protein.mainProt.nrPsms}}</td>
+    <td>{{protein.mainProt.passThreshold}}</td>
   </tr>
   </tbody>
 
