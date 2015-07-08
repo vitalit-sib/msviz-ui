@@ -28,11 +28,10 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
   })
 
   .controller('ProteinIDsListCtrl', function($scope, $routeParams, proteinMatchesRefService){
-    console.log('routeParams', $routeParams)
     $scope.searchId = $routeParams.searchId;
     proteinMatchesRefService.findBySearchId($scope.searchId).then(function(data){
       $scope.proteins=data;
-    })
+    });
   })
 /**
  * @ngdoc object
