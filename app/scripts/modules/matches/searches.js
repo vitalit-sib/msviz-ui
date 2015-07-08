@@ -132,8 +132,8 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     searchService.list().then(function(data){
       $scope.searches=data;
     })
-    $scope.checkboxModel = {
-      value1 : false
+    $scope.changeValue = function() {
+      var value1 = element(by.binding('checkboxModel.value1'));
     };
 
   })

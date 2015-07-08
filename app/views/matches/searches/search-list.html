@@ -14,7 +14,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="search in searches">
-      <td><input type="checkbox" ng-model="checkboxModel.value1" ng-true-value="'Selected'" ng-false-value="'false"></td>
+      <td><input type="checkbox" ng-model="changeValue.value1" ng-true-value="'Selected'" ng-false-value="'false"></td>
       <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
       <td>
