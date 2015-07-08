@@ -131,9 +131,9 @@ angular.module('matches-search', ['thirdparties', 'environment'])
   .controller('SearchListCtrl', function($scope, searchService){
     searchService.list().then(function(data){
       $scope.searches=data;
-    })
-    $scope.checkboxModel = {
-      value1 : false
+    });
+    $scope.checkboxModel = function() {
+      var value1 = element(by.binding('checkboxModel.value1'));
     };
 
   })

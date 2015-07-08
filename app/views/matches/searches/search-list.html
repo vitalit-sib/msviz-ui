@@ -14,11 +14,11 @@
     </thead>
     <tbody>
     <tr ng-repeat="search in searches">
-      <td><input type="checkbox" ng-model="checkboxModel.value1"></td>
+      <td><input type="checkbox" ng-model="checkboxModel.value1" ng-true-value="'Selected'" ng-false-value="'false"></td>
       <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
-      <td ng-repeat="elem in search.database">
-        {{elem.id}} <small>({{elem.version}}, {{elem.entries}} prot.)</small>
+      <td>
+        <p ng-repeat="elem in search.database">{{elem.id}}<small>({{elem.version}}, {{elem.entries}} prot.)</small></p>
       </td>
       <td>{{search.username}}</td>
       <td>{{search.enzyme}}</td>
@@ -28,3 +28,6 @@
     </tbody>
 
   </table>
+
+<button class="btn btn-default" type="submit">Compare</button>
+
