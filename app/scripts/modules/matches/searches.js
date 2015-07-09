@@ -134,18 +134,22 @@ angular.module('matches-search', ['thirdparties', 'environment'])
       $scope.searches=data;
     });
 
-    $scope.values = [
-      'true',
-      'false'
-    ];
-    $scope.setTrue = {
-      values: ['true']
+    $scope.ids= [];
+    $scope.selectedIds = [];
+
+    $scope.addId = function($index){
+      $scope.ids.push($index);
     };
-    $scope.checkAll = function() {
-      $scope.setTrue.values = angular.copy($scope.setTrue);
+    $scope.updateId= function($index){
+      var i=$scope.selectedIds.indexOf($index);
+      if(i> -1){
+        $scope.selectedIds.splice(i,1)
+      }
+      else{
+        $scope.selectedIds.push($index)
+      }
+      console.log($scope.selectedIds);
     };
-    $scope.uncheckAll = function() {
-      $scope.setTrue.values = [];
-    };
-  });
+
+});
 
