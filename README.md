@@ -9,6 +9,10 @@ Prerequisite: node and eventually `npm install -g bower` and `npm install -g gru
     npm install
     bower install 
     
+Launch unit tests:
+
+    grunt test-unit-junit
+    
 Launch the web app with auto reloading:
 
     grunt serve
