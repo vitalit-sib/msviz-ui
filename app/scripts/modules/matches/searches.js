@@ -128,13 +128,24 @@ angular.module('matches-search', ['thirdparties', 'environment'])
 
     return new SearchService();
   })
+
   .controller('SearchListCtrl', function($scope, searchService){
     searchService.list().then(function(data){
       $scope.searches=data;
-    })
-    $scope.changeValue = function() {
-      var value1 = element(by.binding('checkboxModel.value1'));
-    };
+    });
 
-  })
-;
+    $scope.values = [
+      'true',
+      'false'
+    ];
+    $scope.setTrue = {
+      values: ['true']
+    };
+    $scope.checkAll = function() {
+      $scope.setTrue.values = angular.copy($scope.setTrue);
+    };
+    $scope.uncheckAll = function() {
+      $scope.setTrue.values = [];
+    };
+  });
+
