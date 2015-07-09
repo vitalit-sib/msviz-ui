@@ -6,6 +6,8 @@ angular.module('sequences', ['thirdparties', 'environment'])
  * Access sequence definition (from AC/source to sequence)
  *
  */.service('sequenceService', function (httpProxy) {
+    'use strict';
+
     var SequenceService = function () {
       var _this = this;
       return _this;
