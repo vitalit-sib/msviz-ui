@@ -143,13 +143,36 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     $scope.updateId= function($index){
       var i=$scope.selectedIds.indexOf($index);
       if(i> -1){
-        $scope.selectedIds.splice(i,1)
+        $scope.selectedIds.splice(i,1);
       }
       else{
-        $scope.selectedIds.push($index)
+        $scope.selectedIds.push($index);
       }
       console.log($scope.selectedIds);
     };
+
+    $scope.getSearchIds = function(){
+      var setSearchIds = {};
+      //obtain search object
+      $scope.selectedIds.forEach(function(entry) {
+        var s= $scope.searches[entry];
+        //extract serachId and add it to the set
+        setSearchIds[s.searchId]= s.searchId;
+      });
+      console.log('Set of searchIds=');
+      console.log(setSearchIds);
+
+    };
+    $scope.checkAll = function () {
+
+      $scope.ids.forEach(function (item) {
+        //set true
+        $scope.ids[item].checked = true ;
+        //add to selected
+        $scope.selectedIds.push(item);
+      });
+    };
+
 
 });
 

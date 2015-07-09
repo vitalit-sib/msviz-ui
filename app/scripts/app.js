@@ -38,6 +38,10 @@ angular
         templateUrl: 'views/matches/searches/proteinsID-list.html',
         controller: 'ProteinIDsListCtrl'
       })
+      .when('/compare/:searchIds', {
+        templateUrl: 'views/matches/searches/multiSearchProteins-list.html',
+        controller: 'ProteinIDsListCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
