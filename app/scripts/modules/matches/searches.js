@@ -136,6 +136,7 @@ angular.module('matches-search', ['thirdparties', 'environment'])
 
     $scope.ids= [];
     $scope.selectedIds = [];
+    $scope.searchIds='';
 
     $scope.addId = function($index){
       $scope.ids.push($index);
@@ -152,15 +153,22 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     };
 
     $scope.getSearchIds = function(){
-      var setSearchIds = {};
       //obtain search object
       $scope.selectedIds.forEach(function(entry) {
         var s= $scope.searches[entry];
         //extract serachId and add it to the set
-        setSearchIds[s.searchId]= s.searchId;
+        if ($scope.searchIds===''){
+          $scope.searchIds=$scope.searchIds.concat(s.searchId);
+        }
+        else{
+          $scope.searchIds=$scope.searchIds.concat(',').concat(s.searchId);
+        }
+
       });
-      console.log('Set of searchIds=');
-      console.log(setSearchIds);
+      console.log('String of searchIds=');
+      console.log($scope.searchIds);
+      //call multiSearchProt.js service
+
 
     };
     $scope.checkAll = function () {

@@ -40,7 +40,7 @@ angular
       })
       .when('/compare/:searchIds', {
         templateUrl: 'views/matches/searches/multiSearchProteins-list.html',
-        controller: 'ProteinIDsListCtrl'
+        controller: 'MultiSearchListCtrl'
       })
       .otherwise({
         redirectTo: '/'
