@@ -1,16 +1,15 @@
 <h1>Multi Searches Proteins</h1>
-  {{proteins.getACs()}}
 <table class="table table-striped">
   <thead>
   <tr>
     <th>AC</th>
-    <th>SearchIds</th>
-    <th>Score</th>
-    <th>Number of Sequences</th>
-    <th>Number of PSMs</th>
+    <th ng-repeat="searchId in searchIds.split(',')">{{searchId}}</th>
   </tr>
   </thead>
   <tbody>
-
+   <tr ng-repeat="protAC in proteins.getACs()">
+    <th>{{protAC}}</th>
+     <th ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(','))">{{protIdent.mainProt.score.mainScore}}</th>
+   </tr>
   </tbody>
 </table>
