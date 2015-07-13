@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-search', ['thirdparties', 'environment'])
+angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
 /**
  * @ngdoc service

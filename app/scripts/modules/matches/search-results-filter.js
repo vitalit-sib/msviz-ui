@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 angular.module('matches-search-results-filter', ['thirdparties', 'matches-search'])
 /**
  * @ngdoc object

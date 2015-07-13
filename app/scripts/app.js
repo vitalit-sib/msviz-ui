@@ -20,6 +20,7 @@ angular
     'matches-proteins',
     'matches-search',
     'matches-search-results-filter',
+    'multi-matches-search',
     'ssm',
     'sequences',
     'experimental'
