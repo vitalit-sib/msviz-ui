@@ -3,7 +3,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
 /**
  * @ngdoc service
- * @name matches.service:searchService
+ * @name multi-matches.service:multiSearchService
  * @description
  * Access to Searches
  *
@@ -15,8 +15,8 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
     /**
      * @ngdoc method
-     * @name matches.service:multiSearchService#findAllSearchIds
-     * @methodOf matches.service:multiSearchService
+     * @name multi-matches.service:multiSearchService#findByMultiSearchId
+     * @methodOf multi-matches.service:multiSearchService
      * @description get the list of all proteins by searchIds
      * @returns {httpPromise} of an array of maps[SearchId,ProteinIdent]
      */
