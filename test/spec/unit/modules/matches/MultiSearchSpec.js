@@ -33,6 +33,15 @@ describe('setup MultiProteinMatch', function () {
         expect(pm.getACs()).not.toBeUndefined();
         expect(pm.getACs()[0]).toEqual('SAHH_MOUSE');
       });
+
+      it('getProteinIdents()', function () {
+        var pm = new MultiProteinMatch(mockMultiProtMatch);
+        expect(pm.getProteinIdents('SAHH_MOUSE', ['mascot:F001303', 'dummy'])).not.toBeUndefined();
+        expect(pm.getProteinIdents('SAHH_MOUSE', ['mascot:F001303', 'dummy']).length).toEqual(2);
+        expect(pm.getProteinIdents('SAHH_MOUSE', ['mascot:F001303', 'dummy'])[0].searchId).toEqual('mascot:F001303');
+        expect(pm.getProteinIdents('SAHH_MOUSE', ['mascot:F001303', 'dummy'])[1]).toEqual(null);
+      });
+
     });
 
   });

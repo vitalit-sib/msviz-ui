@@ -27,10 +27,10 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
     return new MultiSearchService();
   })
 
-  .controller('MultiSearchListCtrl', function($scope,$routeParams, multiSearchService) {
+  .controller('MultiSearchListCtrl', function($scope,$routeParams, multiSearchService, MultiProteinMatch) {
     $scope.searchIds = $routeParams.searchIds;
     multiSearchService.findByMultiSearchId($scope.searchIds).then(function (data) {
-      $scope.proteins = data;
+      $scope.proteins = new MultiProteinMatch(data);
     });
   })
 
@@ -43,8 +43,8 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
  */
   .factory('MultiProteinMatch', function () {
     var MultiProteinMatch = function (mpm) {
-      var _this = this;
-      _this._data = mpm;
+      var _this= this;
+      _this._multiProteinMatch = mpm;
 
       return _this;
     };
@@ -57,10 +57,31 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
      * @return {Array} list of ProteinACs
      */
     MultiProteinMatch.prototype.getACs = function () {
-      var _this = this;
-      var _keys = Object.keys(_this._data);
-      return _keys;
+      return Object.keys(this._multiProteinMatch);
     };
+
+    /**
+     * @ngdoc method
+     * @name multi-matches.object:MultiProteinMatch:getProteinIdents
+     * @methodOf multi-matches.object:MultiProteinMatch
+     * @description get proteinIdents for a given AC and a list of SearchIds
+     * @return {Array} list of ProteinIdents
+     */
+    MultiProteinMatch.prototype.getProteinIdents = function (proteinAC, searchIds) {
+      var searchProtIdents = this._multiProteinMatch[proteinAC];
+      var protIdents = [];
+
+      searchIds.forEach(function(searchId){
+        if(searchProtIdents[searchId]){
+          protIdents.push(searchProtIdents[searchId]);
+        }else{
+          protIdents.push(null);
+        }
+      });
+
+      return protIdents;
+    };
+
 
     return MultiProteinMatch;
   })
