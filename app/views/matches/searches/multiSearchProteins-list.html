@@ -9,7 +9,7 @@
   <tbody>
    <tr ng-repeat="protAC in proteins.getACs()">
     <td>{{protAC}}</td>
-     <td ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(','))">{{protIdent.mainProt.score.mainScore}}</td>
+     <td ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(',')) track by $index">{{protIdent.mainProt.score.mainScore}}</td>
    </tr>
   </tbody>
 </table>
