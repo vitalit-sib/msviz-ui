@@ -3,13 +3,15 @@
   <thead>
   <tr>
     <th>AC</th>
-    <th ng-repeat="searchId in searchIds.split(',')">{{searchId}}</th>
+    <th ng-repeat="searchId in searchIds">{{searchId}}</th>
   </tr>
   </thead>
   <tbody>
    <tr ng-repeat="protAC in proteins.getACs()">
     <td>{{protAC}}</td>
-     <td ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(',')) track by $index">{{protIdent.mainProt.score.mainScore}}</td>
+     <td ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds) track by $index">
+       <div sib-multi-search-cell></div>
+     </td>
    </tr>
   </tbody>
 </table>

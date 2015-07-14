@@ -42,6 +42,15 @@ describe('setup MultiProteinMatch', function () {
         expect(pm.getProteinIdents('SAHH_MOUSE', ['mascot:F001303', 'dummy'])[1]).toEqual(null);
       });
 
+      it('getBackgroundColor()', function () {
+        var pm = new MultiProteinMatch(mockMultiProtMatch);
+        expect(pm.getBackgroundColor()).not.toBeUndefined();
+        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE['mascot:F001303'])).toEqual('a1d38d'); // score: max
+        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE.nonExistent)).toEqual('FFFFFF'); // score: non-existant
+        expect(pm.getBackgroundColor(mockMultiProtMatch.ACPM_MOUSE['mascot:F001303'])).toEqual('fdfefc'); // score: 30.07
+        expect(pm.getBackgroundColor(mockMultiProtMatch.ST1A1_MOUSE['mascot:F001303'])).toEqual('dff0d8'); // score: 350.67
+      });
+
     });
 
   });
@@ -54,7 +63,7 @@ var mockMultiProtMatch = {
         'proteinAC': 'SAHH_MOUSE',
         'source': 'SDB_SwissProt_ID',
         'score': {
-          'mainScore': 922.527586206896,
+          'mainScore': 1922.527586206896,
           'scoreMap': {}
         },
         'nrSequences': 23,
