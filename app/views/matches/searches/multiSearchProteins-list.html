@@ -8,8 +8,8 @@
   </thead>
   <tbody>
    <tr ng-repeat="protAC in proteins.getACs()">
-    <th>{{protAC}}</th>
-     <th ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(','))">{{protIdent.mainProt.score.mainScore}}</th>
+    <td>{{protAC}}</td>
+     <td ng-repeat="protIdent in proteins.getProteinIdents(protAC, searchIds.split(','))">{{protIdent.mainProt.score.mainScore}}</td>
    </tr>
   </tbody>
 </table>
