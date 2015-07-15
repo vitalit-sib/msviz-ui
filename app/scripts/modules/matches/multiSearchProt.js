@@ -120,7 +120,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
      * @name multi-matches.object:MultiProteinMatch:getBackgroundColor
      * @methodOf multi-matches.object:MultiProteinMatch
      * @description get background color according to Mascot score
-     * @return color
+     * @return {string} color in hex format (without leading #)
      */
     MultiProteinMatch.prototype.getBackgroundColor = function (proteinIdent) {
       // put maximum color from this score on
