@@ -129,7 +129,7 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     return new SearchService();
   })
 
-  .controller('SearchListCtrl', function($scope, searchService){
+  .controller('SearchListCtrl', function($scope, searchService,$location){
     searchService.list().then(function(data){
       $scope.searches=data;
     });
@@ -149,7 +149,6 @@ angular.module('matches-search', ['thirdparties', 'environment'])
       else{
         $scope.selectedIds.push($index);
       }
-      console.log($scope.selectedIds);
     };
 
     $scope.getSearchIds = function(){
@@ -165,9 +164,8 @@ angular.module('matches-search', ['thirdparties', 'environment'])
         }
 
       });
-      console.log('String of searchIds=');
-      console.log($scope.searchIds);
-      //call multiSearchProt.js service
+      var comparePath= "compare/".concat($scope.searchIds)
+      $location.path(comparePath)
 
 
     };
