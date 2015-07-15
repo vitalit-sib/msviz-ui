@@ -28,10 +28,11 @@ describe('setup MultiProteinMatch', function () {
         expect(MultiProteinMatch).not.toBeUndefined();
       });
 
-      it('getACs()', function () {
+      it('getACandScores()', function () {
         var pm = new MultiProteinMatch(mockMultiProtMatch);
-        expect(pm.getACs()).not.toBeUndefined();
-        expect(pm.getACs()[0]).toEqual('SAHH_MOUSE');
+        expect(pm.getACandScores(['mascot:F001303', 'dummy'])).not.toBeUndefined();
+        expect(pm.getACandScores(['mascot:F001303', 'dummy'])[0]).toEqual({ ac: 'SAHH_MOUSE', score: 1922.527586206896 });
+        expect(pm.getACandScores(['mascot:F001303', 'mascot:F001304'])[2]).toEqual({ ac: 'ST1A1_MOUSE', score: 650.5046153846149 });
       });
 
       it('getProteinIdents()', function () {

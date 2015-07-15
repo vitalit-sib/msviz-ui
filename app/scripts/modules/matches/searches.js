@@ -164,8 +164,8 @@ angular.module('matches-search', ['thirdparties', 'environment'])
         }
 
       });
-      var comparePath= "compare/".concat($scope.searchIds)
-      $location.path(comparePath)
+      var comparePath= 'compare/'.concat($scope.searchIds);
+      $location.path(comparePath);
 
 
     };
