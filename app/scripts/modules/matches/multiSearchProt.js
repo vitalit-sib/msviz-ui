@@ -1,6 +1,7 @@
 'use strict';
 angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
+
 /**
  * @ngdoc service
  * @name multi-matches.service:multiSearchService
