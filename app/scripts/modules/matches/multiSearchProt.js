@@ -63,7 +63,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
      * @description the list Protein ACs
      * @return {Array} list of ProteinACs
      */
-    MultiProteinMatch.prototype.getACandScores = function (searchIds) {
+    MultiProteinMatch.prototype.getACandScores = _.memoize(function (searchIds) {
       var self = this;
       var acs = Object.keys(self._multiProteinMatch);
 
@@ -76,6 +76,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
         protIdents.forEach(function(oneProtIdent){
           if(oneProtIdent){
             scoreSum += oneProtIdent.mainProt.score.mainScore;
+            //scoreSum += oneProtIdent.mainProt.nrPsms;
           }
         });
 
@@ -89,7 +90,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
       return acAndScore;
 
-    };
+    });
 
     /**
      * @ngdoc method
