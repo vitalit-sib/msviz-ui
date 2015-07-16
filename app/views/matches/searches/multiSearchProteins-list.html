@@ -1,16 +1,16 @@
-<h1>Multi Searches Proteins</h1>
-<table class="table table-striped">
+<h1>Compare searches</h1>
+<table class="table">
   <thead>
   <tr>
     <th>AC</th>
-    <th ng-repeat="searchId in searchIds">{{searchId}}</th>
+    <th class="text-center" ng-repeat="searchId in searchIds">{{searchId}}</th>
   </tr>
   </thead>
   <tbody>
    <tr ng-repeat="prot in proteins.getACandScores(searchIds) | orderBy:'-score' track by $index">
     <td>{{prot.ac}}</td>
-     <td ng-repeat="protIdent in proteins.getProteinIdents(prot.ac, searchIds) track by $index">
-       <div sib-multi-search-cell></div>
+     <td ng-repeat="protIdent in proteins.getProteinIdents(prot.ac, searchIds) track by $index" style="{{proteins.getBackgroundColor(protIdent)}}">
+        <div sib-multi-search-cell></div>
      </td>
    </tr>
   </tbody>

@@ -53,6 +53,30 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
       var _this= this;
       _this._multiProteinMatch = mpm;
 
+      var maxScore = 0;
+
+      // compute max score
+      var acs = Object.keys(mpm);
+      acs.forEach(function(ac){
+        var searchIds = Object.keys(mpm[ac]);
+
+        searchIds.forEach(function(searchId){
+          var currentScore = mpm[ac][searchId].mainProt.score.mainScore;
+          if(currentScore > maxScore){
+            maxScore = currentScore;
+          }
+        });
+      });
+
+      maxScore = Math.sqrt(maxScore);
+
+      // compute rgb factors
+      _this._colFactorR = (255 - 0xA1)/maxScore;
+      _this._colFactorG = (255 - 0xD3)/maxScore;
+      _this._colFactorB = (255 - 0x8D)/maxScore;
+
+      _this._maxScore = maxScore;
+
       return _this;
     };
 
@@ -123,33 +147,28 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
      * @return {string} color in hex format (without leading #)
      */
     MultiProteinMatch.prototype.getBackgroundColor = function (proteinIdent) {
-      // put maximum color from this score on
-      var maxScore =1000;
-      var maxColor = 0xA1D38D;
+      var _this = this;
 
       // default color is white
       var bgCol = 'FFFFFF';
 
       if(proteinIdent){
-        var newColor = maxColor;
-        var score = proteinIdent.mainProt.score.mainScore;
+        var score = Math.sqrt(proteinIdent.mainProt.score.mainScore);
 
-        /*jslint bitwise: true */
-        if(score < maxScore){
-          var r = 255 - Math.floor(0.094 * score);
-          var g = 255 - Math.floor(0.044 * score);
-          var b = 255 - Math.floor(0.114 * score);
+        var r = 255 - Math.floor(_this._colFactorR * score);
+        var g = 255 - Math.floor(_this._colFactorG * score);
+        var b = 255 - Math.floor(_this._colFactorB * score);
 
-          newColor = r*0x10000 + g*0x100 + b;
-        }
-        /*jslint bitwise: false */
+        var newColor = r*0x10000 + g*0x100 + b;
+
 
         bgCol = newColor.toString(16);
+      }else{
+        // missing color is red
+        bgCol = 'F2DEDE';
       }
-      return bgCol;
+      return 'background-color:#' + bgCol.toUpperCase();
     };
-
-
 
     return MultiProteinMatch;
   })

@@ -26,6 +26,10 @@ describe('setup MultiProteinMatch', function () {
     describe('constructor', function () {
       it('class', function () {
         expect(MultiProteinMatch).not.toBeUndefined();
+        var pm = new MultiProteinMatch(mockMultiProtMatch);
+        expect(pm._colFactorR).toEqual(2.143836019980287);
+        expect(pm._colFactorG).toEqual(1.0034977114801344);
+        expect(pm._colFactorB).toEqual(2.599971343380348);
       });
 
       it('getACandScores()', function () {
@@ -46,10 +50,10 @@ describe('setup MultiProteinMatch', function () {
       it('getBackgroundColor()', function () {
         var pm = new MultiProteinMatch(mockMultiProtMatch);
         expect(pm.getBackgroundColor()).not.toBeUndefined();
-        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE['mascot:F001303'])).toEqual('a1d38d'); // score: max
-        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE.nonExistent)).toEqual('FFFFFF'); // score: non-existant
-        expect(pm.getBackgroundColor(mockMultiProtMatch.ACPM_MOUSE['mascot:F001303'])).toEqual('fdfefc'); // score: 30.07
-        expect(pm.getBackgroundColor(mockMultiProtMatch.ST1A1_MOUSE['mascot:F001303'])).toEqual('dff0d8'); // score: 350.67
+        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE['mascot:F001303'])).toEqual('background-color:#A2D38D'); // score: max
+        expect(pm.getBackgroundColor(mockMultiProtMatch.SAHH_MOUSE.nonExistent)).toEqual('background-color:#F2DEDE'); // score: non-existant
+        expect(pm.getBackgroundColor(mockMultiProtMatch.ACPM_MOUSE['mascot:F001303'])).toEqual('background-color:#F4FAF1'); // score: 30.07
+        expect(pm.getBackgroundColor(mockMultiProtMatch.ST1A1_MOUSE['mascot:F001303'])).toEqual('background-color:#D7EDCF'); // score: 350.67
       });
 
     });
