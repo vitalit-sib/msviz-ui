@@ -1,7 +1,9 @@
-<p class="text-center" data-toggle="tooltip" data-placement="top" title="Score" onmouseenter="$(this).tooltip()">{{protIdent.mainProt.score.mainScore.toFixed(2)}}</p>
-<p class="text-center" data-toggle="tooltip" data-placement="top" title="# PSMs" onmouseenter="$(this).tooltip()">{{protIdent.mainProt.nrPsms}}</p>
-<p class="text-center" data-toggle="tooltip" data-placement="top" title="# Sequences" onmouseenter="$(this).tooltip()">{{protIdent.mainProt.nrSequences}}</p>
-<!-- change style="background-color=XXX" -->
+<div class="row">
+  <div class="col-md-4 text-center" >{{protIdent.mainProt.score.mainScore.toFixed(2)}}</div>
+  <div  class="col-md-4 text-center" >{{protIdent.mainProt.nrPsms}}</div>
+  <div  class="col-md-4 text-center" >{{protIdent.mainProt.nrSequences}}</div>
+</div>
+
 
 
 

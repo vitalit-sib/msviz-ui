@@ -1,9 +1,19 @@
 <h1>Compare searches</h1>
-<table class="table">
+<table class="table table-bordered">
   <thead>
   <tr>
-    <th>AC</th>
+    <th></th>
     <th class="text-center" ng-repeat="searchId in searchIds">{{searchId}}</th>
+  </tr>
+  <tr>
+    <th>AC</th>
+    <th class="text-center" ng-repeat="searchId in searchIds">
+      <div class="row">
+        <div class="col-md-4 text-center"><strong>Score</strong></div>
+        <div class="col-md-4 text-center"><strong># PSMs</strong></div>
+        <div class="col-md-4 text-center"><strong># Sequences</strong></div>
+      </div>
+    </th>
   </tr>
   </thead>
   <tbody>
