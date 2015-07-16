@@ -70,7 +70,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
       maxScore = Math.sqrt(maxScore);
 
-      // compute rgb factors
+      // compute rgb factors (based on #A1D38D as darkest color)
       _this._colFactorR = (255 - 0xA1)/maxScore;
       _this._colFactorG = (255 - 0xD3)/maxScore;
       _this._colFactorB = (255 - 0x8D)/maxScore;
