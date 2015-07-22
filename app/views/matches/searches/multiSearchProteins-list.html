@@ -1,10 +1,7 @@
 <h1>Compare searches</h1>
+<p class="text-left" ng-repeat="searchId in searchIds">{{searchId}}</p>
 <table class="table table-bordered">
   <thead>
-  <tr>
-    <th></th>
-    <th class="text-center" ng-repeat="searchId in searchIds">{{searchId}}</th>
-  </tr>
   <tr>
     <th>AC</th>
     <th class="text-center" ng-repeat="searchId in searchIds">
@@ -18,8 +15,8 @@
   </thead>
   <tbody>
    <tr ng-repeat="prot in proteins.getACandScores(searchIds) | orderBy:'-score' track by $index">
-    <td>{{prot.ac}}<a href="/#/"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
-     <td ng-repeat="protIdent in proteins.getProteinIdents(prot.ac,searchIds) track by $index" style="{{proteins.getBackgroundColor(protIdent)}}">
+    <td>{{prot.ac}}   <a href="/#/"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
+     <td ng-repeat="protIdent in proteins.getProteinIdents(prot.ac,searchIds) track by $index">
         <div sib-multi-search-cell></div>
      </td>
    </tr>
