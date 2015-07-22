@@ -35,12 +35,6 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
     });
   })
 
-  .directive('sibMultiSearchCell', function() {
-    return {
-      templateUrl: 'views/matches/searches/multiSearchProteins-cell.html'
-    };
-  })
-
 /**
  * @ngdoc object
  * @name multi-matches.object:MultiProteinMatch
@@ -119,26 +113,31 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
     /**
      * @ngdoc method
-     * @name multi-matches.object:MultiProteinMatch:getProteinIdents
+     * @name multi-matches.object:MultiProteinMatch:getProteinInfoValues
      * @methodOf multi-matches.object:MultiProteinMatch
-     * @description get proteinIdents for a given AC and a list of SearchIds
-     * @return {Array} list of ProteinIdents
+     * @description get proteinInfoVal for a given AC and a list of SearchIds
+     * @return {Array} list of Scores,PSMs,Sequences
      */
-    MultiProteinMatch.prototype.getProteinIdents = function (proteinAC, searchIds) {
+    MultiProteinMatch.prototype.getProteinInfoValues = function (proteinAC, searchIds) {
       var searchProtIdents = this._multiProteinMatch[proteinAC];
-      var protIdents = [];
+      var scores = [];
+      var psms = [];
+      var sequences = [];
 
       searchIds.forEach(function(searchId){
         if(searchProtIdents[searchId]){
-          protIdents.push(searchProtIdents[searchId]);
+          scores.push(searchProtIdents[searchId].mainProt.score.mainScore.toFixed(2));
+          psms.push(searchProtIdents[searchId].mainProt.nrPsms);
+          sequences.push(searchProtIdents[searchId].mainProt.nrSequences);
         }else{
-          protIdents.push(null);
+          scores.push(null);
+          psms.push(null);
+          sequences.push(null);
         }
       });
 
-      return protIdents;
+      return scores.concat(psms,sequences);
     };
-
     /**
      * @ngdoc method
      * @name multi-matches.object:MultiProteinMatch:getBackgroundColor

@@ -1,23 +1,21 @@
 <h1>Compare searches</h1>
-<p class="text-left" ng-repeat="searchId in searchIds">{{searchId}}</p>
+<p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong></p>
 <table class="table table-bordered">
   <thead>
   <tr>
     <th>AC</th>
-    <th class="text-center" ng-repeat="searchId in searchIds">
-      <div class="row">
-        <div class="col-md-4 text-center"><strong>Score</strong></div>
-        <div class="col-md-4 text-center"><strong># PSMs</strong></div>
-        <div class="col-md-4 text-center"><strong># Sequences</strong></div>
-      </div>
-    </th>
+    <th ng-repeat="searchId in searchIds">Score {{$index}}</th>
+    <th ng-repeat="searchId in searchIds"># PSMs {{$index}}</th>
+    <th ng-repeat="searchId in searchIds"># Seqs {{$index}}</th>
+
+
   </tr>
   </thead>
   <tbody>
    <tr ng-repeat="prot in proteins.getACandScores(searchIds) | orderBy:'-score' track by $index">
     <td>{{prot.ac}}   <a href="/#/"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
-     <td ng-repeat="protIdent in proteins.getProteinIdents(prot.ac,searchIds) track by $index">
-        <div sib-multi-search-cell></div>
+     <td ng-repeat="values in proteins.getProteinInfoValues(prot.ac,searchIds) track by $index">
+       {{values}}
      </td>
    </tr>
   </tbody>
