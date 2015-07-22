@@ -113,6 +113,28 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
     /**
      * @ngdoc method
+     * @name multi-matches.object:MultiProteinMatch:getProteinIdents
+     * @methodOf multi-matches.object:MultiProteinMatch
+     * @description get proteinIdents for a given AC and a list of SearchIds
+     * @return {Array} list of ProteinIdents
+     */
+    MultiProteinMatch.prototype.getProteinIdents = function (proteinAC, searchIds) {
+      var searchProtIdents = this._multiProteinMatch[proteinAC];
+      var protIdents = [];
+
+      searchIds.forEach(function(searchId){
+        if(searchProtIdents[searchId]){
+          protIdents.push(searchProtIdents[searchId]);
+        }else{
+          protIdents.push(null);
+        }
+      });
+
+      return protIdents;
+    };
+
+    /**
+     * @ngdoc method
      * @name multi-matches.object:MultiProteinMatch:getProteinInfoValues
      * @methodOf multi-matches.object:MultiProteinMatch
      * @description get proteinInfoVal for a given AC and a list of SearchIds
@@ -135,7 +157,6 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
           sequences.push(null);
         }
       });
-
       return scores.concat(psms,sequences);
     };
     /**
