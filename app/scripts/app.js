@@ -20,7 +20,9 @@ angular
     'matches-proteins',
     'matches-search',
     'matches-search-results-filter',
+    'matches-modif-filter',
     'multi-matches-search',
+    'psms-alignment',
     'ssm',
     'sequences',
     'experimental'
@@ -42,6 +44,10 @@ angular
       .when('/compare/:searchIds', {
         templateUrl: 'views/matches/searches/multiSearchProteins-list.html',
         controller: 'MultiSearchListCtrl'
+      })
+     .when('/compare/:searchIds/protein/:proteinAC', {
+        templateUrl: 'views/matches/searches/psms-alignment.html',
+        controller: 'PsmsAlignmentCtrl'
       })
       .otherwise({
         redirectTo: '/'

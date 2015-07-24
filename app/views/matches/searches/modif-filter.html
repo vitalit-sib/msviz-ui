@@ -1,0 +1,16 @@
+<div class="row">
+    <form class="modif-filter">
+      <label ng-show="filter._availableModifications">Modification ({{filter._availableModifications.length}})</label>
+      <ui-select ng-model="_tmpSelectedModification"
+                 theme="bootstrap"
+                 on-select="filter.setSelectedModification($item.value)"
+                 style="width:200px"
+        >
+        <ui-select-match placeholder="any">
+          {{$select.selected.name}}</small></ui-select-match>
+        <ui-select-choices repeat="modif in filter._availableModifications">
+          <span>{{modif.name}}</span><span ng-if="modif.count"> ({{modif.count}})</span>
+        </ui-select-choices>
+      </ui-select>
+    </form>
+</div>

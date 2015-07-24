@@ -1,5 +1,6 @@
 <h1>Compare searches</h1>
 <p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong></p>
+
 <table class="table table-bordered">
   <thead>
   <tr>
@@ -7,8 +8,6 @@
     <th ng-repeat="searchId in searchIds">Score {{$index}}</th>
     <th ng-repeat="searchId in searchIds"># PSMs {{$index}}</th>
     <th ng-repeat="searchId in searchIds"># Seqs {{$index}}</th>
-
-
   </tr>
   </thead>
   <tbody>
