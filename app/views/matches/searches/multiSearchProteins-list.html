@@ -12,7 +12,7 @@
   </thead>
   <tbody>
    <tr ng-repeat="prot in proteins.getACandScores(searchIds) | orderBy:'-score' track by $index">
-    <td>{{prot.ac}}   <a href="/#/"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
+    <td>{{prot.ac}}   <a href="/#/compare/{{searchIds.join(',')}}/protein/{{prot.ac}}"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
      <td ng-repeat="values in proteins.getProteinInfoValues(prot.ac,searchIds) track by $index">
        {{values}}
      </td>
