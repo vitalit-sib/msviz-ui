@@ -24,6 +24,24 @@ angular.module('sequences', ['thirdparties', 'environment'])
       return httpProxy.get('/sequence/' + source + '/' + ac);
     };
 
+    /**
+     * @ngdoc method
+     * @name sequences.service:sequenceService#getSource
+     * @methodOf sequences.service:sequenceService
+     * @description get the protein sequence
+     * @returns {httpPromise} of an object
+     */
+    SequenceService.prototype.getSource = function (searchId, database) {
+      return httpProxy.get('/search/' + searchId).then(function(searchInfos){
+
+        var sourceList = searchInfos.database.filter(function (oneInfo){
+          return oneInfo.id === database;
+        });
+
+        return sourceList[0].version;
+      });
+    };
+
     return new SequenceService();
   })
 ;

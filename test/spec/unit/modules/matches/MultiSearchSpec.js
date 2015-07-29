@@ -32,11 +32,11 @@ describe('setup MultiProteinMatch', function () {
         expect(pm._colFactorB).toEqual(2.599971343380348);
       });
 
-      it('getACandScores()', function () {
+      it('getInfos', function () {
         var pm = new MultiProteinMatch(mockMultiProtMatch);
-        expect(pm.getACandScores(['mascot:F001303', 'dummy'])).not.toBeUndefined();
-        expect(pm.getACandScores(['mascot:F001303', 'dummy'])[0]).toEqual({ ac: 'SAHH_MOUSE', score: 1922.527586206896 });
-        expect(pm.getACandScores(['mascot:F001303', 'mascot:F001304'])[2]).toEqual({ ac: 'ST1A1_MOUSE', score: 650.5046153846149 });
+        expect(pm.getInfos(['mascot:F001303', 'dummy'])).not.toBeUndefined();
+        expect(pm.getInfos(['mascot:F001303', 'dummy'])[0]).toEqual({ ac: 'SAHH_MOUSE', source: 'SDB_SwissProt_ID', score: 1922.527586206896 });
+        expect(pm.getInfos(['mascot:F001303', 'mascot:F001304'])[2]).toEqual({ ac: 'ST1A1_MOUSE', source: 'SDB_SwissProt_ID', score: 650.5046153846149 });
       });
 
       it('getProteinIdents()', function () {

@@ -77,37 +77,43 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
     /**
      * @ngdoc method
-     * @name multi-matches.object:MultiProteinMatch:getACs
+     * @name multi-matches.object:MultiProteinMatch:getInfo
      * @methodOf multi-matches.object:MultiProteinMatch
-     * @description the list Protein ACs
-     * @return {Array} list of ProteinACs
+     * @description the list Protein infos (AC, source and score)
+     * @return {Array} list of Protein infos (AC, source and score)
      */
-    MultiProteinMatch.prototype.getACandScores = _.memoize(function (searchIds) {
+    MultiProteinMatch.prototype.getInfos = _.memoize(function (searchIds) {
       var self = this;
       var acs = Object.keys(self._multiProteinMatch);
 
-      var acAndScore = [];
+      var infos = [];
 
       acs.forEach(function(ac){
         var protIdents = MultiProteinMatch.prototype.getProteinIdents.apply(self, [ac, searchIds]);
 
         var scoreSum = 0;
+        var source = null;
+
         protIdents.forEach(function(oneProtIdent){
           if(oneProtIdent){
             scoreSum += oneProtIdent.mainProt.score.mainScore;
             //scoreSum += oneProtIdent.mainProt.nrPsms;
           }
+          if(!source && oneProtIdent){
+            source = oneProtIdent.mainProt.source;
+          }
         });
 
-        var oneEntry = {
+        var oneProtInfo = {
           ac: ac,
+          source: source,
           score: scoreSum
         };
 
-        acAndScore.push(oneEntry);
+        infos.push(oneProtInfo);
       });
 
-      return acAndScore;
+      return infos;
 
     });
 

@@ -30,8 +30,9 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        redirectTo: '/searches'
+        //templateUrl: 'views/main.html',
+        //controller: 'MainCtrl'
       })
       .when('/searches', {
         templateUrl: 'views/matches/searches/search-list.html',
