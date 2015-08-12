@@ -14,7 +14,7 @@
   <tr ng-repeat="protein in proteins">
     <td>{{protein.mainProt.proteinAC}}</td>
     <td>{{protein.mainProt.source}}</td>
-    <td>{{protein.mainProt.score.mainScore}}</td>
+    <td>{{protein.mainProt.score.mainScore.toFixed(0)}}</td>
     <td>{{protein.mainProt.nrSequences}}</td>
     <td>{{protein.mainProt.nrPsms}}</td>
     <td>{{protein.mainProt.passThreshold}}</td>

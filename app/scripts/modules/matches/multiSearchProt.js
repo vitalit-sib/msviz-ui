@@ -155,7 +155,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
 
       searchIds.forEach(function(searchId){
         if(searchProtIdents[searchId]){
-          scores.push(searchProtIdents[searchId].mainProt.score.mainScore.toFixed(2));
+          scores.push(searchProtIdents[searchId].mainProt.score.mainScore.toFixed(0));
           psms.push(searchProtIdents[searchId].mainProt.nrPsms);
           sequences.push(searchProtIdents[searchId].mainProt.nrSequences);
         }else{
