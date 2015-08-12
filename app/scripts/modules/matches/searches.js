@@ -137,6 +137,7 @@ angular.module('matches-search', ['thirdparties', 'environment'])
     $scope.ids= [];
     $scope.selectedIds = [];
     $scope.searchIds='';
+    $scope.titles='';
 
     $scope.addId = function($index){
       $scope.ids.push($index);
@@ -158,14 +159,17 @@ angular.module('matches-search', ['thirdparties', 'environment'])
         //extract serachId and add it to the set
         if ($scope.searchIds===''){
           $scope.searchIds=$scope.searchIds.concat(s.searchId);
+          $scope.titles=$scope.titles.concat(s.title);
+
         }
         else{
           $scope.searchIds=$scope.searchIds.concat(',').concat(s.searchId);
+          $scope.titles=$scope.titles.concat(',').concat(s.title);
         }
 
       });
       var comparePath= 'compare/'.concat($scope.searchIds);
-      $location.path(comparePath);
+      $location.path(comparePath).search({param:$scope.titles});
 
 
     };

@@ -28,8 +28,9 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
     return new MultiSearchService();
   })
 
-  .controller('MultiSearchListCtrl', function($scope,$routeParams, multiSearchService, MultiProteinMatch) {
+  .controller('MultiSearchListCtrl', function($scope,$routeParams,$location, multiSearchService, MultiProteinMatch) {
     $scope.searchIds = $routeParams.searchIds.split(',');
+    $scope.titles =$location.search().param.split(',');
     multiSearchService.findByMultiSearchId($routeParams.searchIds).then(function (data) {
       $scope.proteins = new MultiProteinMatch(data);
     });
