@@ -1,5 +1,5 @@
   'use strict';
-angular.module('matches-modif-filter', ['thirdparties', 'matches-search'])
+angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
 /**
  * @ngdoc object
  * @name matches.ModifFilter:ModifFilter
@@ -14,7 +14,7 @@ angular.module('matches-modif-filter', ['thirdparties', 'matches-search'])
  * @params {Object} opts optinal arguments
  * * onComplete:function(this) will be call once all the field have been set
  */
-  .factory('ModifFilter', function (_, SearchSet, searchService, psmService) { //NOSONAR
+  .factory('ModifFilter', function (_, psmService) { //NOSONAR
     var ModifFilter = function (opts) {
       var _this = this;
 
@@ -105,7 +105,7 @@ angular.module('matches-modif-filter', ['thirdparties', 'matches-search'])
       scope: {
         filter: '='
       },
-      templateUrl: 'views/matches/searches/modif-filter.html'
+      templateUrl: 'main/compare/protein/modif-filter.html'
     };
 
 

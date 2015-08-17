@@ -41,7 +41,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
   .directive('matchesBasketDetailsAll', function () {
     return {
       restrict: 'E',
-      templateUrl: 'views/matches/basket/detailed-all.html'
+      templateUrl: 'main/compare/protein/basket/detailed-all.html'
     };
   })
 

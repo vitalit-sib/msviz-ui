@@ -20,6 +20,11 @@ g.data.psms.psm:hover circle {
   stroke-width: 4;
 }
 
+g.data.ptmCounts.ptmCount circle {
+  fill: blue;
+  opacity: .5;
+}
+
 g.data.psmIsoModifs.psmIsoModif line {
   stroke: green;
 }
@@ -43,7 +48,7 @@ g.data.psmIsoModifs.psmIsoModif:hover circle, g.data.psmIsoModifs.psmIsoModif:ho
 }
 
 g.data.aaInfos.aaInfo line {
-  stroke: blue;
+  stroke: green;
 }
 
 g.data.aaInfos.aaInfo circle {

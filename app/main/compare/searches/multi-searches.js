@@ -1,6 +1,5 @@
 'use strict';
-angular.module('multi-matches-search', ['thirdparties', 'environment'])
-
+angular.module('multi-searches', ['thirdparties', 'environment'])
 
 /**
  * @ngdoc service
@@ -18,7 +17,7 @@ angular.module('multi-matches-search', ['thirdparties', 'environment'])
      * @ngdoc method
      * @name multi-matches.service:multiSearchService#findByMultiSearchId
      * @methodOf multi-matches.service:multiSearchService
-     * @description get the list of all proteins by searchIds
+     * @description get the list of all protein by searchIds
      * @returns {httpPromise} of an array of maps[SearchId,ProteinIdent]
      */
     MultiSearchService.prototype.findByMultiSearchId = function (searchIds) {

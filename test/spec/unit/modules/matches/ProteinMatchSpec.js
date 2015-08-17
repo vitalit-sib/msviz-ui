@@ -4,7 +4,7 @@ describe('searches', function () {
   var ProteinMatch, EnvConfig;
   var $httpBackend, $rootScope, _;
 
-  beforeEach(module('matches-proteins'));
+  beforeEach(module('matches-protein'));
   beforeEach(module('environment'));
   beforeEach(module('thirdparties'));
 

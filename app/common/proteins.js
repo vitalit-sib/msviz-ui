@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-iso-modif'])
+angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-iso-modif'])
 
 /**
  * @ngdoc service
@@ -86,6 +86,35 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
       return this._targetModification;
     };
 
+
+    /**
+     * @ngdoc method
+     * @name proteinMatches.object:ProteinMatch#getMyBestPSMs()
+     * @methodOf proteinMatches.object:ProteinMatch
+     * @description get only the best and valid PSMs.
+     * Tweak them and keep only the proteinRef that match the protein's one
+     * @return {Array} of psms
+     */
+    ProteinMatch.prototype.getMyBestPSMs = function () {
+      var _this = this;
+      var ids = _this.getProtein().proteinRef.identifiers;
+      var newPSMs =  _.map(_this.getPSMs(), function (psm) {
+        var onePSM = _.extend({}, psm);
+
+        // keep only PSMs that match protein AC
+        onePSM.proteinList = _.filter(psm.proteinList, function (p) {
+          return _.contains(ids, p.proteinRef.AC);
+        });
+
+        return onePSM;
+      });
+
+      return _.filter(newPSMs, function(psm){
+        return psm.matchInfo.rank == 1;
+      });
+
+    };
+
     /**
      * @ngdoc method
      * @name proteinMatches.object:ProteinMatch#getMyPSMs()
@@ -109,7 +138,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
      * @ngdoc method
      * @name matches.object:PSMIsoModif:getMyPSMIsoModif
      * @methodOf matches.object:PSMIsoModif
-     * @description the list PSM grouped by Iso Modif (same set of modifi by sequence
+     * @description the list PSM grouped by Iso Modif (same set of modif by sequence
      * @return {Array} list of PSMIsoModif
      */
     ProteinMatch.prototype.getMyPSMIsoModif = function () {
@@ -132,7 +161,7 @@ angular.module('matches-proteins', ['thirdparties', 'environment', 'matches-psm-
       var tModif = _this.getTargetModification();
 
       var seqArray = _this.getProtein().sequence.split('');
-      _.each(_this.getMyPSMs(), function (psm) {
+      _.each(_this.getMyBestPSMs(), function (psm) {
         var isModifAtPos = function (p) {
           return _.contains(psm.pep.modificationNames[p], tModif);
         };
