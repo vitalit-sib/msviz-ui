@@ -1,5 +1,5 @@
 'use strict';
-angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper'])
 /**
  * @ngdoc object
  * @name matches.object:ProteinMatchesGlobalPvizView
@@ -22,14 +22,29 @@ angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fis
       });
       view.render();
 
-      seqEntry.addFeatures(_this.getFeaturesAATargetModif());
-      seqEntry.addFeatures(_this.getFeaturesPSMIsoModifs());
-      seqEntry.addFeatures(_this.getFeaturesPTMsCount());
-      seqEntry.addFeatures(_this.getFeaturesAAInfos());
-      seqEntry.addFeatures(_this.getFeaturesPSMs());
+      // we need the seqEntry later to be able to refresh the view
+      _this.seqEntry = seqEntry;
+
+      // we add all the features to the view
+      _this.refreshView();
 
       return _this;
     };
+
+
+    ProteinMatchesGlobalPvizView.prototype.refreshView = function () {
+      var _this = this;
+
+      // first we clear the view
+      _this.seqEntry.clear();
+
+      // then we set again all features
+      _this.seqEntry.addFeatures(_this.getFeaturesAATargetModif());
+      _this.seqEntry.addFeatures(_this.getFeaturesPTMsCount());
+      _this.seqEntry.addFeatures(_this.getFeaturesAAInfos());
+      _this.seqEntry.addFeatures(_this.getFeaturesPSMs());
+    };
+
 
     /**
      * @ngdoc object
@@ -43,7 +58,8 @@ angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fis
 
       var tModif = _this.protMatch.getTargetModification();
 
-      var fts = _.chain(_this.protMatch.getMyBestPSMs())
+      // var fts = _.chain(_this.protMatch.getMyBestPSMs())
+      var fts = _.chain(_this._selectedPSMs)
         .map(function (psm) {
           return _.map(psm.proteinList, function (prot) {
             var modif = [];
@@ -75,6 +91,7 @@ angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fis
         })
         .flatten()
         .value();
+
       return fts;
     };
 
@@ -171,7 +188,8 @@ angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fis
      */
     ProteinMatchesGlobalPvizView.prototype.getFeaturesAAInfos = function () {
       var _this = this;
-      return _.map(_this.protMatch.getAminoAcidInfo(), function (aai) {
+
+      return _.map( _this.protMatch.getAminoAcidInfo(), function (aai) {
         return {
           groupSet: aai.searchId,
           category: 'aaInfos',
@@ -207,6 +225,17 @@ angular.module('protein-matches-pviz-view', ['thirdparties', 'environment', 'fis
           };
         })
         .value();
+    };
+
+
+    ProteinMatchesGlobalPvizView.prototype.setSelectedPSMs = function (selPTM) {
+      var _this = this;
+
+      // we delete all entries corresponding to the current SearchId
+      console.log(selPTM);
+
+      // we want to keep the PSM's corresponding to another SearchId
+      _this._selectedPSMs = selPTM.psms;
     };
 
 

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thirdparties', 'environment', 'fishtones-wrapper'])
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmPviz
@@ -24,10 +24,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'pvi
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
         scope.$broadcast('show-match', {type: 'psm', bean: ft.data});
       });
-      pviz.FeatureDisplayer.addMouseoverCallback(['aaInfo'], function (ft) {
-        //console.log(JSON.stringify(ft.data.psms[0].pep));
-        //console.log(JSON.stringify(ft.data));
-      });
       pviz.FeatureDisplayer.addMouseoverCallback(['psmIsoModif'], function (ft) {
         scope.$broadcast('show-match', {type: 'psmIsoModif', bean: ft.data});
       });
@@ -39,7 +35,21 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'pvi
           return;
         }
         var view = new ProteinMatchesGlobalPvizView(elm, protMatch);
+        scope.pvizView = view;
         return view;
+      });
+      // PTM count behaviours
+      pviz.FeatureDisplayer.addClickCallback(['ptmCount'], function (ft) {
+        scope.$broadcast("show-ptm-matches", {type: 'psm', bean: ft.data})
+      });
+      scope.$on('show-ptm-matches', function (undefined, args) {
+        //console.log(scope.pvizView);
+        scope.pvizView.setSelectedPSMs(args.bean);
+        scope.pvizView.refreshView();
+        //scope.pvizView.seqEntry.addFeatures(scope.pvizView.getFeaturesPSMs());
+        //scope.pvizView.seqEntry.clear();
+
+
       });
     };
     return {
@@ -88,12 +98,13 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'pvi
       delete $scope.psm;
       delete $scope.psmIsoModif;
 
-
       $scope[args.type] = args.bean;
       $scope.$apply();
 
     });
   })
+
+
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmOneLiner

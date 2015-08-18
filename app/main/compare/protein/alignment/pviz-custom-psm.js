@@ -124,12 +124,12 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .style('stroke-width', function (aai) {
             var d = aai.data.depth;
             if(d <= 2){
-              return 1;
+              return d;
             }
-            if (d <= 4) {
-              return d/2;
+            if (d <= 9) {
+              return d/2 + 1;
             }
-            return d/4;
+            return d/4 + 3.5;
           });
         sel.filter(function (aai) {
           return aai.data.nbTargetModification;
