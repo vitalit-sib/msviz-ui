@@ -228,14 +228,25 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     };
 
 
-    ProteinMatchesGlobalPvizView.prototype.setSelectedPSMs = function (selPTM) {
+    ProteinMatchesGlobalPvizView.prototype.setSelPsmPos = function (selPTM) {
       var _this = this;
 
-      // we delete all entries corresponding to the current SearchId
-      console.log(selPTM);
+      // create the array if it doesn't exist
+      if(_this._selectedPSMs === undefined){
+        _this._selectedPSMs = selPTM.psms;
+      }else{
+        // get current searchId
+        var searchId = selPTM.searchId;
 
-      // we want to keep the PSM's corresponding to another SearchId
-      _this._selectedPSMs = selPTM.psms;
+        // we delete all entries corresponding to the current SearchId
+        var clearedPSMs = _(_this._selectedPSMs).filter(function(el){
+          return el.searchId !== searchId;
+        });
+
+        // add the selected entries
+        _this._selectedPSMs = clearedPSMs.concat(selPTM.psms);
+      }
+
     };
 
 

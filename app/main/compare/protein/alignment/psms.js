@@ -43,12 +43,9 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
         scope.$broadcast("show-ptm-matches", {type: 'psm', bean: ft.data})
       });
       scope.$on('show-ptm-matches', function (undefined, args) {
-        //console.log(scope.pvizView);
+        console.log(args);
         scope.pvizView.setSelectedPSMs(args.bean);
         scope.pvizView.refreshView();
-        //scope.pvizView.seqEntry.addFeatures(scope.pvizView.getFeaturesPSMs());
-        //scope.pvizView.seqEntry.clear();
-
 
       });
     };
