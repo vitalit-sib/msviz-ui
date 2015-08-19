@@ -11,6 +11,7 @@
         <th>#</th>
         <th>peptide</th>
         <th>score</th>
+        <th>delta score</th>
       </tr>
       </thead>
       <tbody>
@@ -18,6 +19,7 @@
         <td>{{opsm.matchInfo.rank}}</td>
         <td>{{opsm.fishTones.richSeq.toString()}}</td>
         <td>{{opsm.matchInfo.score.mainScore}}</td>
+        <td>{{opsm.matchInfo.score.scoreMap['Mascot:delta score']}}</td>
       </tr>
       </tbody>
     </table>
