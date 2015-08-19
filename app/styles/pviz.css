@@ -1,5 +1,5 @@
 g.data.psms.psm line {
-  stroke: blue;
+  stroke: grey;
 }
 
 g.data.psms.psm:hover line {
@@ -7,13 +7,18 @@ g.data.psms.psm:hover line {
 }
 
 g.data.psms.psm circle {
-  fill: blue;
-  stroke: blue;
+  fill: grey;
+  stroke: grey;
 }
 
-g.data.psms.psm circle.is-target {
+g.data.psms.psm circle.is-first {
   fill: red;
   stroke: red;
+}
+
+g.data.psms.psm circle.is-firstWithConflict {
+  fill: orange;
+  stroke: orange;
 }
 
 g.data.psms.psm:hover circle {

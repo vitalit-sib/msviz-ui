@@ -58,39 +58,97 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       var tModif = _this.protMatch.getTargetModification();
 
-      // var fts = _.chain(_this.protMatch.getMyBestPSMs())
-      var fts = _.chain(_this._selectedPSMs)
-        .map(function (psm) {
-          return _.map(psm.proteinList, function (prot) {
-            var modif = [];
+      var psmPos = _this._selPsmPos;
+
+      var spGroups = _.groupBy(_this.protMatch.getMyPSMs(), function(onePsm){
+        return onePsm.spectrumId.id + onePsm.spectrumId.runId;
+      });
+
+      var fts = _.chain(spGroups)
+
+        // transform into PVIZ psm object
+        .map(function(psmList) {
+
+          var bestScore = 0;
+
+          // sort by rank
+          var sortedPsm = _.sortBy(psmList, function(psm){
+            return psm.matchInfo.rank;
+          });
+
+          // count each score to see if first one appears multiple times
+          var scoreMap = _.countBy(sortedPsm, function(psm){
+             return psm.matchInfo.score.mainScore;
+          });
+
+          var bestScore = _.keys(scoreMap)[0];
+          var multipleBestScores = (scoreMap[bestScore] > 1)?true:false;
+
+          // create list of modifs
+          var modifs = [];
+          _.each(sortedPsm, function(psm){
+            // proteinList should always be 1 (we filtered it before)
+            var prot = psm.proteinList[0];
+
             var len = prot.endPos - prot.startPos + 1;
             _.each(psm.pep.modificationNames, function (mods, i) {
-              if (_.size(mods) === 0) {
+              if (_.size(mods) === 0 || mods != tModif) {
                 return;
               }
+              // get position
               var x = Math.max(-0.3, i - 1);
               x = Math.min(len - 0.7, x);
-              modif.push({
-                pos: x + prot.startPos - 1,
-                modifNames: mods,
-                text: mods.join(','),
-                isTarget: _.contains(mods, tModif)
-              });
+
+              // get modif rank
+              var modifRank = '';
+
+              if(psm.matchInfo.score.mainScore === parseFloat(bestScore)){
+                if(psm.matchInfo.rank === 1){
+                  modifRank = 'first';
+                }else{
+                  modifRank = 'firstWithConflict';
+                }
+              }
+
+              // with add the modif only once per position
+              var currentPos = x + prot.startPos - 1;
+              if(!(_.findWhere(modifs, {pos: currentPos}))){
+                modifs.push({
+                  pos: currentPos,
+                  modifNames: mods,
+                  text: mods.join(','),
+                  modifRank: modifRank
+                });
+              }
+
             });
-            return {
-              groupSet: psm.searchId,
-              category: 'psms',
-              categoryName: '',
-              type: 'psm',
-              start: prot.startPos - 1,
-              end: prot.endPos - 1,
-              data: psm,
-              modif: modif
-            };
+
           });
+
+          // if there is no modification or only at position not selected, we return an empty list
+          if(_.size(modifs) === 0 || !(_.findWhere(modifs, {pos: psmPos-1}))){
+            return;
+          }
+
+          var psm = sortedPsm[0];
+          var prot = psm.proteinList[0];
+
+          return {
+            groupSet: psm.searchId,
+            category: 'psms',
+            categoryName: '',
+            type: 'psm',
+            start: prot.startPos - 1,
+            end: prot.endPos - 1,
+            data: psm,
+            modif: modifs
+          };
+
         })
+        // remove empty entries
+        .filter(Boolean)
         .flatten()
-        .value();
+        .value()
 
       return fts;
     };
@@ -228,25 +286,10 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     };
 
 
-    ProteinMatchesGlobalPvizView.prototype.setSelPsmPos = function (selPTM) {
+    ProteinMatchesGlobalPvizView.prototype.setSelPsmPos = function (psmPos) {
       var _this = this;
 
-      // create the array if it doesn't exist
-      if(_this._selectedPSMs === undefined){
-        _this._selectedPSMs = selPTM.psms;
-      }else{
-        // get current searchId
-        var searchId = selPTM.searchId;
-
-        // we delete all entries corresponding to the current SearchId
-        var clearedPSMs = _(_this._selectedPSMs).filter(function(el){
-          return el.searchId !== searchId;
-        });
-
-        // add the selected entries
-        _this._selectedPSMs = clearedPSMs.concat(selPTM.psms);
-      }
-
+      _this._selPsmPos = psmPos;
     };
 
 

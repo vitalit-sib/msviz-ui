@@ -22,7 +22,12 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .attr({
             r: 2,
             class: function (m) {
-              return m.isTarget ? 'is-target' : '';
+              if(m.modifRank == "first"){
+                return 'is-first';
+              }else if(m.modifRank == "firstWithConflict"){
+                return 'is-firstWithConflict';
+              }
+              return '';
             }
           });
         return sel;

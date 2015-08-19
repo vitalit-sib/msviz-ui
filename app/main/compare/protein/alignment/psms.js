@@ -40,13 +40,11 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
       // PTM count behaviours
       pviz.FeatureDisplayer.addClickCallback(['ptmCount'], function (ft) {
-        scope.$broadcast("show-ptm-matches", {type: 'psm', bean: ft.data})
+        scope.$broadcast("show-ptm-matches", {pos: ft.data.pos});
       });
       scope.$on('show-ptm-matches', function (undefined, args) {
-        console.log(args);
-        scope.pvizView.setSelectedPSMs(args.bean);
+        scope.pvizView.setSelPsmPos(args.pos);
         scope.pvizView.refreshView();
-
       });
     };
     return {
