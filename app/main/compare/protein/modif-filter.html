@@ -6,10 +6,10 @@
                  on-select="filter.setSelectedModification($item.value)"
                  style="width:200px"
         >
-        <ui-select-match placeholder="any">
+        <ui-select-match placeholder="">
           {{$select.selected.name}}</small></ui-select-match>
         <ui-select-choices repeat="modif in filter._availableModifications">
-          <span>{{modif.name}}</span><span ng-if="modif.count"> ({{modif.count}})</span>
+          <span>{{modif.name}}</span>
         </ui-select-choices>
       </ui-select>
     </form>

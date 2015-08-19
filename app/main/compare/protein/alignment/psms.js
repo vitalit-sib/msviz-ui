@@ -22,7 +22,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
 
     var link = function (scope, elm) {
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
-        console.log(ft.data);
         scope.$broadcast('show-match', {type: 'psm', bean: ft.data});
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
