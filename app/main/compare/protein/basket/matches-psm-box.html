@@ -2,11 +2,19 @@
 <br>
 <br>
   <div>
-    {{psm.fishTones.richSeq.toString()}}<br>
-    <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Delta score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</small>
+    <div ng-if="psm4spectrum" class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group">
+      <button ng-click="expandOtherMatchTable(item)" showtype="button"
+              class="btn btn-default btn-xs">
+        <span ng-if="tableExpanded" class="glyphicon glyphicon-chevron-down"></span>
+        <span ng-if="!tableExpanded" class="glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+    <div ng-if="!tableExpanded">
+      {{psm.fishTones.richSeq.toString()}}<br>
+      <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Delta score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</small>
+    </div>
   </div>
-  <div ng-if="psm4spectrum">
-    <strong>Other peptides for spectrum</strong>
+  <div ng-show="tableExpanded">
     <table class="table table-striped">
       <thead>
       <tr>
@@ -25,9 +33,6 @@
       </tr>
       </tbody>
     </table>
-  </div>
-  <div ng-if="!psm4spectrum">
-    <strong>no other matches for spectrum</strong>
   </div>
   <!--
   <div>
