@@ -1,22 +1,18 @@
 <div ng-repeat="item in selectedItems">
     <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
       <button ng-click="removeSelectedPSM(item)" showtype="button"
-              class="btn btn-default btn-small" style="color:red">
+              class="btn btn-default btn-small">
         <span class="glyphicon glyphicon-remove"></span>
       </button>
     </div>
   <div ng-if="item.type==='psm'">
-      <div matches-fishtones-psm-spectrum fishtonespsm="item.bean.fishTones"
-           sytle="width:100%;height:200px">
-
-      </div>
-
+      <div matches-fishtones-psm-spectrum fishtonespsm="item.bean.fishTones" style="height:150px" />
       <matches-psm-box psm="item.bean"></matches-psm-box>
-
-    </div>
+  </div>
+  <!-- currently we're not using the similar spectra option
   <div ng-if="item.type==='SSM'" ng-repeat="ssm in item.matches" class="col-sm-2">
-    <div matches-fishtones-ssm fishtonesssm="ssm" sytle="width:100%;height:200px">
-
+    <div matches-fishtones-ssm fishtonesssm="ssm" sytle="height:220px">
     </div>
   </div>
+  -->
 </div>

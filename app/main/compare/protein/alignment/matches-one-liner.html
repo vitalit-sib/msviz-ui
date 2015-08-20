@@ -1,9 +1,7 @@
-<pre class="psm-one-liner  match-one-liner {{psm.matchInfo.isRejected?'rejected':''}}"
-     ng-if="psm">
-  {{psm.fishTones.richSeq.toString()}}
-  <small>Mascot score: {{psm.matchInfo.score.mainScore}}
-  Delta score: {{psm.matchInfo.score.scoreMap['Mascot:delta score']}}</small>
-</pre>
+<div class="well psm-one-liner  match-one-liner {{psm.matchInfo.isRejected?'rejected':''}}">
+  {{psm.fishTones.richSeq.toString()}}<br>
+  <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Delta score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</small>
+</div>
 <div class="psm-iso-modif-one-liner match-one-liner"
      ng-if="psmIsoModif">
   {{psmIsoModif.getDescription()}}

@@ -1,7 +1,9 @@
 <div ng-controller="MatchesPSMCtrl">
+<br>
+<br>
   <div>
-    {{psm.fishTones.richSeq.toString()}}
-    <small>(mascot score={{psm.matchInfo.score.mainScore}})</small>
+    {{psm.fishTones.richSeq.toString()}}<br>
+    <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Delta score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</small>
   </div>
   <div ng-if="psm4spectrum">
     <strong>Other peptides for spectrum</strong>
@@ -18,8 +20,8 @@
       <tr ng-repeat="opsm in psm4spectrum">
         <td>{{opsm.matchInfo.rank}}</td>
         <td>{{opsm.fishTones.richSeq.toString()}}</td>
-        <td>{{opsm.matchInfo.score.mainScore}}</td>
-        <td>{{opsm.matchInfo.score.scoreMap['Mascot:delta score']}}</td>
+        <td>{{opsm.matchInfo.score.mainScore | number:0}}</td>
+        <td>{{opsm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</td>
       </tr>
       </tbody>
     </table>
