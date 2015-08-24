@@ -82,7 +82,7 @@ describe('searches', function () {
       it('size', function () {
         var pm = new ProteinMatch(mockProtMatchACTBL.prot, mockProtMatchACTBL.psms, {targetModification: 'Oxidation'});
         var aai = pm.getAminoAcidInfo();
-        expect(aai.length).toEqual(181);
+        expect(aai.length).toEqual(135);
       });
 
       describe('values', function () {
@@ -144,11 +144,11 @@ describe('searches', function () {
           _nbPSMs: 4
         });
         check('bout a bout', 'mascot:F001303', 327, {
-          depth: 2,
+          depth: 1,
           pos: 327,
           aa: 'K',
           searchId: 'mascot:F001303',
-          _nbPSMs: 2
+          _nbPSMs: 1
         });
 
       });
