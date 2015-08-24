@@ -110,7 +110,7 @@ angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-i
       });
 
       return _.filter(newPSMs, function(psm){
-        return psm.matchInfo.rank == 1;
+        return psm.matchInfo.rank === 1;
       });
 
     };

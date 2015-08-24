@@ -105,7 +105,7 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
       scope: {
         filter: '='
       },
-      templateUrl: 'main/compare/protein/modif-filter.html'
+      templateUrl: 'scripts/main/compare/protein/modif-filter.html'
     };
 
 

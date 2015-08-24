@@ -69,8 +69,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         // transform into PVIZ psm object
         .map(function(psmList) {
 
-          var bestScore = 0;
-
           // sort by rank
           var sortedPsm = _.sortBy(psmList, function(psm){
             return psm.matchInfo.rank;
@@ -82,7 +80,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
           });
 
           var bestScore = _.keys(scoreMap)[0];
-          var multipleBestScores = (scoreMap[bestScore] > 1)?true:false;
 
           // create list of modifs
           var modifs = [];
@@ -92,7 +89,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
             var len = prot.endPos - prot.startPos + 1;
             _.each(psm.pep.modificationNames, function (mods, i) {
-              if (_.size(mods) === 0 || mods != tModif) {
+              if (_.size(mods) === 0 || mods !== tModif) {
                 return;
               }
               // get position
@@ -148,7 +145,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         // remove empty entries
         .filter(Boolean)
         .flatten()
-        .value()
+        .value();
 
       return fts;
     };
@@ -294,4 +291,4 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
 
     return ProteinMatchesGlobalPvizView;
-  })
+  });

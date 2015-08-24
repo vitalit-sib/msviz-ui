@@ -37,10 +37,10 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
       // PTM count behaviours
       pviz.FeatureDisplayer.addClickCallback(['aaModif'], function (ft) {
-        scope.$broadcast("show-ptm-matches", {pos: ft.start+1});
+        scope.$broadcast('show-ptm-matches', {pos: ft.start+1});
       });
       pviz.FeatureDisplayer.addClickCallback(['ptmCount'], function (ft) {
-        scope.$broadcast("show-ptm-matches", {pos: ft.data.pos});
+        scope.$broadcast('show-ptm-matches', {pos: ft.data.pos});
       });
       scope.$on('show-ptm-matches', function (undefined, args) {
         scope.pvizView.setSelPsmPos(args.pos);
@@ -69,7 +69,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
 
     $scope.expandOtherMatchTable = function () {
       $scope.tableExpanded = $scope.tableExpanded?false:true;
-    }
+    };
   })
 /**
  * @ngdoc directive
@@ -80,7 +80,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     return {
       restrict: 'E',
       scope: {psm: '='},
-      templateUrl: 'main/compare/protein/basket/matches-psm-box.html'
+      templateUrl: 'scripts/main/compare/protein/basket/matches-psm-box.html'
     };
   })
 
@@ -112,7 +112,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
   .directive('matchesOneLiner', function () {
     return {
       restrict: 'E',
-      templateUrl: 'main/compare/protein/alignment/matches-one-liner.html'
+      templateUrl: 'scripts/main/compare/protein/alignment/matches-one-liner.html'
     };
   })
 ;

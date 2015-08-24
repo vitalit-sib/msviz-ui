@@ -32,19 +32,19 @@ angular
         redirectTo: '/searches'
       })
       .when('/searches', {
-        templateUrl: 'main/searches/searches-list.html',
+        templateUrl: 'scripts/main/searches/searches-list.html',
         controller: 'SearchListCtrl'
       })
       .when('/proteins/:searchId', {
-        templateUrl: 'main/searches/proteinsID-list.html',
+        templateUrl: 'scripts/main/searches/proteinsID-list.html',
         controller: 'ProteinIDsListCtrl'
       })
       .when('/compare/:searchIds', {
-        templateUrl: 'main/compare/searches/multi-searches.html',
+        templateUrl: 'scripts/main/compare/searches/multi-searches.html',
         controller: 'MultiSearchListCtrl'
       })
      .when('/compare/:searchIds/protein/:proteinAC', {
-        templateUrl: 'main/compare/protein/compare-protein.html',
+        templateUrl: 'scripts/main/compare/protein/compare-protein.html',
         controller: 'PsmsAlignmentCtrl'
       })
       .otherwise({

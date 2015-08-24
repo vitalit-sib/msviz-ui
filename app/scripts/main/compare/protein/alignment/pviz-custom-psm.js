@@ -22,9 +22,9 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .attr({
             r: 2,
             class: function (m) {
-              if(m.modifRank == "first"){
+              if(m.modifRank === 'first'){
                 return 'is-first';
-              }else if(m.modifRank == "firstWithConflict"){
+              }else if(m.modifRank === 'firstWithConflict'){
                 return 'is-firstWithConflict';
               }
               return '';
@@ -143,7 +143,7 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .append('circle')
           .attr('r', function(r){
             var nrModif = r.data.nbTargetModification;
-            if(nrModif == 1){
+            if(nrModif === 1){
               return 2;
             }
             return nrModif >= 10 ? 15 : nrModif * 1.5;
@@ -240,5 +240,5 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
         return d3selection;
       }
     });
-  })
+  });
 

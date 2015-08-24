@@ -90,4 +90,4 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
     };
 
     return new PSMService();
-  })
+  });

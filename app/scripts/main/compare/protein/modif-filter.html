@@ -1,6 +1,6 @@
 <div class="row">
+    <label ng-show="filter._availableModifications">Modification ({{filter._availableModifications.length}})</label>
     <form class="modif-filter">
-      <label ng-show="filter._availableModifications">Modification ({{filter._availableModifications.length}})</label>
       <ui-select ng-model="_tmpSelectedModification"
                  theme="bootstrap"
                  on-select="filter.setSelectedModification($item.value)"
