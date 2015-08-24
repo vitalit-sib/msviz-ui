@@ -4,7 +4,7 @@ angular.module('experimental', ['thirdparties', 'environment'])
  * @ngdoc service
  * @name experimental.service:spectrumService
  * @description
- * Access to MS/MS spectra
+ * Access to MS/MS basket
  *
  */
   .service('spectrumService', function ($http, EnvConfig, httpProxy) {

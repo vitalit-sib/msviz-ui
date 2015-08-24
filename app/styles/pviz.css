@@ -1,5 +1,5 @@
 g.data.psms.psm line {
-  stroke: blue;
+  stroke: grey;
 }
 
 g.data.psms.psm:hover line {
@@ -7,17 +7,27 @@ g.data.psms.psm:hover line {
 }
 
 g.data.psms.psm circle {
-  fill: blue;
-  stroke: blue;
+  fill: grey;
+  stroke: grey;
 }
 
-g.data.psms.psm circle.is-target {
+g.data.psms.psm circle.is-first {
   fill: red;
   stroke: red;
 }
 
+g.data.psms.psm circle.is-firstWithConflict {
+  fill: orange;
+  stroke: orange;
+}
+
 g.data.psms.psm:hover circle {
   stroke-width: 4;
+}
+
+g.data.ptmCounts.ptmCount circle {
+  fill: blue;
+  opacity: .5;
 }
 
 g.data.psmIsoModifs.psmIsoModif line {
@@ -43,7 +53,7 @@ g.data.psmIsoModifs.psmIsoModif:hover circle, g.data.psmIsoModifs.psmIsoModif:ho
 }
 
 g.data.aaInfos.aaInfo line {
-  stroke: blue;
+  stroke: green;
 }
 
 g.data.aaInfos.aaInfo circle {

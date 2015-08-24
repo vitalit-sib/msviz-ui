@@ -17,11 +17,10 @@ angular
     'matches-psms',
     'matches-basket',
     'matches-psms-list',
-    'matches-proteins',
-    'matches-search',
-    'matches-search-results-filter',
+    'matches-protein',
+    'searches-list',
     'matches-modif-filter',
-    'multi-matches-search',
+    'multi-searches',
     'psms-alignment',
     'ssm',
     'sequences',
@@ -31,23 +30,21 @@ angular
     $routeProvider
       .when('/', {
         redirectTo: '/searches'
-        //templateUrl: 'views/main.html',
-        //controller: 'MainCtrl'
       })
       .when('/searches', {
-        templateUrl: 'views/matches/searches/search-list.html',
+        templateUrl: 'scripts/main/searches/searches-list.html',
         controller: 'SearchListCtrl'
       })
       .when('/proteins/:searchId', {
-        templateUrl: 'views/matches/searches/proteinsID-list.html',
+        templateUrl: 'scripts/main/searches/proteinsID-list.html',
         controller: 'ProteinIDsListCtrl'
       })
       .when('/compare/:searchIds', {
-        templateUrl: 'views/matches/searches/multiSearchProteins-list.html',
+        templateUrl: 'scripts/main/compare/searches/multi-searches.html',
         controller: 'MultiSearchListCtrl'
       })
      .when('/compare/:searchIds/protein/:proteinAC', {
-        templateUrl: 'views/matches/searches/psms-alignment.html',
+        templateUrl: 'scripts/main/compare/protein/compare-protein.html',
         controller: 'PsmsAlignmentCtrl'
       })
       .otherwise({

@@ -9,7 +9,6 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
     var MatchesFishtonesPsmSpectrumView = function (elm, ftPSM) {
       var _this = this;
 
-
       var psm = new fishtones.match.PSMAlignment({
         richSequence: ftPSM.richSeq,
         expSpectrum: ftPSM.spectrum
@@ -71,7 +70,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         'fishtonespsm': '='
       },
       restrict: 'A',
-      template: '<div ></div>'
+      template: '<div></div>'
     };
   })
 /**
@@ -90,7 +89,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
         'fishtonesssm': '='
       },
       restrict: 'A',
-      template: '<div ></div>'
+      template: '<div></div>'
     };
   })
 ;
