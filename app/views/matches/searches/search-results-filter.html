@@ -1,51 +1,0 @@
-<div class="row">
-  <div class="col-sm-12 ">
-    <form class="search-results-filter">
-      <label>Searches ({{filter._available.searches.size()}})</label>
-      <ui-select multiple ng-model="_tmpSelectedSearch"
-                 theme="bootstrap"
-                 ng-disabled="disabled"
-                 on-select="filter.addSelectedSearch($item)"
-                 on-remove="filter.removeSelectedSearch($item)"
-                 class="form-control"
-                 style="width:300px"
-        >
-        <ui-select-match placeholder="Select or look for a search">{{$item.searchId}}</ui-select-match>
-        <ui-select-choices repeat="s in filter._available.searches.list() | filter: $select.search">
-          <span ng-bind-html="s.searchId | highlight: $select.search"></span>
-        </ui-select-choices>
-      </ui-select>
-      <label ng-show="filter._available.modifications">Modification ({{filter._available.modifications.length}})</label>
-      <ui-select ng-model="_tmpSelectedModification"
-                 ng-show="filter._available.modifications"
-                 theme="bootstrap"
-                 ng-disabled="disabled"
-                 on-select="filter.setSelectedModification($item.value)"
-                 style="width:200px"
-        >
-        <ui-select-match placeholder="Restrict modif">
-          {{$select.selected.name}}</small></ui-select-match>
-        <ui-select-choices repeat="modif in filter._available.modifications">
-          <span>{{modif.name}}</span><span ng-if="modif.count"> ({{modif.count}})</span>
-        </ui-select-choices>
-      </ui-select>
-      <label ng-show="filter._available.proteins">Protein: ({{filter._available.proteins.length}})</label>
-      <ui-select ng-model="_tmpSelectedProtein"
-                 ng-show="filter._available.proteins"
-                 on-select="filter.setSelectedProtein($item)"
-                 theme="bootstrap"
-                 ng-disabled="disabled"
-                 style="width:300px"
-        > 
-        <ui-select-match placeholder="Select protein">{{$select.selected.AC}}
-          <small>({{$select.selected.source}})</small>
-        </ui-select-match>
-         
-        <ui-select-choices repeat="p in filter._available.proteins | filter: $select.search">  <span
-          ng-bind-html="p.AC | highlight: $select.search"></span> 
-        </ui-select-choices>
-         
-      </ui-select>
-    </form>
-  </div>
-</div>

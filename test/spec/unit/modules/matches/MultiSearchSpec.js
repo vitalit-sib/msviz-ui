@@ -4,7 +4,7 @@ describe('setup MultiProteinMatch', function () {
   var MultiProteinMatch, EnvConfig;
   var $httpBackend, $rootScope, _;
 
-  beforeEach(module('multi-matches-search'));
+  beforeEach(module('multi-searches'));
   beforeEach(module('environment'));
   beforeEach(module('thirdparties'));
 

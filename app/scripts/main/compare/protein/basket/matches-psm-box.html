@@ -1,0 +1,42 @@
+<div ng-controller="MatchesPSMCtrl">
+<br>
+<br>
+  <div>
+    <div ng-if="psm4spectrum" class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group">
+      <button ng-click="expandOtherMatchTable(item)" showtype="button"
+              class="btn btn-default btn-xs">
+        <span ng-if="tableExpanded" class="glyphicon glyphicon-chevron-down"></span>
+        <span ng-if="!tableExpanded" class="glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+    <div ng-if="!tableExpanded">
+      {{psm.fishTones.richSeq.toString()}}<br>
+      <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small>
+    </div>
+  </div>
+  <div ng-show="tableExpanded">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Peptide</th>
+        <th>Mascot score</th>
+        <th>Localisation score [%]</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="opsm in psm4spectrum">
+        <td>{{opsm.matchInfo.rank}}</td>
+        <td>{{opsm.fishTones.richSeq.toString()}}</td>
+        <td>{{opsm.matchInfo.score.mainScore | number:0}}</td>
+        <td>{{opsm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--
+  <div>
+    <button class="btn btn-default" ng-click="getSimSpectra(psm.spectrumId)">similar spectra ?</button>
+  </div>
+  -->
+</div>
