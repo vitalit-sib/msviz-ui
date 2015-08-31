@@ -19,6 +19,7 @@ angular
     'matches-psms-list',
     'matches-protein',
     'searches-list',
+    'qcSummary-list',
     'matches-modif-filter',
     'multi-searches',
     'psms-alignment',
@@ -34,6 +35,10 @@ angular
       .when('/searches', {
         templateUrl: 'scripts/main/searches/searches-list.html',
         controller: 'SearchListCtrl'
+      })
+      .when('/qcSummary', {
+        templateUrl: 'scripts/main/qc/qcSummary-list.html',
+        controller: 'QcSummaryListCtrl'
       })
       .when('/proteins/:searchId', {
         templateUrl: 'scripts/main/searches/proteinsID-list.html',
