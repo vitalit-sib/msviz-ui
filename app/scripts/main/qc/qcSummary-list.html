@@ -1,13 +1,18 @@
+
 <h1>QcSummary</h1>
+<label>DateFrom:<input type="text" ng-model="dateFrom"></label>
+<label>DateTo:<input type="text" ng-model="dateTo"></label>
+<button type="button" ng-Click="findQcSummary(dateFrom,dateTo)">Search</button>
+
   <table class="table table-striped">
     <thead>
     <tr>
       <th>Select</th>
       <th>RawfileInfomation</th>
-      <th>MS</th>
-      <th>MS/MS</th>
-      <th>MS/MS Identified</th>
-      <th>Peptide Sequences Identified</th>
+      <th><a href="#/qcSummary/MS">MS</a></th>
+      <th><a href="#/qcSummary/MMS">MS/MS</a></th>
+      <th><a href="#/qcSummary/MmsIdentify">MS/MS Identified</a></th>
+      <th><a href="#/qcSummary/PeptideSeq">Peptide Sequences Identified</a></th>
     </tr>
     </thead>
     <tbody>
