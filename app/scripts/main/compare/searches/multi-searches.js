@@ -48,13 +48,22 @@ angular.module('multi-searches', ['thirdparties', 'environment'])
       _this._multiProteinMatch = mpm;
 
       var maxScore = 0;
-
+      var amountProteinsHash={};
       // compute max score
       var acs = Object.keys(mpm);
       acs.forEach(function(ac){
         var searchIds = Object.keys(mpm[ac]);
 
         searchIds.forEach(function(searchId){
+
+          //Save number of proteins foreach searchId
+          if (amountProteinsHash.hasOwnProperty(searchId)){
+            amountProteinsHash[searchId]=amountProteinsHash[searchId] + 1;
+          }
+          else {
+            amountProteinsHash[searchId]=1;
+            }
+
           var currentScore = mpm[ac][searchId].mainProt.score.mainScore;
           if(currentScore > maxScore){
             maxScore = currentScore;
@@ -70,7 +79,7 @@ angular.module('multi-searches', ['thirdparties', 'environment'])
       _this._colFactorB = (255 - 0x8D)/maxScore;
 
       _this._maxScore = maxScore;
-
+      _this._amountProteinsHash= amountProteinsHash;
       return _this;
     };
 
