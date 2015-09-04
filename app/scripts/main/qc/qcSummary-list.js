@@ -38,24 +38,23 @@ angular.module('qcSummary-list', ['thirdparties', 'environment'])
   .controller('QcSummaryListCtrl', function($scope, QcSummaryService,$location){
 
     QcSummaryService.list().then(function(data){
-      $scope.summaries = data
+      $scope.summaries = data;
     });
 
     $scope.findQcSummary = function(dateFrom,dateTo) {
 
-      //console.log(dateFrom===undefined);
-      if (dateFrom===undefined ){
-      QcSummaryService.list().then(function(data){
-        //console.log($location);
-        $scope.summaries = data
+      if (dateFrom===undefined || dateFrom===''){
+        QcSummaryService.list().then(function(data){
+        $scope.summaries = data;
       });
+      }else {
+
+        QcSummaryService.findAllBtw2Date(dateFrom, dateTo).then(function (data) {
+          $scope.summaries = data;
+
+        });
       }
-
-      QcSummaryService.findAllBtw2Date(dateFrom, dateTo).then(function (data) {
-        $scope.summaries = data
-      })
     };
-
 
     $scope.entries= [];
     $scope.selectedEntries = [];
