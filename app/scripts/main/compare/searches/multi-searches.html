@@ -1,6 +1,5 @@
 <h1>Compare searches</h1>
-<p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i></small></p>
-
+<p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins._amountProteinsHash[searchId]}} </strong></small></p>
 <table class="table table-bordered">
   <thead>
   <tr>
