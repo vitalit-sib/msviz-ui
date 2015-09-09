@@ -56,5 +56,6 @@ angular.module('fishtones-wrapper', ['thirdparties'])
         richSeqShortcut: _this.richSeqShortcuter.richSeqToString(rs)
       };
     };
+
     return new FishtonifyService();
   });

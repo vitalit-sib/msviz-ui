@@ -12,6 +12,11 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       $scope.selectedItems.push(newEntry);
     };
 
+
+    $scope.zoomSpectrum = function(item){
+      console.log(item);
+    }
+
     //$scope.addSelectedOther = function (psm, item) {
     //  console.log("here");
     //};
@@ -33,6 +38,15 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
         return e.firstPsm !== psm;
       });
+    };
+
+    $scope.loadXic = function (psm) {
+      // create object of intersting information
+      var sp = psm.firstPsm.fishTones.spectrum.attributes;
+      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime};
+
+      // first we send it up
+        $scope.$emit('show-xic-emit', ms2Info);
     };
 
   })

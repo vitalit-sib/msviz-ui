@@ -1,5 +1,5 @@
 'use strict';
-angular.module('psms-alignment', ['matches-modif-filter', 'matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment'])
+angular.module('psms-alignment', ['matches-modif-filter', 'matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'xic-services'])
 
 
   .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
@@ -9,6 +9,12 @@ angular.module('psms-alignment', ['matches-modif-filter', 'matches-protein', 'se
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
     $scope.database = acSourcePair[1];
+
+
+    $scope.$on('show-xic-emit', function (undefined, args) {
+      $scope.$broadcast('show-xic-broadcast', args);
+
+    });
 
     var showProtein = function () {
 

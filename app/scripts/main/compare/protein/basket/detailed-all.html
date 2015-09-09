@@ -1,4 +1,10 @@
 <div ng-repeat="item in selectedItems">
+  <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+    <button ng-click="loadXic(item)" showtype="button"
+            class="btn btn-default btn-small">
+      <span>XIC</span>
+    </button>
+  </div>
     <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
       <button ng-click="zoomSpectrum(item)" showtype="button"
               class="btn btn-default btn-small">
@@ -20,4 +26,5 @@
     </div>
   </div>
   -->
+
 </div>

@@ -25,7 +25,9 @@ angular
     'psms-alignment',
     'ssm',
     'sequences',
-    'experimental'
+    'experimental',
+    'xic',
+    'xic-services'
   ])
   .config(function ($routeProvider) {
     $routeProvider
