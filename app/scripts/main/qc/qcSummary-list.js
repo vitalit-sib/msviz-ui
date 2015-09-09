@@ -2,34 +2,59 @@
 angular.module('qcSummary-list', ['thirdparties', 'environment'])
 /**
  * @ngdoc service
- * @name matches.service:searchService
+ * @name service:qcSummaryService
  * @description
- * Access to Searches
+ * Access to qcSummary
  *
  */
-  .service('qcSummaryService', function (httpProxy) {
-    var qcSummaryService = function () {
+  .service('QcSummaryService', function (httpProxy) {
+    var QcSummaryService = function () {
       return this;
     };
 
     /**
      * @ngdoc method
-     * @name matches.service:searchService#findAllSearchIds
-     * @methodOf matches.service:searchService
-     * @description get the list of all searchIds
+     * @name matches.service:qcSummaryService#findAllBtw2Date
+     * @methodOf service:qcSummaryService
+     * @description get the list of all qcSummaries
      * @returns {httpPromise} of an array of string
      */
-    qcSummaryService.prototype.list = function () {
-      return httpProxy.get('/qc/summary');
+
+    QcSummaryService.prototype.findAllBtw2Date = function (dateFrom,dateTo) {
+
+      return httpProxy.get('/qc/summary' + '/'+ dateFrom + '/' + dateTo );
     };
 
-    return new qcSummaryService();
-  })
+    QcSummaryService.prototype.list = function () {
 
-  .controller('QcSummaryListCtrl', function($scope, qcSummaryService,$location){
-    qcSummaryService.list().then(function(data){
-      $scope.summaries=data;
+      return httpProxy.get('/qc/summary' );
+    };
+    return new QcSummaryService();
+  }
+
+
+)
+
+  .controller('QcSummaryListCtrl', function($scope, QcSummaryService,$location){
+
+    QcSummaryService.list().then(function(data){
+      $scope.summaries = data;
     });
+
+    $scope.findQcSummary = function(dateFrom,dateTo) {
+
+      if (dateFrom===undefined || dateFrom===''){
+        QcSummaryService.list().then(function(data){
+        $scope.summaries = data;
+      });
+      }else {
+
+        QcSummaryService.findAllBtw2Date(dateFrom, dateTo).then(function (data) {
+          $scope.summaries = data;
+
+        });
+      }
+    };
 
     $scope.entries= [];
     $scope.selectedEntries = [];
