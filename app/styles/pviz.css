@@ -10,6 +10,15 @@ g.data.psms.psm circle {
   fill: grey;
   stroke: grey;
 }
+g.data.psms.psm circle.is-non-selected {
+  fill: pink;
+  stroke: pink;
+}
+
+g.data.psms.psm rect.is-non-selected-modif {
+  fill: yellow;
+  stroke: yellow;
+}
 
 g.data.psms.psm circle.is-first {
   fill: red;

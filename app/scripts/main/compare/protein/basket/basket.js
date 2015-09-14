@@ -13,9 +13,10 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     };
 
 
-    $scope.zoomSpectrum = function(item){
-      console.log(item);
-    }
+    $scope.zoomSpectrum = function(spectra){
+      console.log('sending spectra');
+      $scope.$emit('show-spectrum-modal', spectra.firstPsm);
+    };
 
     //$scope.addSelectedOther = function (psm, item) {
     //  console.log("here");

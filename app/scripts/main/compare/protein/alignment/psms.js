@@ -26,7 +26,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         addSelectedPSM(scope, ft.data);
       });
-        scope.$watch('proteinMatch', function (protMatch) {
+      scope.$watch('proteinMatch', function (protMatch) {
         if (protMatch === undefined) {
           return;
         }
