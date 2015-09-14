@@ -125,7 +125,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
                   //Showing non selected modifications with different shape
                   if(mods[0] !== tModif){
-                    console.log('encontrada otraaa');
                     selectedMod = false;
                   }
                 }else{
