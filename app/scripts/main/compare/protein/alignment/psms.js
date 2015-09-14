@@ -35,6 +35,11 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
         return view;
       });
 
+      //Display psms when clicking protein position
+      pviz.FeatureDisplayer.addClickCallback(['aaInfo'], function (ft) {
+        scope.$broadcast('show-ptm-matches', {pos: ft.data.pos});
+      });
+
       // PTM count behaviours
       pviz.FeatureDisplayer.addClickCallback(['aaModif'], function (ft) {
         scope.$broadcast('show-ptm-matches', {pos: ft.start+1});
