@@ -50,6 +50,7 @@ angular
         templateUrl: 'scripts/main/compare/searches/multi-searches.html',
         controller: 'MultiSearchListCtrl'
       })
+
      .when('/compare/:searchIds/protein/:proteinAC', {
         templateUrl: 'scripts/main/compare/protein/compare-protein.html',
         controller: 'PsmsAlignmentCtrl'
