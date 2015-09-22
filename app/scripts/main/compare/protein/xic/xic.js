@@ -6,18 +6,17 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, xicFishtonesView, _, httpProxy) {
+.directive('xicFishtones', function (pviz, xicFishtonesView, _, httpProxy, $q) {
 
     var link = function (scope, elm) {
 
-      var updateXic = function(retentionTime, intensities){
-        var view = xicFishtonesView(elm, retentionTime, intensities);
+      var updateXics = function(xics){
+        var view = xicFishtonesView(elm, xics, scope.searchIds);
         return view;
       }
 
       var getXic = function(searchId, moz){
         var uri = '/exp/xic/' + searchId + '/' + moz; // + '?tolerance=0.001';
-        console.log('get ' + uri);
         return httpProxy.get(uri);
       }
 
@@ -28,19 +27,24 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
           elm.children()[i].remove();
         }
 
-        console.log(ms2Info);
-
         if (ms2Info) {
-          getXic('hoho', ms2Info.precMoz).then(function(xic){
-            console.log(xic);
-            updateXic(xic.rt,xic.intensities)
+          var backendCalls = [];
+
+          scope.searchIds.forEach(function(searchId) {
+            backendCalls.push(getXic(searchId, ms2Info.precMoz));
           });
+
+          $q.all(
+            backendCalls
+          ).then(function(args){
+              updateXics(args);
+            })
         }
 
       });
 
       // create an empty xic on startup
-      updateXic([],[]);
+      // updateXic([],[]);
 
     };
 
