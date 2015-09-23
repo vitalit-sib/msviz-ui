@@ -47,7 +47,6 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
 
       return psmService.findAllModificationsBySearchIds(_this._searchIds)
         .then(function (modifCount) {
-          console.log('factory init Filter');
           var tmp = [{value: undefined, name: 'None', count: undefined}];
           _.each(modifCount, function (count, modif) {
             tmp.push({value: modif, name: modif, count: count});

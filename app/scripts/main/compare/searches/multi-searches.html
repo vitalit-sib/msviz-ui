@@ -2,7 +2,7 @@
 
 
 <div class="row">
-  <div class="col-xs-5"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins._amountProteinsHash[searchId]}} </strong></small></p></div>
+  <div class="col-xs-5"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][searchId]}} </strong></small></p></div>
   <div class="col-xs-3"><modif-filter filter="modifFilter"></modif-filter></div>
 </div>
 
@@ -17,9 +17,9 @@
   </tr>
   </thead>
   <tbody>
-   <tr ng-repeat="prot in proteins.getInfos(searchIds) | orderBy:'-score' track by $index">
+   <tr ng-repeat="prot in proteins['proteinInfos'] | orderBy:'-score' track by $index">
     <td>{{prot.ac}}   <a href="/#/compare/{{searchIds.join(',')}}/protein/{{prot.ac}}:{{prot.source}}"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></a></td>
-     <td ng-repeat="values in proteins.getProteinInfoValues(prot.ac,searchIds) track by $index">
+     <td ng-repeat="values in prot['datatable'] track by $index">
        {{values}}
      </td>
    </tr>
