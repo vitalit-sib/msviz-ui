@@ -72,7 +72,6 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
       if (withModif) {
         uri += '?withModif=' + withModif;
       }
-
       return httpProxy.get(uri);
     };
 
