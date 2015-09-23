@@ -21,45 +21,8 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
      * @returns {httpPromise} of an array of ProteinRefs
      */
     MultiSearchService.prototype.findByMultiSearchId = function (searchIds, withModif) {
-
-
       console.log('Buscar refs modificadas');
       return httpProxy.get('/compare/' + searchIds + withModif);
-    };
-
-    /**
-     * @ngdoc method
-     * @name multi-matches.service:multiSearchService#findProteinsByMultiSearchId
-     * @methodOf multi-matches.service:multiSearchService
-     * @description get the list of all protein by searchIds
-     * @returns {httpPromise} of an array of maps[SearchId,ProteinIdent]
-     */
-    MultiSearchService.prototype.findProteinsByMultiSearchId = function (searchIds) {
-
-
-      console.log('listar proteinas');
-      console.log('searchIds recibidos');
-      console.log(searchIds);
-      return httpProxy.get('/compare/modifProteins/' + searchIds );
-    };
-
-    /**
-     * @ngdoc method
-     * @name multi-matches.service:multiSearchService#findProteinsByMultiSearchIdAndMultiACs
-     * @methodOf multi-matches.service:multiSearchService
-     * @description get the list of all protein by searchIds and Acs
-     * @returns {httpPromise} of an array of maps[SearchId,ProteinIdent]
-     */
-    MultiSearchService.prototype.findProteinsByMultiSearchIdAndMultiACs = function (searchIds,acs) {
-
-
-      console.log('obtener protein Ident');
-      //console.log('acs recibidos');
-      //console.log(acs);
-      //console.log('searchId recibidos');
-      //console.log(searchIds);
-      var uri = '/compare/' + searchIds + '/by-ac/' + acs;
-      return httpProxy.get(uri);
     };
 
     return new MultiSearchService();
@@ -70,9 +33,10 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
     console.log('MultiSearch controller');
     $scope.titles =$location.search().param.split(',');
 
-    multiSearchService.findProteinsByMultiSearchId($routeParams.searchIds).then(function (data) {
+    multiSearchService.findByMultiSearchId($routeParams.searchIds,'').then(function (data) {
       //console.log('proteinas ');
       $scope.proteins = new MultiProteinMatch(data);
+      console.log(data);
       //console.log('proteinas ');
       //console.log($scope.proteins);
     });
@@ -90,19 +54,10 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
             $scope.proteins = new MultiProteinMatch(data);
           });
           */
-      var acs=[];
-      multiSearchService.findByMultiSearchId($routeParams.searchIds,withModif).then(function (data){
-
-        data.forEach(function(ac){
-          acs.push(ac.AC);
-        });
-        multiSearchService.findProteinsByMultiSearchIdAndMultiACs($routeParams.searchIds,acs).then(function(data){
-          console.log('protein Ident encontradas');
-          console.log(data);
-          $scope.proteins = new MultiProteinMatch(data);
-          console.log('findProteinsByMultiSearchIdAndMultiACs finitooo');
-
-        });
+      multiSearchService.findByMultiSearchId($routeParams.searchIds, withModif).then(function (data){
+        console.log('here');
+        console.log(data);
+        $scope.proteins = new MultiProteinMatch(data);
         console.log('findByMultiSearchId end');
       });
       console.log('end show protein');
@@ -222,10 +177,9 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       var searchProtIdents = this._multiProteinMatch[proteinAC];
       var protIdents = [];
 
-
         searchIds.forEach(function(searchId){
 
-          if(searchProtIdents!==undefined){
+          if(searchProtIdents[searchId]){
             protIdents.push(searchProtIdents[searchId]);
           }else{
             protIdents.push(null);
@@ -251,15 +205,12 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       var scores = [];
       var psms = [];
       var sequences = [];
- //console.log('get protein info values');
- //
-
 
       //console.log(searchProtIdents);
       searchIds.forEach(function(searchId){
         //console.log('dentro del search');
        //console.log(searchProtIdents);
-        if(searchProtIdents!==undefined){
+        if(searchProtIdents[searchId]){
           scores.push(searchProtIdents[searchId].mainProt.score.mainScore.toFixed(0));
           psms.push(searchProtIdents[searchId].mainProt.nrPsms);
           sequences.push(searchProtIdents[searchId].mainProt.nrSequences);
