@@ -68,7 +68,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var filteredPsms = _.filter(myPsms, function(psm){
         var prot = psm.proteinList[0];
         return (psmPos <= prot.endPos && psmPos >= prot.startPos + 1);
-      })
+      });
 
       var spGroups = _.groupBy(filteredPsms, function(onePsm){
         return onePsm.spectrumId.id + onePsm.spectrumId.runId;
