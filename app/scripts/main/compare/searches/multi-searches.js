@@ -30,7 +30,6 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
      * @name multi-matches.service:multiSearchService#prepareAmountProteins
      * @methodOf multi-matches.service:multiSearchService
      * @description get amount of proteins per searchId
-     * @returns complex object
      */
     MultiSearchService.prototype.prepareAmountProteins = function (data) {
       // store amount of proteins in hash
@@ -64,7 +63,6 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
      * @name multi-matches.service:multiSearchService#prepareAmountProteins
      * @methodOf multi-matches.service:multiSearchService
      * @description get amount of proteins per searchId
-     * @returns complex object
      */
     MultiSearchService.prototype.prepareInfoMap = function (data, searchIds) {
       var _this = this;
@@ -109,7 +107,6 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
      * @name multi-matches.service:multiSearchService#prepareProteinInfos
      * @methodOf multi-matches.service:multiSearchService
      * @description prepare the Protein data so it can be used in the html
-     * @returns complex object
      */
     MultiSearchService.prototype.prepareProteinInfos = function (data, searchIds) {
       var _this = this;
