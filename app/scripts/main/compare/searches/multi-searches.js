@@ -33,9 +33,6 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
      * @returns complex object
      */
     MultiSearchService.prototype.prepareAmountProteins = function (data) {
-      // object containing results
-      var res = {};
-
       // store amount of proteins in hash
       var amountProteinsHash={};
 
@@ -77,12 +74,12 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       var infos = [];
 
       acs.forEach(function(ac){
-        var protIdents = _this.getProteinIdents.apply(self, [data, ac, searchIds]);
+        var protIdents = _this.getProteinIdents.apply(undefined, [data, ac, searchIds]);
 
         var scoreSum = 0;
         var source = null;
 
-        protIdents['protIdents'].forEach(function(oneProtIdent){
+        protIdents.protIdents.forEach(function(oneProtIdent){
           if(oneProtIdent){
             scoreSum += oneProtIdent.mainProt.score.mainScore;
             //scoreSum += oneProtIdent.mainProt.nrPsms;
@@ -96,7 +93,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
           ac: ac,
           source: source,
           score: scoreSum,
-          datatable: protIdents['datatable']
+          datatable: protIdents.datatable
         };
 
         infos.push(oneProtInfo);
@@ -120,8 +117,8 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       // object containing results
       var res = {};
 
-      res['amountProteinHash'] = _this.prepareAmountProteins(data);
-      res['proteinInfos'] = _this.prepareInfoMap(data, searchIds);
+      res.amountProteinHash = _this.prepareAmountProteins(data);
+      res.proteinInfos = _this.prepareInfoMap(data, searchIds);
 
       return res;
     };
@@ -158,8 +155,8 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
         }
       });
 
-      res['datatable'] = scores.concat(psms,sequences);
-      res['protIdents'] = protIdents;
+      res.datatable = scores.concat(psms,sequences);
+      res.protIdents = protIdents;
 
       return res;
     };
@@ -178,7 +175,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
 
     var showProtein = function () {
 
-      var withModif = ($scope.modifFilter.getSelectedModification()!= undefined)? '?withModif='+ $scope.modifFilter.getSelectedModification():'';
+      var withModif = ($scope.modifFilter.getSelectedModification()!== undefined)? '?withModif='+ $scope.modifFilter.getSelectedModification():'';
 
       multiSearchService.findByMultiSearchId($routeParams.searchIds, withModif).then(function (data){
         $scope.proteins = multiSearchService.prepareProteinInfos(data, $scope.searchIds);
