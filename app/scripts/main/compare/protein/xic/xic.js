@@ -10,17 +10,19 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
     var link = function (scope, elm) {
 
-      var updateXics = function(xics){
-        var view = xicFishtonesView(elm, xics, scope.searchIds);
+      var updateXics = function(xics, retentionTime, searchId){
+        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
         return view;
-      }
+      };
 
       var getXic = function(searchId, moz){
-        var uri = '/exp/xic/' + searchId + '/' + moz; // + '?tolerance=0.001';
+        var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=10.0&rtTolerance=10.0';
         return httpProxy.get(uri);
-      }
+      };
 
       scope.$on('show-xic-broadcast', function (undefined, ms2Info) {
+
+        console.log(ms2Info);
 
         // we have to remove all existing SVG elements
         for(var i=0; i<elm.children().length; i++){
@@ -37,8 +39,8 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
           $q.all(
             backendCalls
           ).then(function(args){
-              updateXics(args);
-            })
+              updateXics(args, ms2Info.retentionTime, ms2Info.searchId);
+            });
         }
 
       });
@@ -52,6 +54,6 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
     link: link,
     restrict: 'A'
   };
-})
+});
 
 

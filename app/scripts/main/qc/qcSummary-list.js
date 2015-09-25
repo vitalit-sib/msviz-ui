@@ -8,7 +8,7 @@ angular.module('qcSummary-list', ['thirdparties', 'environment'])
  *
  */
   .service('qcSummaryService', function (httpProxy) {
-    var qcSummaryService = function () {
+    var QcSummaryService = function () {
       return this;
     };
 
@@ -19,14 +19,14 @@ angular.module('qcSummary-list', ['thirdparties', 'environment'])
      * @description get the list of all searchIds
      * @returns {httpPromise} of an array of string
      */
-    qcSummaryService.prototype.list = function () {
+    QcSummaryService.prototype.list = function () {
       return httpProxy.get('/qc/summary');
     };
 
-    return new qcSummaryService();
+    return new QcSummaryService();
   })
 
-  .controller('QcSummaryListCtrl', function($scope, qcSummaryService,$location){
+  .controller('QcSummaryListCtrl', function($scope, qcSummaryService){
     qcSummaryService.list().then(function(data){
       $scope.summaries=data;
     });

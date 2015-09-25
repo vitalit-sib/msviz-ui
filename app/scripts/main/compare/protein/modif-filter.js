@@ -76,9 +76,6 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
       return _this;
     };
 
-
-
-
     /**
      * @ngdoc function
      * @name matches.ModifFilter:ModifFilter#getSelectedModification
