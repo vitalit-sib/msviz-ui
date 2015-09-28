@@ -56,6 +56,8 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
      * @return {Array} of PSM features
      */
     ProteinMatchesGlobalPvizView.prototype.getFeaturesPSMs = function () {
+
+
       var _this = this;
 
       var tModif = _this.protMatch.getTargetModification();
@@ -108,25 +110,22 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
                 return;
               }
 
-
-
-
               // get position
               var x = Math.max(-0.3, i - 1);
               x = Math.min(len - 0.7, x);
 
               // get modif rank
               var modifRank = '';
-              var selectedMod= true;
+              var selectedMod= '';
 
               if(psm.matchInfo.score.mainScore === parseFloat(bestScore)){
+
+                //Showing non selected modifications with different shape
+                if(mods[0] !== tModif ){
+                  selectedMod = false;
+                } else selectedMod = true;
                 if(psm.matchInfo.rank === 1 ){
                   modifRank = 'first';
-
-                  //Showing non selected modifications with different shape
-                  if(mods[0] !== tModif){
-                    selectedMod = false;
-                  }
                 }else{
                   modifRank = 'firstWithConflict';
                 }

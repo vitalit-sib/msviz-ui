@@ -16,7 +16,8 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
         sel.selectAll('circle')
           .data(function (psm) {
             return _.filter(psm.modif, function (m) {
-              return m.selectedModif;
+                return m.selectedModif;
+
             });
           })
           .enter()
@@ -51,6 +52,7 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
               if(m.modifRank === 'first'){
                 return 'is-non-selected-modif';
               }
+              //else return 'others';
               return '';
             }
           });
