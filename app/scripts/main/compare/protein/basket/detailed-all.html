@@ -6,7 +6,7 @@
     </button>
   </div>
     <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-      <button ng-click="zoomSpectrum(item)" showtype="button" data-toggle="modal"
+      <button ng-click="zoomSpectrum(item)" showtype="button" data-toggle="modal" data-target="#basicModal"
               class="btn btn-default btn-small">
         <span class="glyphicon glyphicon-zoom-in modal-show"></span>
       </button>
@@ -19,6 +19,25 @@
       <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
       <matches-psm-box psm="item.firstPsm"></matches-psm-box>
   </div>
+
+  <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Modal Body</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- currently we're not using the similar spectra option
   <div ng-if="item.type==='SSM'" ng-repeat="ssm in item.matches" class="col-sm-2">

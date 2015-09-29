@@ -1,11 +1,10 @@
 'use strict';
-angular.module('psms-alignment', ['matches-modif-filter', 'matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'xic-services'])
+angular.module('psms-alignment', ['spectrum-modal','matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'xic-services'])
 
 
-  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
+  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, SpectrumModal) {
 
     $scope.searchIds = $routeParams.searchIds.split(',');
-
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
     $scope.database = acSourcePair[1];
@@ -18,7 +17,8 @@ angular.module('psms-alignment', ['matches-modif-filter', 'matches-protein', 'se
     $scope.$on('show-spectrum-modal', function (undefined, args) {
       console.log('receiving spectra');
       console.log(args);
-
+      var modal = new SpectrumModal(args);
+      return modal;
     });
 
     var showProtein = function () {

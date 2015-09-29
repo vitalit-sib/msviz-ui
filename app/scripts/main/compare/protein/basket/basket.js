@@ -15,6 +15,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
     $scope.zoomSpectrum = function(spectra){
       console.log('sending spectra');
+      $('#basicModal').modal('show');
       $scope.$emit('show-spectrum-modal', spectra.firstPsm);
     };
 

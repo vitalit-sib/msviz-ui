@@ -15,6 +15,8 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
  * * onComplete:function(this) will be call once all the field have been set
  */
   .factory('ModifFilter', function (_, psmService) { //NOSONAR
+
+    console.log('filter factory');
     var ModifFilter = function (opts) {
       var _this = this;
 
@@ -92,6 +94,7 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
   })
 
   .directive('modifFilter', function () {
+    console.log('filter directive weeeee');
     var link = function () {
     };
 
