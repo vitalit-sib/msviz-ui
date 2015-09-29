@@ -12,8 +12,8 @@ g.data.psms.psm circle {
 }
 
 g.data.psms.psm rect.others {
-  fill: pink;
-  stroke: pink;
+  fill: yellow;
+  stroke: yellow;
 }
 
 g.data.psms.psm rect.is-non-selected-modif {
