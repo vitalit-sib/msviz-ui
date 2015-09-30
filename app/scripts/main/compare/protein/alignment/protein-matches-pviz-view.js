@@ -123,7 +123,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
                 //Showing non selected modifications with different shape
                 if(mods[0] !== tModif ){
                   selectedMod = false;
-                } else selectedMod = true;
+                } else {
+                  selectedMod = true;
+                }
                 if(psm.matchInfo.rank === 1 ){
                   modifRank = 'first';
                 }else{

@@ -2,13 +2,14 @@
 angular.module('spectrum-modal', ['thirdparties', 'environment'])
 
 
-  .factory('SpectrumModal', function (_, psmService) { //NOSONAR
+  .factory('SpectrumModal', function () { //NOSONAR
     console.log('factory');
 
     var SpectrumModal = function (opts) {
 
       console.log('modalll');
-      $('#basicModal').modal('show');
+      console.log(opts);
+      //$('#basicModal').modal('show');
 
     };
     return SpectrumModal;
@@ -16,7 +17,8 @@ angular.module('spectrum-modal', ['thirdparties', 'environment'])
 
   .directive('spectrumModal', function (spectra) {
     console.log('modalll directive');
-    $('#basicModal').modal('show');
+    console.log(spectra);
+    //$('#basicModal').modal('show');
 
     var link = function () {
     };
