@@ -56,8 +56,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
      * @return {Array} of PSM features
      */
     ProteinMatchesGlobalPvizView.prototype.getFeaturesPSMs = function () {
-
-
       var _this = this;
 
       var tModif = _this.protMatch.getTargetModification();

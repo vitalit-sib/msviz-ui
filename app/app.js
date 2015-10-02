@@ -25,7 +25,6 @@ angular
     'psms-alignment',
     'ssm',
     'sequences',
-    'spectrum-modal',
     'experimental',
     'xic',
     'xic-services'
