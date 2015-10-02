@@ -17,8 +17,6 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     $scope.$on('show-spectrum-modal', function (undefined, args) {
       console.log('receiving spectra');
       console.log(args);
-      var modal = new SpectrumModal(args);
-      return modal;
     });
 
     var showProtein = function () {
