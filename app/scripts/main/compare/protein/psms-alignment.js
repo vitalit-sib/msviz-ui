@@ -2,7 +2,7 @@
 angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'xic-services'])
 
 
-  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, SpectrumModal) {
+  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
 
     $scope.searchIds = $routeParams.searchIds.split(',');
     var acSourcePair = $routeParams.proteinAC.split(':');
