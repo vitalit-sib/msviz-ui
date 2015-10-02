@@ -22,8 +22,6 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
       scope.$on('show-xic-broadcast', function (undefined, ms2Info) {
 
-        console.log(ms2Info);
-
         // we have to remove all existing SVG elements
         for(var i=0; i<elm.children().length; i++){
           elm.children()[i].remove();
