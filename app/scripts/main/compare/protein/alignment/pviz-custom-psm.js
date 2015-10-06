@@ -2,7 +2,11 @@
 angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
   .service('pvizCustomPsm', function (_, pviz) {
-    pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.4;
+    var defaultTrackHeight = 0.1;
+    pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.5;
+    pviz.FeatureDisplayer.trackHeightPerCategoryType.ptmCounts = defaultTrackHeight;
+    pviz.FeatureDisplayer.trackHeightPerCategoryType.psmIsoModifs = defaultTrackHeight;
+    pviz.FeatureDisplayer.trackHeightPerCategoryType.aaInfos = defaultTrackHeight;
 
     pviz.FeatureDisplayer.setCustomHandler('psm', {
       appender: function (viewport, svgGroup, features, type) {
@@ -17,7 +21,6 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .data(function (psm) {
             return _.filter(psm.modif, function (m) {
                 return m.selectedModif;
-
             });
           })
           .enter()
@@ -62,7 +65,7 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
       positioner: function (viewport, d3selection) {
 
         d3selection.attr('transform', function (ft) {
-          return 'translate(0,' + 0.4 * viewport.scales.y(0.5 + ft.displayTrack) + ')';
+          return 'translate(0,' + 0.5 * viewport.scales.y(0.5 + ft.displayTrack) + ')';
         });
 
         d3selection.selectAll('line')

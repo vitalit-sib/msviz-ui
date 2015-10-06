@@ -1,5 +1,6 @@
 g.data.psms.psm line {
   stroke: grey;
+  stroke-width: 2;
 }
 
 g.data.psms.psm:hover line {
@@ -73,4 +74,13 @@ g.data.aaInfos.aaInfo circle {
 g.data.aaModif text {
   font-family: monospace;
   font-size: 80%;
+}
+
+path.chromato.target_0 {
+  stroke: blue;
+  stroke-width: 1.5;
+}
+
+g.chromato.rtBar line {
+  stroke: red;
 }

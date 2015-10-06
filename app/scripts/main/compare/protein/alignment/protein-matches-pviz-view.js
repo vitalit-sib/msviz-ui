@@ -10,6 +10,8 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     var _yo = pvizCustomPsm.yo;
     _yo++;
 
+    // pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 8;
+
     var ProteinMatchesGlobalPvizView = function (elm, protMatch) {
       var _this = this;
 
@@ -20,6 +22,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         model: seqEntry,
         el: elm
       });
+
       view.render();
 
       // we need the seqEntry later to be able to refresh the view
