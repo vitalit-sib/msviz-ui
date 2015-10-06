@@ -17,11 +17,9 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .attr('class', 'feature internal data ' + type);
         sel.append('line').attr({
           class: function (m) {
-
             if(m.isSelected){
               return 'selected';
             }
-
             return '';
           }
         });

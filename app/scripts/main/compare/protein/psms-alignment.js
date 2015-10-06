@@ -14,10 +14,6 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
       $scope.$broadcast('show-xic-broadcast', args);
 
     });
-    $scope.$on('show-spectrum-modal', function (undefined, args) {
-      console.log('receiving spectra');
-      console.log(args);
-    });
 
     var showProtein = function () {
 
