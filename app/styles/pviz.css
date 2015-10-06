@@ -3,6 +3,11 @@ g.data.psms.psm line {
   stroke-width: 2;
 }
 
+g.data.psms.psm line.selected {
+  stroke: blue;
+  stroke-width: 2;
+}
+
 g.data.psms.psm:hover line {
   stroke-width: 4;
 }

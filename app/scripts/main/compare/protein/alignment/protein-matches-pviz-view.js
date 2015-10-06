@@ -15,6 +15,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     var ProteinMatchesGlobalPvizView = function (elm, protMatch) {
       var _this = this;
 
+      // set empty array for selected psms
+      _this.selPsms = [];
+
       _this.protMatch = protMatch;
 
       var seqEntry = new pviz.SeqEntry({sequence: protMatch.getProtein().sequence});
@@ -175,6 +178,14 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         })
         // remove empty entries
         .filter(Boolean)
+        // mark selected PTMs
+        .map(function(el){
+          var isSelected = _.find(_this.selPsms, function(oneSel){
+            return oneSel.searchId == el.data.searchId && oneSel.spNr == el.data.spectrumId.id;
+          });
+          el.isSelected = (isSelected != undefined) ? true : false;
+          return el;
+        })
         .flatten()
         .value();
 
@@ -313,11 +324,39 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         .value();
     };
 
-
+    /**
+     * @description set the AA position on which the user clicked
+     */
     ProteinMatchesGlobalPvizView.prototype.setSelPsmPos = function (psmPos) {
       var _this = this;
 
       _this._selPsmPos = psmPos;
+    };
+
+    /**
+     * @description remove the given PSM from the list of selected PSMs
+     */
+    ProteinMatchesGlobalPvizView.prototype.removeSelPsm = function (psm) {
+      var _this = this;
+
+      _this.selPsms = _this.selPsms.filter(function(el){
+        return !(el.searchId == psm.searchId && el.spNr == psm.spNr);
+      })
+    }
+
+    /**
+     * @description add given PSM to the list of selected PSMs
+     */
+    ProteinMatchesGlobalPvizView.prototype.addSelPsm = function (psm) {
+      var _this = this;
+
+      var psmInfo = {
+        // rank: psm.matchInfo.rank,
+        searchId: psm.searchId,
+        spNr: psm.spectrumId.id
+      }
+
+      _this.selPsms.push(psmInfo);
     };
 
 

@@ -15,7 +15,16 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .enter()
           .append('g')
           .attr('class', 'feature internal data ' + type);
-        sel.append('line');
+        sel.append('line').attr({
+          class: function (m) {
+
+            if(m.isSelected){
+              return 'selected';
+            }
+
+            return '';
+          }
+        });
 
         sel.selectAll('circle')
           .data(function (psm) {

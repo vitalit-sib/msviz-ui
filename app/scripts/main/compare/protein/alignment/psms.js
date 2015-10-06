@@ -25,6 +25,8 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         addSelectedPSM(scope, ft.data);
+        scope.pvizView.addSelPsm(ft.data);
+        scope.pvizView.refreshView();
       });
       scope.$watch('proteinMatch', function (protMatch) {
         if (protMatch === undefined) {
@@ -49,6 +51,11 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
       scope.$on('show-ptm-matches', function (undefined, args) {
         scope.pvizView.setSelPsmPos(args.pos);
+        scope.pvizView.refreshView();
+      });
+
+      scope.$on('basket-remove', function (undefined, args) {
+        scope.pvizView.removeSelPsm(args);
         scope.pvizView.refreshView();
       });
 

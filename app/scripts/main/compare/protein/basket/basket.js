@@ -40,6 +40,13 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
         return e.firstPsm !== psm;
       });
+
+      var psmInfo = {
+        // rank: psm.matchInfo.rank,
+        searchId: psm.searchId,
+        spNr: psm.spectrumId.id
+      }
+      $scope.$emit('basket-remove', psmInfo);
     };
 
     $scope.loadXic = function (psm) {
