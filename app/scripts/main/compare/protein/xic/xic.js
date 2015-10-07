@@ -20,31 +20,24 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
         return httpProxy.get(uri);
       };
 
-      scope.$on('show-xic-broadcast', function (undefined, ms2Info) {
+      var ms2Info = scope.item.ms2Info;
 
-        // we have to remove all existing SVG elements
-        for(var i=0; i<elm.children().length; i++){
-          elm.children()[i].remove();
-        }
+      // we have to remove all existing SVG elements
+      //for(var i=0; i<elm.children().length; i++){
+      //  elm.children()[i].remove();
+      //}
 
-        if (ms2Info) {
-          var backendCalls = [];
+      var backendCalls = [];
 
-          scope.searchIds.forEach(function(searchId) {
-            backendCalls.push(getXic(searchId, ms2Info.precMoz));
-          });
-
-          $q.all(
-            backendCalls
-          ).then(function(args){
-              updateXics(args, ms2Info.retentionTime, ms2Info.searchId);
-            });
-        }
-
+      scope.searchIds.forEach(function(searchId) {
+        backendCalls.push(getXic(searchId, ms2Info.precMoz));
       });
 
-      // create an empty xic on startup
-      // updateXic([],[]);
+      $q.all(
+        backendCalls
+      ).then(function(args){
+          updateXics(args, ms2Info.retentionTime, ms2Info.searchId);
+      });
 
     };
 

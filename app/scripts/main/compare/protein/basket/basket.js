@@ -8,10 +8,15 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     });
 
     $scope.addSelected = function (item) {
-      var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: []};
+      // info for XIC
+      console.log(item.bean);
+      var sp = item.bean.fishTones.spectrum.attributes;
+      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.searchId};
+
+      // info for spectrum and XIC
+      var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
     };
-
 
     $scope.zoomSpectrum = function(spectra){
       console.log('zoomSpectrum');
