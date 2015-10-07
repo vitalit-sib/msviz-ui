@@ -15,6 +15,7 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           .enter()
           .append('g')
           .attr('class', 'feature internal data ' + type);
+
         sel.append('line').attr({
           class: function (m) {
             if(m.isSelected){
@@ -23,6 +24,18 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
             return '';
           }
         });
+
+        // add the scan nr if the PSM was selected
+          sel.append('text')
+            .text(function (m) {
+              if(m.isSelected === true) {
+                var spId = m.data.spectrumId.id;
+                var spIdSplit = spId.split('.');
+                return spIdSplit[spIdSplit.length - 2];
+              }
+              return '';
+            });
+
 
         sel.selectAll('circle')
           .data(function (psm) {
@@ -81,6 +94,10 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           })
           .attr('x2', function (ft) {
             return viewport.scales.x(ft.end + 0.4);
+          });
+        d3selection.selectAll('text')
+          .attr('x', function (ft) {
+            return viewport.scales.x(ft.end + 2.4);
           });
         d3selection.selectAll('circle')
           .attr('cx', function (ft) {

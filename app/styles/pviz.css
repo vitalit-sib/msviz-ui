@@ -12,6 +12,13 @@ g.data.psms.psm:hover line {
   stroke-width: 4;
 }
 
+g.data.psms.psm text {
+  #font-family: monospace;
+  font-size: 80%;
+  fill: blue;
+}
+
+
 g.data.psms.psm circle {
   fill: grey;
   stroke: grey;

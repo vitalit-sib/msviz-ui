@@ -9,7 +9,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
     $scope.addSelected = function (item) {
       // info for XIC
-      console.log(item.bean);
       var sp = item.bean.fishTones.spectrum.attributes;
       var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.searchId};
 
