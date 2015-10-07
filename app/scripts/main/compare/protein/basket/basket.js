@@ -19,7 +19,8 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     };
 
     $scope.zoomSpectrum = function(spectra){
-      console.log('zoomSpectrum');
+      console.log('zoom spectrum:');
+      console.log(spectra);
     };
 
     // we're currently not looking for similar spectra
@@ -44,7 +45,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         // rank: psm.matchInfo.rank,
         searchId: psm.searchId,
         spNr: psm.spectrumId.id
-      }
+      };
       $scope.$emit('basket-remove', psmInfo);
     };
 

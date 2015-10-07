@@ -181,9 +181,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         // mark selected PTMs
         .map(function(el){
           var isSelected = _.find(_this.selPsms, function(oneSel){
-            return oneSel.searchId == el.data.searchId && oneSel.spNr == el.data.spectrumId.id;
+            return oneSel.searchId === el.data.searchId && oneSel.spNr === el.data.spectrumId.id;
           });
-          el.isSelected = (isSelected != undefined) ? true : false;
+          el.isSelected = (isSelected !== undefined) ? true : false;
           return el;
         })
         .flatten()
@@ -340,9 +340,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var _this = this;
 
       _this.selPsms = _this.selPsms.filter(function(el){
-        return !(el.searchId == psm.searchId && el.spNr == psm.spNr);
-      })
-    }
+        return !(el.searchId === psm.searchId && el.spNr === psm.spNr);
+      });
+    };
 
     /**
      * @description add given PSM to the list of selected PSMs
@@ -354,7 +354,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
         // rank: psm.matchInfo.rank,
         searchId: psm.searchId,
         spNr: psm.spectrumId.id
-      }
+      };
 
       _this.selPsms.push(psmInfo);
     };
