@@ -36,7 +36,6 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
               return '';
             });
 
-
         sel.selectAll('circle')
           .data(function (psm) {
             return _.filter(psm.modif, function (m) {

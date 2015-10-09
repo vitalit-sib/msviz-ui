@@ -95,7 +95,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
              return psm.matchInfo.score.mainScore;
           });
 
-          var bestScore = _.keys(scoreMap)[0];
+          var bestScore = parseFloat(_.keys(scoreMap)[0]);
 
           // create list of modifs
           var modifs = [];
@@ -107,9 +107,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
             _.each(psm.pep.modificationNames, function (mods, i) {
 
-              // we ignore entries with no modifications our without the modif looked for
-
-
               if (_.size(mods) === 0) {
                 return;
               }
@@ -118,23 +115,21 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
               var x = Math.max(-0.3, i - 1);
               x = Math.min(len - 0.7, x);
 
-              // get modif rank
+              // get modif rank @TODO is mods ever bigger than 1 ??
               var modifRank = '';
-              var selectedMod= '';
+              var selectedMod= (mods[0] === tModif ) ? true : false;
+              if(mods.length > 1){console.log(mods.length);}
 
-              if(psm.matchInfo.score.mainScore === parseFloat(bestScore)){
+              if(psm.matchInfo.score.mainScore === bestScore){
 
-                //Showing non selected modifications with different shape
-                if(mods[0] !== tModif ){
-                  selectedMod = false;
-                } else {
-                  selectedMod = true;
-                }
                 if(psm.matchInfo.rank === 1 ){
                   modifRank = 'first';
                 }else{
                   modifRank = 'firstWithConflict';
                 }
+                // we keep lower hits only for selected modifs
+              }else if(! selectedMod){
+                return;
               }
 
               // we add the modif only once per position
