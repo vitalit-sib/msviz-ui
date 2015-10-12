@@ -148,14 +148,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
           });
 
-          // if there is no modification or only at position not selected, we return an empty list
-
-       /*   if(_.size(modifs) === 0 || !(_.findWhere(modifs, {pos: psmPos-1}))){
-            return;
-          }
-*/
-          //if(_this._showAllPsm === false) {return;}
-
           var psm = sortedPsm[0];
           var prot = psm.proteinList[0];
 
