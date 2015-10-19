@@ -1,8 +1,7 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _) {
+  .controller('MatchesBasketCtrl', function ($scope, $q, _, myService,$location) {
     $scope.selectedItems = [];
-
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
     });
@@ -15,11 +14,22 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       // info for spectrum and XIC
       var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
+      //$scope.spectras = myService.set(newEntry);
     };
 
     $scope.zoomSpectrum = function(spectra){
       console.log('zoom spectrum:');
-      console.log(spectra);
+      //console.log(spectra);
+      // call service to save the data
+      angular.injector(['ng', 'matches-basket']).get("myService").set(spectra);
+
+      //open a new tab for the spectrum
+      //var comparePath= 'spectrum'
+      //$location.path(comparePath);
+      //var url='/#/spectrum/'
+      //window.open(url, '_blank');
+      var comparePath= 'spectrum'
+      $location.path(comparePath);
     };
 
     // we're currently not looking for similar spectra
@@ -58,6 +68,29 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     };
 
   })
+
+
+  //Service to share spectrum
+
+  .factory('myService', function() {
+    var savedData = {}
+
+    console.log('saving data');
+    function set(data) {
+      savedData = data;
+      console.log(data);
+    }
+    function get() {
+      return savedData;
+    }
+
+    return {
+      set: set,
+      get: get
+    }
+
+  })
+
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmListDetails
