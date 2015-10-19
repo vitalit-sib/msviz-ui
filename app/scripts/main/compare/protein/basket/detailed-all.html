@@ -15,9 +15,14 @@
             <span class="glyphicon glyphicon-remove"></span>
           </button>
         </div>
-        <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div>
+        <!-- <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div> -->
+        <div xic-fishtones style="height:150px"></div>
+        <div ng-if="xicPeaks">hoho</div>
       </div>
     </div>
     <matches-psm-box psm="item.firstPsm"></matches-psm-box>
+  <div ng-repeat="xic in xicPeaks">
+      {{xic.searchId}} - {{xic.rt}} - {{xic.int}}
+  </div>
     <hr>
 </div>

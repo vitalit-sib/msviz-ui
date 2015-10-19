@@ -97,6 +97,6 @@ g.chromato.rtBar line {
 }
 
 g.selectedRange rect {
-  fill: green;
+  fill: lightgreen;
 }
 

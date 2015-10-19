@@ -1,6 +1,20 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
+  .directive('xicFishtones', function (pviz, xicFishtonesView, _, httpProxy, $q) {
+    var link = function(scope, elm){
+      scope.$on("");
+    }
+
+    return {
+      template: '<span>{{searchId}}</span>',
+      link: link,
+      restrict: 'A'
+    };
+
+  })
+
+
 /**
  * @ngdoc directive
  * @name matches.directive:matchesFishtonesPsmSpectrum
@@ -12,6 +26,36 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
       var updateXics = function(xics, retentionTime, searchId){
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
+        scope.xicModel = view.model;
+
+        scope.xicPeaks = undefined;
+
+        scope.xicModel.on('change', function(){
+          console.log('xic model changed');
+          //scope.selectedXic = scope.xicModel.models;
+          //console.log(scope.selectedXic);
+          var xicPeaks = _.map(scope.xicModel.models, function(m){
+            console.log(m);
+            if(m.get('selected')){
+              return {
+                searchId: m.get('name'),
+                rt: m.get('selected')[0]/60,
+                int: (m.get('selected')[1]).toExponential()
+              }
+            }else{
+              return undefined;
+            }
+          });
+
+          scope.$emit("selected-xic-region", xicPeaks);
+          console.log(xicPeaks);
+
+//          var xic = scope.xicModel.models[0];
+//          console.log(xic.get('selected')[0]);
+//          if(scope.xicModel.hasChanged('selected')){
+//            console.log('selected changed');
+//          }
+        });
         return view;
       };
 
@@ -21,11 +65,6 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
       };
 
       var ms2Info = scope.item.ms2Info;
-
-      // we have to remove all existing SVG elements
-      //for(var i=0; i<elm.children().length; i++){
-      //  elm.children()[i].remove();
-      //}
 
       var backendCalls = [];
 
@@ -46,5 +85,9 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
     restrict: 'A'
   };
 });
+
+
+
+
 
 

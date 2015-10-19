@@ -3,6 +3,10 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
   .controller('MatchesBasketCtrl', function ($scope, $q, _) {
     $scope.selectedItems = [];
 
+    $scope.$on("selected-xic-region", function(event, item){
+      console.log("got message!");
+    });
+
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
     });
