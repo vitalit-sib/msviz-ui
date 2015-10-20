@@ -14,7 +14,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       // info for spectrum and XIC
       var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
-      //$scope.spectras = myService.set(newEntry);
+      $scope.spectras = myService.set(newEntry);
     };
 
     $scope.zoomSpectrum = function(spectra){
@@ -72,24 +72,28 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
   //Service to share spectrum
 
-  .factory('myService', function() {
+
+.factory('myService', ['$rootScope', function ($rootScope) {
     var savedData = {}
 
     console.log('saving data');
+
     function set(data) {
-      savedData = data;
+      //savedData = data;
+      $rootScope.spectras=data;
       console.log(data);
     }
     function get() {
-      return savedData;
+      console.log('en el get');
+      return $rootScope.spectras;
+      //return savedData;
     }
 
     return {
       set: set,
       get: get
     }
-
-  })
+}])
 
 /**
  * @ngdoc directive
