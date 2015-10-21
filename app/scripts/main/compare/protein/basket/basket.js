@@ -3,10 +3,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
   .controller('MatchesBasketCtrl', function ($scope, $q, _) {
     $scope.selectedItems = [];
 
-    $scope.$on("selected-xic-region", function(event, item){
-      console.log("got message!");
-    });
-
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
     });
@@ -25,19 +21,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       console.log('zoom spectrum:');
       console.log(spectra);
     };
-
-    // we're currently not looking for similar spectra
-    //$scope.getSimSpectra = function (spectrumRef) {
-    //  ssmService.findSimilarSpectra(spectrumRef).then(function (spspMatches) {
-    //    var ssms = {
-    //      type: 'SSM',
-    //      ref: spectrumRef,
-    //      matches: spspMatches
-    //    };
-    //    $scope.selectedItems.push(ssms);
-    //
-    //  });
-    //};
 
     $scope.removeSelectedPSM = function (psm) {
       $scope.selectedItems = _.filter($scope.selectedItems, function (e) {

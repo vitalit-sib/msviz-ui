@@ -81,7 +81,9 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     $scope.loadPSMSForSpectrum();
 
     $scope.expandOtherMatchTable = function () {
-      $scope.tableExpanded = $scope.tableExpanded?false:true;
+      var tableExpanded = $scope.tableExpanded?false:true;
+      $scope.$emit('conflict-table-expanded', tableExpanded);
+      $scope.tableExpanded = tableExpanded;
     };
   })
 /**

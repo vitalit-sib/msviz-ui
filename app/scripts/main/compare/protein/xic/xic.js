@@ -1,19 +1,12 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
-  .directive('xicFishtones', function (pviz, xicFishtonesView, _, httpProxy, $q) {
-    var link = function(scope, elm){
-      scope.$on("");
-    }
-
+  .directive('xicTable', function () {
     return {
-      template: '<span>{{searchId}}</span>',
-      link: link,
-      restrict: 'A'
+      templateUrl: 'scripts/main/compare/protein/basket/xic-table.html',
+      restrict: 'E'
     };
-
   })
-
 
 /**
  * @ngdoc directive
@@ -26,35 +19,38 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
       var updateXics = function(xics, retentionTime, searchId){
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
+
         scope.xicModel = view.model;
 
-        scope.xicPeaks = undefined;
+        scope.$on('conflict-table-expanded', function(event, tableExpanded){
+          scope.tableExpanded = tableExpanded;
+        });
 
         scope.xicModel.on('change', function(){
-          console.log('xic model changed');
-          //scope.selectedXic = scope.xicModel.models;
-          //console.log(scope.selectedXic);
+
           var xicPeaks = _.map(scope.xicModel.models, function(m){
-            console.log(m);
+
             if(m.get('selected')){
               return {
                 searchId: m.get('name'),
-                rt: m.get('selected')[0]/60,
-                int: (m.get('selected')[1]).toExponential()
+                rt: (m.get('selected')[0]/60).toFixed(2),
+                int: (m.get('selected')[1]).toExponential(2)
               }
             }else{
               return undefined;
             }
           });
 
-          scope.$emit("selected-xic-region", xicPeaks);
-          console.log(xicPeaks);
+          // if all entries are undefined we return undefined
+          var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
+          if(definedPeaks.undef === xicPeaks.length){
+            xicPeaks = undefined;
+          }
 
-//          var xic = scope.xicModel.models[0];
-//          console.log(xic.get('selected')[0]);
-//          if(scope.xicModel.hasChanged('selected')){
-//            console.log('selected changed');
-//          }
+          scope.xicPeaks = xicPeaks;
+
+          scope.$apply();
+
         });
         return view;
       };
@@ -84,6 +80,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
     link: link,
     restrict: 'A'
   };
+
 });
 
 
