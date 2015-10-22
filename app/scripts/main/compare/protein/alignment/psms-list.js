@@ -7,6 +7,10 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  */
   .factory('MatchesFishtonesPsmSpectrumView', function (_, fishtones) {
     var MatchesFishtonesPsmSpectrumView = function (elm, ftPSM) {
+
+      console.log('factory psms-list');
+      console.log('parametros que llegan');
+      console.log(ftPSM);
       var _this = this;
 
       var psm = new fishtones.match.PSMAlignment({
@@ -60,8 +64,12 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  * @description display a fishtones PSM spectrum view
  */
   .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
+
     var link = function (scope, elm) {
       var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
+
+      console.log('direc');
+      console.log(scope.fishtonesssm);
       return view;
     };
     return {

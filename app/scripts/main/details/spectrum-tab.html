@@ -1,5 +1,6 @@
-
-
-<p>Holaaaa</p>
-
-{{spectra}}
+<div ng-repeat="item in spectra">
+  <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:250px" />
+  <br>
+  <br>
+  <div xic-fishtones xicdata="item.ms2Info" style="height:250px"></div>
+</div>

@@ -1,6 +1,9 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _, myService,$location) {
+  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams) {
+    $scope.searchIds = $routeParams.searchIds.split(',');
+    var acSourcePair = $routeParams.proteinAC.split(':');
+    $scope.proteinAC = acSourcePair[0];
     $scope.selectedItems = [];
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
@@ -14,22 +17,17 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       // info for spectrum and XIC
       var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
-      $scope.spectras = myService.set(newEntry);
     };
 
     $scope.zoomSpectrum = function(spectra){
       console.log('zoom spectrum:');
-      //console.log(spectra);
-      // call service to save the data
-      angular.injector(['ng', 'matches-basket']).get("myService").set(spectra);
-
       //open a new tab for the spectrum
+      var spectrumId=spectra.firstPsm.spectrumId.id;
+      var runId=spectra.firstPsm.spectrumId.runId;
+      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId
+      window.open(url, '_blank');
       //var comparePath= 'spectrum'
       //$location.path(comparePath);
-      //var url='/#/spectrum/'
-      //window.open(url, '_blank');
-      var comparePath= 'spectrum'
-      $location.path(comparePath);
     };
 
     // we're currently not looking for similar spectra
@@ -72,21 +70,21 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
   //Service to share spectrum
 
-
+/*
 .factory('myService', ['$rootScope', function ($rootScope) {
     var savedData = {}
 
     console.log('saving data');
 
     function set(data) {
-      //savedData = data;
-      $rootScope.spectras=data;
+      savedData = data;
+      //$rootScope.spectras=data;
       console.log(data);
     }
     function get() {
       console.log('en el get');
-      return $rootScope.spectras;
-      //return savedData;
+      //return $rootScope.spectras;
+      return savedData;
     }
 
     return {
@@ -94,7 +92,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       get: get
     }
 }])
-
+*/
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmListDetails

@@ -55,9 +55,9 @@ angular
         templateUrl: 'scripts/main/compare/protein/compare-protein.html',
         controller: 'PsmsAlignmentCtrl'
       })
-      .when('/spectrum/', {
+      .when('/details/:searchIds/protein/:proteinAC/spectrumId/:spectrumId/runId/:runId', {
         templateUrl: 'scripts/main/details/spectrum-tab.html',
-        controller: 'SpectrumTabCtrl'
+        controller: 'DetailsTabCtrl'
       })
       .otherwise({
         redirectTo: '/'
