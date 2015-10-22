@@ -1,4 +1,4 @@
-<div ng-repeat="item in selectedItems">
+<div ng-repeat="item in selectedItems" class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
         <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
@@ -7,6 +7,8 @@
           </button>
         </div>
         <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
+        <div style="height:30px;"/>
+        <matches-psm-box psm="item.firstPsm"></matches-psm-box>
       </div>
       <div class="col-sm-6">
         <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
@@ -15,9 +17,11 @@
             <span class="glyphicon glyphicon-remove"></span>
           </button>
         </div>
-        <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div>
+        <!-- <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div> -->
+        <div xic-fishtones style="height:150px"></div>
+        <div style="height:30px;"/>
+        <xic-table/>
       </div>
     </div>
-    <matches-psm-box psm="item.firstPsm"></matches-psm-box>
-    <hr>
+    <hr style="margin-top: 0; margin-bottom: 3px">
 </div>

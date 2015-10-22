@@ -22,19 +22,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       console.log(spectra);
     };
 
-    // we're currently not looking for similar spectra
-    //$scope.getSimSpectra = function (spectrumRef) {
-    //  ssmService.findSimilarSpectra(spectrumRef).then(function (spspMatches) {
-    //    var ssms = {
-    //      type: 'SSM',
-    //      ref: spectrumRef,
-    //      matches: spspMatches
-    //    };
-    //    $scope.selectedItems.push(ssms);
-    //
-    //  });
-    //};
-
     $scope.removeSelectedPSM = function (psm) {
       $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
         return e.firstPsm !== psm;

@@ -1,6 +1,13 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
+  .directive('xicTable', function () {
+    return {
+      templateUrl: 'scripts/main/compare/protein/basket/xic-table.html',
+      restrict: 'E'
+    };
+  })
+
 /**
  * @ngdoc directive
  * @name matches.directive:matchesFishtonesPsmSpectrum
@@ -12,6 +19,39 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
       var updateXics = function(xics, retentionTime, searchId){
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
+
+        scope.xicModel = view.model;
+
+        scope.$on('conflict-table-expanded', function(event, tableExpanded){
+          scope.tableExpanded = tableExpanded;
+        });
+
+        scope.xicModel.on('change', function(){
+
+          var xicPeaks = _.map(scope.xicModel.models, function(m){
+
+            if(m.get('selected')){
+              return {
+                searchId: m.get('name'),
+                rt: (m.get('selected')[0]/60).toFixed(2),
+                int: (m.get('selected')[1]).toExponential(2)
+              }
+            }else{
+              return {searchId: m.get('name')};
+            }
+          });
+
+          // if all entries are undefined we return undefined
+          //var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
+          //if(definedPeaks.undef === xicPeaks.length){
+          //  xicPeaks = undefined;
+          //}
+
+          scope.xicPeaks = xicPeaks;
+
+          scope.$apply();
+
+        });
         return view;
       };
 
@@ -21,11 +61,6 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
       };
 
       var ms2Info = scope.item.ms2Info;
-
-      // we have to remove all existing SVG elements
-      //for(var i=0; i<elm.children().length; i++){
-      //  elm.children()[i].remove();
-      //}
 
       var backendCalls = [];
 
@@ -45,6 +80,11 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
     link: link,
     restrict: 'A'
   };
+
 });
+
+
+
+
 
 

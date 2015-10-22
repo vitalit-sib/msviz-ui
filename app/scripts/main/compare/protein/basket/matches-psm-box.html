@@ -1,6 +1,4 @@
 <div ng-controller="MatchesPSMCtrl">
-<br>
-<br>
   <div>
     <div ng-if="psm4spectrum" class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group">
       <button ng-click="expandOtherMatchTable(item)" showtype="button"
@@ -10,8 +8,8 @@
       </button>
     </div>
     <div ng-if="!tableExpanded">
-      {{psm.fishTones.richSeq.toString()}}<br>
-      <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small>
+      <p style="word-wrap: break-word">{{psm.fishTones.richSeq.toString()}}</p>
+      <p><small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small></p>
     </div>
   </div>
   <div ng-show="tableExpanded">
