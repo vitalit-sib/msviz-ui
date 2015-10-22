@@ -37,15 +37,15 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
                 int: (m.get('selected')[1]).toExponential(2)
               }
             }else{
-              return undefined;
+              return {searchId: m.get('name')};
             }
           });
 
           // if all entries are undefined we return undefined
-          var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
-          if(definedPeaks.undef === xicPeaks.length){
-            xicPeaks = undefined;
-          }
+          //var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
+          //if(definedPeaks.undef === xicPeaks.length){
+          //  xicPeaks = undefined;
+          //}
 
           scope.xicPeaks = xicPeaks;
 

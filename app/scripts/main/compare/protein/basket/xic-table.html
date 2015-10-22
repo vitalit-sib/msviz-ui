@@ -1,4 +1,3 @@
-<!--<table ng-if="xicPeaks.length" class="table">-->
 <table ng-if="!tableExpanded && xicPeaks.length" class="table">
   <thead>
   <tr>
@@ -8,7 +7,8 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="xic in xicPeaks track by $index">
+  <!--<tr ng-repeat="xic in xicPeaks track by $index">-->
+  <tr ng-repeat="xic in xicPeaks | orderBy:'searchId'">
     <td>{{xic.searchId}}</td>
     <td>{{xic.rt}}</td>
     <td>{{xic.int}}</td>
