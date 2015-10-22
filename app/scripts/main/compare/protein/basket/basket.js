@@ -26,8 +26,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       var runId=spectra.firstPsm.spectrumId.runId;
       var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId
       window.open(url, '_blank');
-      //var comparePath= 'spectrum'
-      //$location.path(comparePath);
     };
 
     // we're currently not looking for similar spectra

@@ -7,7 +7,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
  */
   .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtones, fishtonifyService, spectrumService) {
 
-    console.log('directive');
     var addSelectedPSM = function(scope, pvizPsm){
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
 
@@ -16,7 +15,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
         var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
         scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});
-        console.log('shittt vuelta');
       });
     };
 
@@ -27,9 +25,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         addSelectedPSM(scope, ft.data);
         scope.pvizView.addSelPsm(ft.data);
-        console.log('pviz');
-        //console.log(ft.data);
-        console.log('end pviz');
         scope.pvizView.refreshView();
       });
       scope.$watch('proteinMatch', function (protMatch) {
