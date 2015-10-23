@@ -4,8 +4,8 @@ g.data.psms.psm line {
 }
 
 g.data.psms.psm line.selected {
-  stroke: blue;
-  stroke-width: 2;
+  stroke: lightblue;
+  stroke-width: 3;
 }
 
 g.data.psms.psm:hover line {
@@ -15,7 +15,7 @@ g.data.psms.psm:hover line {
 g.data.psms.psm text {
   #font-family: monospace;
   font-size: 80%;
-  fill: blue;
+  fill: grey;
 }
 
 g.data.psms.psm circle {
