@@ -65,32 +65,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
   })
 
-
-  //Service to share spectrum
-
-/*
-.factory('myService', ['$rootScope', function ($rootScope) {
-    var savedData = {}
-
-    console.log('saving data');
-
-    function set(data) {
-      savedData = data;
-      //$rootScope.spectras=data;
-      console.log(data);
-    }
-    function get() {
-      console.log('en el get');
-      //return $rootScope.spectras;
-      return savedData;
-    }
-
-    return {
-      set: set,
-      get: get
-    }
-}])
-*/
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmListDetails
