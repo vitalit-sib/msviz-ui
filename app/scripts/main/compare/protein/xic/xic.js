@@ -35,7 +35,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
                 searchId: m.get('name'),
                 rt: (m.get('selected')[0]/60).toFixed(2),
                 int: (m.get('selected')[1]).toExponential(2)
-              }
+              };
             }else{
               return {searchId: m.get('name')};
             }
