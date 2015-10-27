@@ -73,7 +73,11 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       // filter out psm's outside selected position
       var filteredPsms = _.filter(myPsms, function(psm){
         var prot = psm.proteinList[0];
-        return (psmPos <= prot.endPos && psmPos >= prot.startPos + 1);
+
+        //for n-terminal
+        if (psmPos==1){
+          return (psmPos <= prot.endPos && psmPos >= prot.startPos)
+        }else return (psmPos <= prot.endPos && psmPos >= prot.startPos +1);
       });
 
       var spGroups = _.groupBy(filteredPsms, function(onePsm){
@@ -316,7 +320,6 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
      */
     ProteinMatchesGlobalPvizView.prototype.setSelPsmPos = function (psmPos) {
       var _this = this;
-
       _this._selPsmPos = psmPos;
     };
 

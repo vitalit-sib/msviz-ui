@@ -11,7 +11,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
 
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
-
       spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
         var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
@@ -114,7 +113,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
 
       $scope[args.type] = args.bean;
       $scope.$apply();
-
     });
   })
 
