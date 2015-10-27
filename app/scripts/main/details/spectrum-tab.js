@@ -11,7 +11,7 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
      psmService.findAllBySearchIdAndSpectrumId($scope.runId,$scope.spectrumId)
      .then(function (psm)
      {
-       addSelectedPSM(psm[0])
+       addSelectedPSM(psm[0]);
      });
 
 
@@ -21,10 +21,9 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
         pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
         spectrumService.findByRunIdAndId($scope.runId, $scope.spectrumId).then(function (spectrum) {
-          var sp = fishtonifyService.convertSpectrum(spectrum);
-          pvizPsm.fishTones.spectrum = sp;
-          var sp = pvizPsm.fishTones.spectrum.attributes;
-          var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: pvizPsm.searchId};
+          pvizPsm.fishTones.spectrum = fishtonifyService.convertSpectrum(spectrum);
+          var spAttr = pvizPsm.fishTones.spectrum.attributes;
+          var ms2Info = {precCharge: spAttr.precCharge, precIntensity: spAttr.precIntensity, precMoz: spAttr.precMoz, retentionTime: spAttr.retentionTime, searchId: pvizPsm.searchId};
 
           // info for spectrum and XIC
           var newEntry = {type:pvizPsm.type, firstPsm: pvizPsm, otherPsms: [], ms2Info: ms2Info};

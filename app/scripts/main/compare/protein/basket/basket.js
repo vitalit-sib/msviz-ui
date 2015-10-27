@@ -24,7 +24,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       //open a new tab for the spectrum
       var spectrumId=spectra.firstPsm.spectrumId.id;
       var runId=spectra.firstPsm.spectrumId.runId;
-      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId
+      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId;
       window.open(url, '_blank');
     };
 
