@@ -1,8 +1,6 @@
 'use strict';
 angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service'])
   .controller('DetailsTabCtrl', function ($scope, $q, _,psmService,spectrumService,fishtones,fishtonifyService,pviz,$routeParams) {
-    //console.log('params');
-    //console.log($routeParams);
     $scope.searchIds = $routeParams.searchIds.split(',');
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
