@@ -5,7 +5,6 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
 .factory('xicFishtonesView', function (fishtones) {
 
     var xicFishtonesView = function(elm, xics, searchIds, selRetentionTime, selSearchId) {
-      var _this = this;
 
       // create an unused injection object
       var injection = new fishtones.wet.Injection();
@@ -47,7 +46,7 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
         xicCol.add(xic);
       }
 
-      return _this;
+      return view;
     };
 
     return xicFishtonesView;

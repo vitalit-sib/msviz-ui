@@ -1,13 +1,15 @@
-<div ng-repeat="item in selectedItems">
+<div ng-repeat="item in selectedItems" class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
-      <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-        <button ng-click="zoomSpectrum(item)" showtype="button" class="btn btn-default btn-small">
-          <span class="glyphicon glyphicon-zoom-in"></span>
-        </button>
+        <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+          <button ng-click="zoomSpectrum(item)" showtype="button" class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-zoom-in"></span>
+          </button>
+        </div>
+        <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
+        <div style="height:30px;"/>
+        <matches-psm-box psm="item.firstPsm"></matches-psm-box>
       </div>
-      <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
-    </div>
       <div class="col-sm-6">
         <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
           <button ng-click="removeSelectedPSM(item.firstPsm)" showtype="button"
@@ -15,9 +17,11 @@
             <span class="glyphicon glyphicon-remove"></span>
           </button>
         </div>
-        <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div>
+        <!-- <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div> -->
+        <div xic-fishtones style="height:150px"></div>
+        <div style="height:30px;"/>
+        <xic-table/>
       </div>
     </div>
-    <matches-psm-box psm="item.firstPsm"></matches-psm-box>
-    <hr>
+    <hr style="margin-top: 0; margin-bottom: 3px">
 </div>

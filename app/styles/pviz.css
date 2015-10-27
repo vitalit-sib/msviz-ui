@@ -95,3 +95,8 @@ path.chromato.target_0 {
 g.chromato.rtBar line {
   stroke: red;
 }
+
+g.selectedRange rect {
+  fill: lightgreen;
+}
+
