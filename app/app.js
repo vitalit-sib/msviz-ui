@@ -23,6 +23,7 @@ angular
     'matches-modif-filter',
     'multi-searches',
     'psms-alignment',
+    'spectrum-tab',
     'ssm',
     'sequences',
     'experimental',
@@ -50,10 +51,13 @@ angular
         templateUrl: 'scripts/main/compare/searches/multi-searches.html',
         controller: 'MultiSearchListCtrl'
       })
-
      .when('/compare/:searchIds/protein/:proteinAC', {
         templateUrl: 'scripts/main/compare/protein/compare-protein.html',
         controller: 'PsmsAlignmentCtrl'
+      })
+      .when('/details/:searchIds/protein/:proteinAC/spectrumId/:spectrumId/runId/:runId', {
+        templateUrl: 'scripts/main/details/spectrum-tab.html',
+        controller: 'DetailsTabCtrl'
       })
       .otherwise({
         redirectTo: '/'

@@ -60,6 +60,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  * @description display a fishtones PSM spectrum view
  */
   .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
+
     var link = function (scope, elm) {
       var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
       return view;

@@ -1,8 +1,10 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _) {
+  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams) {
+    $scope.searchIds = $routeParams.searchIds.split(',');
+    var acSourcePair = $routeParams.proteinAC.split(':');
+    $scope.proteinAC = acSourcePair[0];
     $scope.selectedItems = [];
-
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
     });
@@ -19,7 +21,11 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
     $scope.zoomSpectrum = function(spectra){
       console.log('zoom spectrum:');
-      console.log(spectra);
+      //open a new tab for the spectrum
+      var spectrumId=spectra.firstPsm.spectrumId.id;
+      var runId=spectra.firstPsm.spectrumId.runId;
+      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId
+      window.open(url, '_blank');
     };
 
     $scope.removeSelectedPSM = function (psm) {
@@ -45,6 +51,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     };
 
   })
+
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmListDetails
