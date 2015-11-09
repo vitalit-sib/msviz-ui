@@ -24,7 +24,6 @@ angular
     'multi-searches',
     'psms-alignment',
     'spectrum-tab',
-    'ssm',
     'sequences',
     'experimental',
     'xic',

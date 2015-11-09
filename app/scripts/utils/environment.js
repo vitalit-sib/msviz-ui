@@ -52,6 +52,14 @@ angular.module('environment', ['angularytics'])
         });
     };
 
+
+    HttpProxy.prototype.put = function(uri, data, opts){
+      return $http.put(EnvConfig.backendUrl+uri, data, opts)
+        .then(function(resp){
+          return resp;
+        });
+    };
+
     return new HttpProxy();
   })
 

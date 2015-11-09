@@ -20,15 +20,15 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
       var updateXics = function(xics, retentionTime, searchId){
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
 
-        scope.xicModel = view.model;
+        scope.$parent.xicModel = view.model;
 
         scope.$on('conflict-table-expanded', function(event, tableExpanded){
           scope.tableExpanded = tableExpanded;
         });
 
-        scope.xicModel.on('change', function(){
+        scope.$parent.xicModel.on('change', function(){
 
-          var xicPeaks = _.map(scope.xicModel.models, function(m){
+          var xicPeaks = _.map(scope.$parent.xicModel.models, function(m){
 
             if(m.get('selected')){
               return {
@@ -41,13 +41,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
             }
           });
 
-          // if all entries are undefined we return undefined
-          //var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
-          //if(definedPeaks.undef === xicPeaks.length){
-          //  xicPeaks = undefined;
-          //}
-
-          scope.xicPeaks = xicPeaks;
+          scope.$parent.xicPeaks = xicPeaks;
 
           scope.$apply();
 
