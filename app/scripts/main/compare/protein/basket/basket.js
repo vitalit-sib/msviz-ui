@@ -29,9 +29,11 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         "proteinAC":item.firstPsm.proteinList[0].proteinRef.AC,
          "peptideSeq":item.firstPsm.fishTones.richSeqShortcut ,
         "startPos":item.firstPsm.proteinList[0].startPos ,
-        "endPos":item.firstPsm.proteinList[0].endPos ,
+          "endPos":item.firstPsm.proteinList[0].endPos ,
         "searchIds":$scope.searchIds.join(","),
         "spectrumId": item.firstPsm.spectrumId,
+        "score": item.firstPsm.matchInfo.score.mainScore,
+        "localizationScore": item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
         "ppmTolerance": 10,
         "rtZoom": {"lowerRt":10, "upperRt":30},
         "rtSelected": {"lowerRt":10, "upperRt":30},

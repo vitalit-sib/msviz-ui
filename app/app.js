@@ -43,6 +43,10 @@ angular
         templateUrl: 'scripts/main/results/results-list.html',
         controller: 'ResultsCtrl'
       })
+      .when('/result/:searchId', {
+        templateUrl: 'scripts/main/results/result.html',
+        controller: 'OneResultCtrl'
+      })
       .when('/proteins/:searchId', {
         templateUrl: 'scripts/main/searches/proteinsID-list.html',
         controller: 'ProteinIDsListCtrl'

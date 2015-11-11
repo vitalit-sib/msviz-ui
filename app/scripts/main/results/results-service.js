@@ -10,6 +10,10 @@ angular.module('results-services', ['thirdparties', 'environment'])
       return httpProxy.get('/basket');
     };
 
+    BasketServices.prototype.findBySearchId = function (searchId) {
+      return httpProxy.get('/basket/' + searchId);
+    };
+
     return new BasketServices();
   })
 

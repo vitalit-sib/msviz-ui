@@ -1,13 +1,24 @@
-<h1>{id}</h1>
+<h3>{{searchId}}</h3>
+
+<div>
+  <p ng-repeat="oneId in searchIds">Sample {{$index + 1}} : <strong>{{oneId}}</strong></p>
+</div>
+
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>SearchId</th>
+    <th>ProteinAC</th>
+    <th>Peptide</th>
+    <th ng-repeat="rt in searchIds">rt {{$index + 1}}</th>
+    <th ng-repeat="int in searchIds">int {{$index + 1}}</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="id in searchIds">
-    <td><a href="#/result/{{id}}">{{id}}</a></td>
+  <tr ng-repeat="e in entries | orderBy:['proteinAC','startPos']">
+    <td>{{e.proteinAC}}</td>
+    <td>{{e.peptideSeq}}</td>
+    <td ng-repeat="p in e.xicPeaks">{{p.rt}}</td>
+    <td ng-repeat="p in e.xicPeaks">{{p.intensity}}</td>
   </tr>
   </tbody>
 </table>
