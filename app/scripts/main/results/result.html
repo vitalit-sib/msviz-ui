@@ -4,25 +4,33 @@
   <p ng-repeat="oneId in searchIds">Sample {{$index + 1}} : <strong>{{oneId}}</strong></p>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <thead>
   <tr>
     <th>ProteinAC</th>
     <th>Peptide</th>
+    <th>Scan#</th>
+    <th>Rt</th>
+    <th>Moz</th>
+    <th>Charge</th>
     <th>Score</th>
-    <th>L. score</th>
-    <th ng-repeat="rt in searchIds">rt {{$index + 1}}</th>
-    <th ng-repeat="int in searchIds">int {{$index + 1}}</th>
+    <th>L.score</th>
+    <th ng-repeat="rt in searchIds">{{$index + 1}}:Rt</th>
+    <th ng-repeat="int in searchIds">{{$index + 1}}:Int</th>
   </tr>
   </thead>
   <tbody>
   <tr ng-repeat="e in entries | orderBy:['proteinAC','startPos']">
     <td>{{e.proteinAC}}</td>
     <td>{{e.peptideSeq}}</td>
-    <td>{{e.score}}</td>
-    <td>{{e.localizationScore}}</td>
+    <td>{{e.scanNr}}</td>
+    <td>{{e.precRt.toFixed(2)}}</td>
+    <td>{{e.precMoz.toFixed(2)}}</td>
+    <td>{{e.precCharge}}</td>
+    <td>{{e.score.toFixed(0)}}</td>
+    <td>{{e.localizationScore.toFixed(0)}}</td>
     <td ng-repeat="p in e.xicPeaks">{{p.rt}}</td>
-    <td ng-repeat="p in e.xicPeaks">{{p.intensity}}</td>
+    <td ng-repeat="p in e.xicPeaks">{{p.intensity.toExponential(2)}}</td>
   </tr>
   </tbody>
 </table>

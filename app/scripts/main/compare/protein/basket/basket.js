@@ -20,7 +20,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     };
 
     $scope.addToBasket = function(item){
-
       var myXicPeaks = _.map($scope.xicPeaks, function(el){
         return {"searchId": el.searchId, "rt": Number(el.rt), "intensity": Number(el.int)}
       });
@@ -29,7 +28,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         "proteinAC":item.firstPsm.proteinList[0].proteinRef.AC,
          "peptideSeq":item.firstPsm.fishTones.richSeqShortcut ,
         "startPos":item.firstPsm.proteinList[0].startPos ,
-          "endPos":item.firstPsm.proteinList[0].endPos ,
+        "endPos":item.firstPsm.proteinList[0].endPos ,
         "searchIds":$scope.searchIds.join(","),
         "spectrumId": item.firstPsm.spectrumId,
         "score": item.firstPsm.matchInfo.score.mainScore,
