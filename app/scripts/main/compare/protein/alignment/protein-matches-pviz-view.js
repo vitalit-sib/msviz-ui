@@ -101,7 +101,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
              return psm.matchInfo.score.mainScore;
           });
 
-          var bestScore = parseFloat(_.keys(scoreMap)[0]);
+          var bestScore = parseFloat(_.max(_.keys(scoreMap)));
 
           // create list of modifs
           var modifs = [];
