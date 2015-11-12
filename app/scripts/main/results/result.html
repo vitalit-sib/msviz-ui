@@ -9,6 +9,8 @@
   <tr>
     <th>ProteinAC</th>
     <th>Peptide</th>
+    <th>Score</th>
+    <th>L. score</th>
     <th ng-repeat="rt in searchIds">rt {{$index + 1}}</th>
     <th ng-repeat="int in searchIds">int {{$index + 1}}</th>
   </tr>
@@ -17,6 +19,8 @@
   <tr ng-repeat="e in entries | orderBy:['proteinAC','startPos']">
     <td>{{e.proteinAC}}</td>
     <td>{{e.peptideSeq}}</td>
+    <td>{{e.score}}</td>
+    <td>{{e.localizationScore}}</td>
     <td ng-repeat="p in e.xicPeaks">{{p.rt}}</td>
     <td ng-repeat="p in e.xicPeaks">{{p.intensity}}</td>
   </tr>
