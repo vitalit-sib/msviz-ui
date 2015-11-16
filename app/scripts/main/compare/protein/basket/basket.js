@@ -15,16 +15,18 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.searchId};
 
       // info for spectrum and XIC
-      var newEntry = {type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
+      var newId = $scope.selectedItems.length;
+      var newEntry = {id: newId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
     };
 
-    $scope.addToBasket = function(item){
-      var myXicPeaks = _.map($scope.xicPeaks, function(el){
+    $scope.addToResults = function(item){
+
+      var myXicPeaks = _.map(item.xicPeaks, function(el){
         return {"searchId": el.searchId, "rt": Number(el.rt), "intensity": Number(el.int)}
       });
 
-      var basketEntry = {
+      var resultEntry = {
         "proteinAC":item.firstPsm.proteinList[0].proteinRef.AC,
          "peptideSeq":item.firstPsm.fishTones.richSeqShortcut ,
         "startPos":item.firstPsm.proteinList[0].startPos ,
@@ -39,7 +41,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         "xicPeaks": myXicPeaks
       };
 
-      httpProxy.put('/basket', basketEntry, {headers: {'Content-Type': undefined}});
+      httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}});
 
     }
 

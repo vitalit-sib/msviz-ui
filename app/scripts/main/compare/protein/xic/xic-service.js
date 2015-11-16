@@ -45,7 +45,6 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
 
         xicCol.add(xic);
       }
-
       return view;
     };
 

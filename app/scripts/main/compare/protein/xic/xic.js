@@ -20,15 +20,15 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
       var updateXics = function(xics, retentionTime, searchId){
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
 
-        scope.$parent.xicModel = view.model;
+        scope.xicModel = view.model;
 
         scope.$on('conflict-table-expanded', function(event, tableExpanded){
           scope.tableExpanded = tableExpanded;
         });
 
-        scope.$parent.xicModel.on('change', function(){
+        scope.xicModel.on('change', function(){
 
-          var xicPeaks = _.map(scope.$parent.xicModel.models, function(m){
+          var xicPeaks = _.map(scope.xicModel.models, function(m){
 
             if(m.get('selected')){
               return {
@@ -41,7 +41,10 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
             }
           });
 
-          scope.$parent.xicPeaks = xicPeaks;
+          // once we store it for the directive scope
+          scope.xicPeaks = xicPeaks;
+          // and once for the basket controller scope
+          scope.item.xicPeaks = xicPeaks;
 
           scope.$apply();
 
