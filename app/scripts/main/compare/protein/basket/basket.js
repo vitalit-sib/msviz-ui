@@ -1,6 +1,8 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
   .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams, httpProxy) {
+
+    $scope.showAddedLabel = false;
     $scope.searchIds = $routeParams.searchIds.split(',');
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
@@ -40,7 +42,20 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         'xicPeaks': myXicPeaks
       };
 
-      httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}});
+      // put the data to the bakend and show the label
+      httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}}).then(function (data){
+        $scope.showAddedLabel = true;
+      });
+
+      // remove the label after 2 seconds
+      setTimeout(function(){
+        $scope.$apply(function () {
+          $scope.showAddedLabel = false;
+        });
+      }, 2000);
+
+
+      //$scope.apply();
 
     };
 
