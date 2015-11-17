@@ -12,6 +12,10 @@
       </div>
       <div class="col-sm-6">
         <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+          <button ng-click="addToResults(item)" showtype="button"
+                  class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
           <button ng-click="removeSelectedPSM(item.firstPsm)" showtype="button"
                   class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-remove"></span>
@@ -20,7 +24,7 @@
         <!-- <div xic-fishtones xicdata="item.ms2Info" style="height:150px"></div> -->
         <div xic-fishtones style="height:150px"></div>
         <div style="height:30px;"/>
-        <xic-table/>
+        <xic-table></xic-table>
       </div>
     </div>
     <hr style="margin-top: 0; margin-bottom: 3px">

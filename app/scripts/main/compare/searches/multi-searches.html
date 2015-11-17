@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-8"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][searchId]}} </strong></small></p></div>
+  <div class="col-xs-8"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index + 1}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][searchId]}} </strong></small></p></div>
   <div class="col-xs-3"><modif-filter filter="modifFilter"></modif-filter></div>
 </div>
 
@@ -8,9 +8,9 @@
   <thead>
   <tr>
     <th>AC</th>
-    <th ng-repeat="searchId in searchIds">Score {{$index}}</th>
-    <th ng-repeat="searchId in searchIds"># PSMs {{$index}}</th>
-    <th ng-repeat="searchId in searchIds"># Seqs {{$index}}</th>
+    <th ng-repeat="searchId in searchIds">Score {{$index + 1}}</th>
+    <th ng-repeat="searchId in searchIds"># PSMs {{$index+ 1}}</th>
+    <th ng-repeat="searchId in searchIds"># Seqs {{$index + 1}}</th>
   </tr>
   </thead>
   <tbody>

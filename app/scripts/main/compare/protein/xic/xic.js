@@ -41,13 +41,10 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
             }
           });
 
-          // if all entries are undefined we return undefined
-          //var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
-          //if(definedPeaks.undef === xicPeaks.length){
-          //  xicPeaks = undefined;
-          //}
-
+          // once we store it for the directive scope
           scope.xicPeaks = xicPeaks;
+          // and once for the basket controller scope
+          scope.item.xicPeaks = xicPeaks;
 
           scope.$apply();
 
