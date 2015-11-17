@@ -32,7 +32,8 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         'proteinAC':item.firstPsm.proteinList[0].proteinRef.AC,
         'peptideSeq':item.firstPsm.fishTones.richSeqShortcut,
         'startPos':item.firstPsm.proteinList[0].startPos,
-        'endPos':item.firstPsm.proteinList[0].endPos,'searchIds':$scope.searchIds.join(','),
+        'endPos':item.firstPsm.proteinList[0].endPos,
+        'searchIds':$scope.searchIds.join(','),
         'spectrumId': item.firstPsm.spectrumId,
         'score': item.firstPsm.matchInfo.score.mainScore,
         'localizationScore': item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
@@ -44,18 +45,15 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
       // put the data to the bakend and show the label
       httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}}).then(function (){
-        $scope.showAddedLabel = true;
+        item.showAddedLabel = true;
       });
 
       // remove the label after 2 seconds
       setTimeout(function(){
         $scope.$apply(function () {
-          $scope.showAddedLabel = false;
+          item.showAddedLabel = false;
         });
       }, 2000);
-
-
-      //$scope.apply();
 
     };
 
