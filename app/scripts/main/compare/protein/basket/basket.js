@@ -23,15 +23,14 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     $scope.addToResults = function(item){
 
       var myXicPeaks = _.map(item.xicPeaks, function(el){
-        return {'searchId': el.searchId, 'rt': Number(el.rt), 'intensity': Number(el.int)}
+        return {'searchId': el.searchId, 'rt': Number(el.rt), 'intensity': Number(el.int)};
       });
 
       var resultEntry = {
         'proteinAC':item.firstPsm.proteinList[0].proteinRef.AC,
-         'peptideSeq':item.firstPsm.fishTones.richSeqShortcut ,
-        'startPos':item.firstPsm.proteinList[0].startPos ,
-        'endPos':item.firstPsm.proteinList[0].endPos ,
-        'searchIds':$scope.searchIds.join(','),
+        'peptideSeq':item.firstPsm.fishTones.richSeqShortcut,
+        'startPos':item.firstPsm.proteinList[0].startPos,
+        'endPos':item.firstPsm.proteinList[0].endPos,'searchIds':$scope.searchIds.join(','),
         'spectrumId': item.firstPsm.spectrumId,
         'score': item.firstPsm.matchInfo.score.mainScore,
         'localizationScore': item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
@@ -43,7 +42,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
       httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}});
 
-    }
+    };
 
     $scope.zoomSpectrum = function(spectrum){
       //open a new tab for the spectrum
