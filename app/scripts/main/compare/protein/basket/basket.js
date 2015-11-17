@@ -43,7 +43,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       };
 
       // put the data to the bakend and show the label
-      httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}}).then(function (data){
+      httpProxy.put('/basket', resultEntry, {headers: {'Content-Type': undefined}}).then(function (){
         $scope.showAddedLabel = true;
       });
 
