@@ -14,6 +14,13 @@ angular.module('results-services', ['thirdparties', 'environment'])
       return httpProxy.get('/basket/' + searchId);
     };
 
+    BasketServices.prototype.findBySearchIdTsv = function (searchId) {
+      return httpProxy.get('/basket/' + searchId, {headers: {
+        'Accept': 'application/tsv'
+      }
+      });
+    };
+
     return new BasketServices();
   })
 

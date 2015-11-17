@@ -1,4 +1,11 @@
-<h3>{{searchId}}</h3>
+<div class="row">
+  <div class="col-md-11"><h3>{{searchId}}</h3></div>
+  <div class="col-md-1 text-right">
+    <button type="button" class="btn btn-primary" ng-click="downloadTsv()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
 
 <div>
   <p ng-repeat="oneId in searchIds">Sample {{$index + 1}} : <strong>{{oneId}}</strong></p>

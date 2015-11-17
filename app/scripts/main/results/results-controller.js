@@ -18,5 +18,20 @@ angular.module('results-controller', ['thirdparties', 'environment'])
       $scope.entries = data;
     });
 
+    $scope.downloadTsv = function () {
+      console.log($scope.searchId);
+      resultsService.findBySearchIdTsv($scope.searchId).then(function (data) {
+        console.log(data);
+
+          var hiddenElement = document.createElement('a');
+
+          hiddenElement.href = 'data:attachment/csv,' + encodeURI(data);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = 'results.csv';
+          hiddenElement.click();
+
+      });
+    }
+
 });
 
