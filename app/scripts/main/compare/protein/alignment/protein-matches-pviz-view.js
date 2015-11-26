@@ -5,7 +5,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
  * @name matches.object:ProteinMatchesGlobalPvizView
  * @description the proteinMatchOverview
  */
-  .factory('ProteinMatchesGlobalPvizView', function (_, pviz, pvizCustomPsm) {
+  .factory('ProteinMatchesGlobalPvizView', function (_, pviz, pvizCustomPsm, spectrumService) {
     //these two lines just to fool out jshint
     var _yo = pvizCustomPsm.yo;
     _yo++;
@@ -156,6 +156,17 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
           var psm = sortedPsm[0];
           var prot = psm.proteinList[0];
+
+          // we can add the spectrum title here
+          spectrumService.findByRunIdAndId(psm.spectrumId.runId, psm.spectrumId.id).then(function (spectrum) {
+            var spTitle = 'scan: ' + spectrum.ref.scanNumber
+                          + ' (' + (spectrum.ref.precursor.retentionTime / 60).toFixed(1) + 'min) '
+                          + spectrum.ref.precursor.charge + '+ '
+                          + spectrum.ref.precursor.moz.toFixed(4) + 'Da';
+            psm.spTitle = spTitle;
+          });
+
+
 
           return {
             groupSet: psm.searchId,

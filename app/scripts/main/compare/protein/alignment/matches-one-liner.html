@@ -1,4 +1,5 @@
 <div class="well match-one-liner {{psm.matchInfo.isRejected?'rejected':''}}">
+  {{psm.spTitle}}<br>
   {{psm.fishTones.richSeq.toString()}}<br>
   <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small>
 </div>
