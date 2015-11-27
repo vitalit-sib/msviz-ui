@@ -1,5 +1,5 @@
 'use strict';
-angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper', 'experimental'])
 /**
  * @ngdoc object
  * @name matches.object:ProteinMatchesGlobalPvizView

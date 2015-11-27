@@ -23,8 +23,7 @@ describe('searches', function () {
     $rootScope = $injector.get('$rootScope');
 
     EnvConfig.backendUrl = 'http://pipo.com/backend';
-    //$httpBackend.when('GET', 'http://pipo.com/backend/')
-    //  .respond(prout);
+    //httpBackend.when('GET', 'http://pipo.com/backend/').respond(prout);
   }));
 
   describe('ProteinMatchesGlobalPvizView', function () {
@@ -41,7 +40,7 @@ describe('searches', function () {
         expect(pvizView.getFeaturesAAInfos().length).toEqual(1328);
       });
     });
- 
+
   describe('getFeaturesPSMs', function () {
 
       it('no PTM selected', function () {
