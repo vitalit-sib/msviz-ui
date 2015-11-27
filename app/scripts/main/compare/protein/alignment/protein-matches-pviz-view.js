@@ -159,10 +159,10 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
           // we can add the spectrum title here
           spectrumService.findByRunIdAndId(psm.spectrumId.runId, psm.spectrumId.id).then(function (spectrum) {
-            var spTitle = 'scan: ' + spectrum.ref.scanNumber
-                          + ' (' + (spectrum.ref.precursor.retentionTime / 60).toFixed(1) + 'min) '
-                          + spectrum.ref.precursor.charge + '+ '
-                          + spectrum.ref.precursor.moz.toFixed(4) + 'Da';
+            var spTitle = 'scan: ' + spectrum.ref.scanNumber +
+                          ' (' + (spectrum.ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
+                          spectrum.ref.precursor.charge + '+ ' +
+                          spectrum.ref.precursor.moz.toFixed(4) + 'Da';
             psm.spTitle = spTitle;
           });
 
