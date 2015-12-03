@@ -21,6 +21,10 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       });
       view.render();
 
+      _this.scalingArea = view.scalingArea;
+      _this.scalingContext = view.scalingContext;
+
+
       return _this;
     };
 
@@ -31,10 +35,16 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-  .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
+  .directive('matchesFishtonesPsmSpectrum', function (pviz, _, MatchesFishtonesPsmSpectrumView) {
 
     var link = function (scope, elm) {
       var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
+
+      // lets store the view in main scope
+      var currentId = scope.$parent.selectedItemsId;
+      _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingArea = view.scalingArea;
+      _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingContext = view.scalingContext;
+
       return view;
     };
     return {

@@ -7,18 +7,21 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
     $scope.selectedItems = [];
+    $scope.selectedItemsId = -1;
+
     $scope.$on('basket-add', function (event, item) {
       $scope.addSelected(item);
     });
 
     $scope.addSelected = function (item) {
+      $scope.selectedItemsId ++;
+
       // info for XIC
       var sp = item.bean.fishTones.spectrum.attributes;
       var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.searchId};
 
       // info for spectrum and XIC
-      var newId = $scope.selectedItems.length;
-      var newEntry = {id: newId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
+      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
       $scope.selectedItems.push(newEntry);
     };
 
@@ -30,7 +33,7 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
       var resultEntry = {
         'proteinAC':item.firstPsm.proteinList[0].proteinRef.AC,
-        'peptideSeq':item.firstPsm.fishTones.richSeqShortcut,
+        'peptideSeq':item.firstPsm.fishTones.richSeq.toString(),
         'startPos':item.firstPsm.proteinList[0].startPos,
         'endPos':item.firstPsm.proteinList[0].endPos,
         'searchIds':$scope.searchIds.join(','),
@@ -63,6 +66,24 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       var runId=spectrum.firstPsm.spectrumId.runId;
       var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId;
       window.open(url, '_blank');
+    };
+
+    $scope.resetSpectrum = function(id, target){
+      target[id].model.reset();
+    };
+
+    $scope.resetXic = function(id, target){
+      target[id].model.reset();
+    };
+
+    $scope.zoomAllOther = function(id, target){
+      var xDomain = _.findWhere($scope.selectedItems, {id: id})[target]._xDomain;
+
+      $scope.selectedItems.forEach(function(item){
+        if(item.id !== id){
+          item[target].xDomain(xDomain);
+        }
+      });
     };
 
     $scope.removeSelectedPSM = function (psm) {
