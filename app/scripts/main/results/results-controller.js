@@ -20,12 +20,17 @@ angular.module('results-controller', ['thirdparties', 'environment'])
 
     $scope.downloadTsv = function () {
       resultsService.findBySearchIdTsv($scope.searchId).then(function (data) {
-          var hiddenElement = document.createElement('a');
 
-          hiddenElement.href = 'data:attachment/csv,' + encodeURI(data);
-          hiddenElement.target = '_blank';
-          hiddenElement.download = 'results.csv';
-          hiddenElement.click();
+        var anchor = angular.element('<a/>');
+        anchor.css({display: 'none'}); // Make sure it's not visible
+        angular.element(document.body).append(anchor); // Attach to document
+
+        anchor.attr({
+          href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+          target: '_blank',
+          download: 'results.csv'
+        })[0].click();
+
       });
     };
 
