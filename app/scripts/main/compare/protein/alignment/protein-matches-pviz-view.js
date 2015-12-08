@@ -13,6 +13,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     // pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 8;
 
     var ProteinMatchesGlobalPvizView = function (elm, protMatch) {
+
       var _this = this;
 
       // set empty array for selected psms
@@ -74,12 +75,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var filteredPsms = _.filter(myPsms, function(psm){
         var prot = psm.proteinList[0];
 
-        //for n-terminal
-        if (psmPos===1){
-          return (psmPos <= prot.endPos && psmPos >= prot.startPos);
-        }else{
-          return (psmPos <= prot.endPos && psmPos >= prot.startPos +1);
-        }
+        return (psmPos <= prot.endPos && psmPos >= prot.startPos);
       });
 
       var spGroups = _.groupBy(filteredPsms, function(onePsm){

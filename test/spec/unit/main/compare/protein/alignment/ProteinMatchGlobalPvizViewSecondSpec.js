@@ -41,6 +41,16 @@ describe('searches', function () {
       });
     });
 
+  describe('getFirstPosition', function () {
+    it('Actely selected at 304', function () {
+      var pm = new ProteinMatch(mockProtMatch.prot, mockProtMatch.psms, {targetModification: 'Acetyl'});
+      var pvizView = new ProteinMatchesGlobalPvizView(undefined, pm);
+      pvizView._selPsmPos = 1;
+      expect(pvizView.getFeaturesPSMs()).not.toBeUndefined();
+      expect(pvizView.getFeaturesPSMs().length).toEqual(24);
+    });
+  });
+
   describe('getFeaturesPSMs', function () {
 
       it('no PTM selected', function () {
