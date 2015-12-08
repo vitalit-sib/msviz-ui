@@ -1,4 +1,4 @@
-  'use strict';
+    'use strict';
 
 describe('PSMIsoModif', function () {
   var PSMIsoModif, psmIsoModifBuilder, _;

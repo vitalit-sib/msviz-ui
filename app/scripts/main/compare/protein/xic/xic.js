@@ -23,7 +23,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
         scope.xicModel = view.model;
 
         // lets store the view in main scope
-        var currentId = scope.$parent.selectedItemsId;
+        var currentId = view.localId;
         _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingAreaXic = view.scalingArea;
         _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingContextXic= view.scalingContext;
 
