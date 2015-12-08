@@ -28,7 +28,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService,$location){
     searchService.list().then(function(data){
-      $scope.searches=data;
+      $scope.searches=data.slice().reverse();
     });
 
     $scope.ids= [];
