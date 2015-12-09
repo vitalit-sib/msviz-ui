@@ -18,6 +18,14 @@ angular.module('results-controller', ['thirdparties', 'environment'])
       $scope.entries = data;
     });
 
+    $scope.deleteEntry = function (id) {
+      resultsService.deleteEntry(id).then(function(answer){
+        resultsService.findBySearchId($scope.searchId).then(function (data) {
+          $scope.entries = data;
+        });
+      });
+    }
+
     $scope.downloadTsv = function () {
       resultsService.findBySearchIdTsv($scope.searchId).then(function (data) {
 

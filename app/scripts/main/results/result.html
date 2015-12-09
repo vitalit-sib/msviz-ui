@@ -14,6 +14,7 @@
 <table class="table table-striped table-bordered">
   <thead>
   <tr>
+    <th></th>
     <th>ProteinAC</th>
     <th>Peptide</th>
     <th>Scan#</th>
@@ -28,6 +29,9 @@
   </thead>
   <tbody>
   <tr ng-repeat="e in entries | orderBy:['proteinAC','startPos']">
+    <td></thd><button ng-click="deleteEntry(e._id)" showtype="button" class="btn btn-default btn-xs">
+      <span class="glyphicon glyphicon-trash"></span>
+    </button></td>
     <td>{{e.proteinAC}}</td>
     <td>{{e.peptideSeq}}</td>
     <td>{{e.scanNr}}</td>
@@ -41,3 +45,4 @@
   </tr>
   </tbody>
 </table>
+
