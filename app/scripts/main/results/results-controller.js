@@ -19,12 +19,13 @@ angular.module('results-controller', ['thirdparties', 'environment'])
     });
 
     $scope.deleteEntry = function (id) {
-      resultsService.deleteEntry(id).then(function(answer){
+      resultsService.deleteEntry(id).then(function(){
+        // refresh the basket list after deleting an entry
         resultsService.findBySearchId($scope.searchId).then(function (data) {
           $scope.entries = data;
         });
       });
-    }
+    };
 
     $scope.downloadTsv = function () {
       resultsService.findBySearchIdTsv($scope.searchId).then(function (data) {

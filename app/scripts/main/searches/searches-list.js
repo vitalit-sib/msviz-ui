@@ -50,9 +50,12 @@ angular.module('searches-list', ['thirdparties', 'environment'])
     };
 
     $scope.getSearchIds = function(){
+      // sort searches to make the basket still work as before
+      var sortedSearches = _.sortBy($scope.searches, function(s){return s.searchId;});
+
       //obtain search object
       $scope.selectedIds.forEach(function(entry) {
-        var s= $scope.searches[entry];
+        var s= sortedSearches[entry];
         //extract serachId and add it to the set
         if ($scope.searchIds===''){
           $scope.searchIds=$scope.searchIds.concat(s.searchId);
