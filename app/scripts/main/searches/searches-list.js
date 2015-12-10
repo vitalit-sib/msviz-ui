@@ -28,7 +28,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService,$location){
     searchService.list().then(function(data){
-      $scope.searches=data.slice().reverse();
+      $scope.searches=data.reverse();
     });
 
     $scope.ids= [];
@@ -53,20 +53,19 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       // sort searches to make the basket still work as before
       var sortedSearches = _.sortBy($scope.searches, function(s){return s.searchId;});
 
+      var searchIdList = [];
+      var titleList = [];
+
       //obtain search object
       $scope.selectedIds.forEach(function(entry) {
-        var s= sortedSearches[entry];
-        //extract serachId and add it to the set
-        if ($scope.searchIds===''){
-          $scope.searchIds=$scope.searchIds.concat(s.searchId);
-          $scope.titles=$scope.titles.concat(s.title);
-        }
-        else{
-          $scope.searchIds=$scope.searchIds.concat(',').concat(s.searchId);
-          $scope.titles=$scope.titles.concat(',').concat(s.title);
-        }
-
+        var s= $scope.searches[entry];
+        searchIdList.push(s.searchId);
+        titleList.push(s.title);
       });
+
+      $scope.searchIds = searchIdList.sort().join(',');
+      $scope.titles = titleList.sort().join(',');
+
       var comparePath= 'compare/'.concat($scope.searchIds);
       $location.path(comparePath).search({param:$scope.titles});
 
