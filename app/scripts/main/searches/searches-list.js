@@ -50,25 +50,21 @@ angular.module('searches-list', ['thirdparties', 'environment'])
     };
 
     $scope.getSearchIds = function(){
-      // sort searches to make the basket still work as before
-      var sortedSearches = _.sortBy($scope.searches, function(s){return s.searchId;});
-
       var searchIdList = [];
-      var titleList = [];
 
       //obtain search object
       $scope.selectedIds.forEach(function(entry) {
         var s= $scope.searches[entry];
-        searchIdList.push(s.searchId);
-        titleList.push(s.title);
+        searchIdList.push({id: s.searchId, title: s.title});
       });
 
-      $scope.searchIds = searchIdList.sort().join(',');
-      $scope.titles = titleList.sort().join(',');
+      var sortedSearchIdList = _.sortBy(searchIdList, function(s){return s.searchId;}).reverse();
+
+      $scope.searchIds = _.pluck(sortedSearchIdList, 'id').join(',');
+      $scope.titles = _.pluck(sortedSearchIdList, 'title').join(',');
 
       var comparePath= 'compare/'.concat($scope.searchIds);
       $location.path(comparePath).search({param:$scope.titles});
-
 
     };
     $scope.checkAll = function () {
