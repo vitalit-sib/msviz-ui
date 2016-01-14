@@ -23,8 +23,7 @@ describe('searches', function () {
     $rootScope = $injector.get('$rootScope');
 
     EnvConfig.backendUrl = 'http://pipo.com/backend';
-    //$httpBackend.when('GET', 'http://pipo.com/backend/')
-    //  .respond(prout);
+    //httpBackend.when('GET', 'http://pipo.com/backend/').respond(prout);
   }));
 
   describe('ProteinMatchesGlobalPvizView', function () {
@@ -41,7 +40,17 @@ describe('searches', function () {
         expect(pvizView.getFeaturesAAInfos().length).toEqual(1328);
       });
     });
- 
+
+  describe('getFirstPosition', function () {
+    it('Actely selected at 304', function () {
+      var pm = new ProteinMatch(mockProtMatch.prot, mockProtMatch.psms, {targetModification: 'Acetyl'});
+      var pvizView = new ProteinMatchesGlobalPvizView(undefined, pm);
+      pvizView._selPsmPos = 1;
+      expect(pvizView.getFeaturesPSMs()).not.toBeUndefined();
+      expect(pvizView.getFeaturesPSMs().length).toEqual(24);
+    });
+  });
+
   describe('getFeaturesPSMs', function () {
 
       it('no PTM selected', function () {

@@ -21,73 +21,36 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       });
       view.render();
 
+      _this.scalingArea = view.scalingArea;
+      _this.scalingContext = view.scalingContext;
+
+
       return _this;
     };
 
     return MatchesFishtonesPsmSpectrumView;
   })
 /**
- * @ngdoc object
- * @name  matches.view:MatchesFishtonesSSMSpectrumView
- * @description wrapper around the fisthones/d3 view for SSM
- */
-  .factory('MatchesFishtonesSSMSpectrumView', function (_, fishtones, fishtonifyService) {
-    var MatchesFishtonesSSMSpectrumView = function (elm, ssm) {
-      var _this = this;
-      var alg = new fishtones.match.SpectraPairAlignment({
-        spectrumA: fishtonifyService.convertSpectrum(ssm.sp1),
-        spectrumB: fishtonifyService.convertSpectrum(ssm.sp2)
-      });
-
-      var view = new fishtones.match.SpectraPairAlignmentView({
-        el: elm,
-        model: alg,
-        fragTol: 50,
-        enhanced: true
-      });
-
-      view.xZoomable();
-      view.render();
-
-      return _this;
-    };
-
-    return MatchesFishtonesSSMSpectrumView;
-  })
-/**
  * @ngdoc directive
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-  .directive('matchesFishtonesPsmSpectrum', function (pviz, MatchesFishtonesPsmSpectrumView) {
+  .directive('matchesFishtonesPsmSpectrum', function (pviz, _, MatchesFishtonesPsmSpectrumView) {
 
     var link = function (scope, elm) {
       var view = new MatchesFishtonesPsmSpectrumView(elm, scope.fishtonespsm);
+
+      // lets store the view in main scope
+      var currentId = scope.$parent.selectedItemsId;
+      _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingArea = view.scalingArea;
+      _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingContext = view.scalingContext;
+
       return view;
     };
     return {
       link: link,
       scope: {
         'fishtonespsm': '='
-      },
-      restrict: 'A',
-      template: '<div></div>'
-    };
-  })
-/**
- * @ngdoc directive
- * @name matches.directive:matchesFishtonesSsms
- * @description a list of SSM
- */
-  .directive('matchesFishtonesSsm', function (pviz, MatchesFishtonesSSMSpectrumView) {
-    var link = function (scope, elm) {
-      var view = new MatchesFishtonesSSMSpectrumView(elm, scope.fishtonesssm);
-      return view;
-    };
-    return {
-      link: link,
-      scope: {
-        'fishtonesssm': '='
       },
       restrict: 'A',
       template: '<div></div>'

@@ -3,6 +3,7 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
 
   .service('pvizCustomPsm', function (_, pviz) {
     var defaultTrackHeight = 0.1;
+    var minAaInfoThikness = 2;
     pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 0.5;
     pviz.FeatureDisplayer.trackHeightPerCategoryType.ptmCounts = defaultTrackHeight;
     pviz.FeatureDisplayer.trackHeightPerCategoryType.psmIsoModifs = defaultTrackHeight;
@@ -242,13 +243,13 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
         sel.append('line')
           .style('stroke-width', function (aai) {
             var d = aai.data.depth;
-            if(d <= 2){
-              return 1;
+    /*        if(d <= 2){
+              return minAaInfoThikness;
             }
             if (d <= 4) {
-              return d/2;
-            }
-            return d/4;
+              return d/2 + minAaInfoThikness;
+            } */
+            return d/2 + minAaInfoThikness;
           });
         sel.filter(function (aai) {
           return aai.data.nbTargetModification;

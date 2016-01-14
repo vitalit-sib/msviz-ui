@@ -1,11 +1,11 @@
 'use strict';
-angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 'environment', 'fishtones-wrapper', 'experimental'])
 /**
  * @ngdoc object
  * @name matches.object:ProteinMatchesGlobalPvizView
  * @description the proteinMatchOverview
  */
-  .factory('ProteinMatchesGlobalPvizView', function (_, pviz, pvizCustomPsm) {
+  .factory('ProteinMatchesGlobalPvizView', function (_, pviz, pvizCustomPsm, spectrumService) {
     //these two lines just to fool out jshint
     var _yo = pvizCustomPsm.yo;
     _yo++;
@@ -13,6 +13,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
     // pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 8;
 
     var ProteinMatchesGlobalPvizView = function (elm, protMatch) {
+
       var _this = this;
 
       // set empty array for selected psms
@@ -74,12 +75,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var filteredPsms = _.filter(myPsms, function(psm){
         var prot = psm.proteinList[0];
 
-        //for n-terminal
-        if (psmPos===1){
-          return (psmPos <= prot.endPos && psmPos >= prot.startPos);
-        }else{
-          return (psmPos <= prot.endPos && psmPos >= prot.startPos +1);
-        }
+        return (psmPos <= prot.endPos && psmPos >= prot.startPos);
       });
 
       var spGroups = _.groupBy(filteredPsms, function(onePsm){
@@ -101,7 +97,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
              return psm.matchInfo.score.mainScore;
           });
 
-          var bestScore = parseFloat(_.keys(scoreMap)[0]);
+          var bestScore = _.max(_.map(scoreMap, function(num, key) {return parseFloat(key);}));
 
           // create list of modifs
           var modifs = [];
@@ -156,6 +152,17 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
           var psm = sortedPsm[0];
           var prot = psm.proteinList[0];
+
+          // we can add the spectrum title here
+          spectrumService.findByRunIdAndId(psm.spectrumId.runId, psm.spectrumId.id).then(function (spectrum) {
+            var spTitle = 'scan: ' + spectrum.ref.scanNumber +
+                          ' (' + (spectrum.ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
+                          spectrum.ref.precursor.charge + '+ ' +
+                          spectrum.ref.precursor.moz.toFixed(4) + 'Da';
+            psm.spTitle = spTitle;
+          });
+
+
 
           return {
             groupSet: psm.searchId,

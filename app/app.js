@@ -19,16 +19,16 @@ angular
     'matches-psms-list',
     'matches-protein',
     'searches-list',
-    'qcSummary-list',
     'matches-modif-filter',
     'multi-searches',
     'psms-alignment',
     'spectrum-tab',
-    'ssm',
     'sequences',
     'experimental',
     'xic',
-    'xic-services'
+    'xic-services',
+    'results-services',
+    'results-controller'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -39,9 +39,13 @@ angular
         templateUrl: 'scripts/main/searches/searches-list.html',
         controller: 'SearchListCtrl'
       })
-      .when('/qcSummary', {
-        templateUrl: 'scripts/main/qc/qcSummary-list.html',
-        controller: 'QcSummaryListCtrl'
+      .when('/results', {
+        templateUrl: 'scripts/main/results/results-list.html',
+        controller: 'ResultsCtrl'
+      })
+      .when('/result/:searchId', {
+        templateUrl: 'scripts/main/results/result.html',
+        controller: 'OneResultCtrl'
       })
       .when('/proteins/:searchId', {
         templateUrl: 'scripts/main/searches/proteinsID-list.html',

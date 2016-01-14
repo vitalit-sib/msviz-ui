@@ -4,7 +4,10 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
 
 .factory('xicFishtonesView', function (fishtones) {
 
+    var localId = -1;
+
     var xicFishtonesView = function(elm, xics, searchIds, selRetentionTime, selSearchId) {
+      localId ++;
 
       // create an unused injection object
       var injection = new fishtones.wet.Injection();
@@ -45,6 +48,8 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
 
         xicCol.add(xic);
       }
+
+      view.localId = localId;
 
       return view;
     };

@@ -23,7 +23,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="opsm in psm4spectrum">
+      <tr ng-repeat="opsm in psm4spectrum | orderBy:'matchInfo.rank'">
         <td>{{opsm.matchInfo.rank}}</td>
         <td>{{opsm.fishTones.richSeq.toString()}}</td>
         <td>{{opsm.matchInfo.score.mainScore | number:0}}</td>

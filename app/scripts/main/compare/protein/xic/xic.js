@@ -22,6 +22,11 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
         scope.xicModel = view.model;
 
+        // lets store the view in main scope
+        var currentId = view.localId;
+        _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingAreaXic = view.scalingArea;
+        _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingContextXic= view.scalingContext;
+
         scope.$on('conflict-table-expanded', function(event, tableExpanded){
           scope.tableExpanded = tableExpanded;
         });
@@ -41,13 +46,10 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
             }
           });
 
-          // if all entries are undefined we return undefined
-          //var definedPeaks = _.countBy(xicPeaks, function(p){return p?'def':'undef'});
-          //if(definedPeaks.undef === xicPeaks.length){
-          //  xicPeaks = undefined;
-          //}
-
+          // once we store it for the directive scope
           scope.xicPeaks = xicPeaks;
+          // and once for the basket controller scope
+          scope.item.xicPeaks = xicPeaks;
 
           scope.$apply();
 

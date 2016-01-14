@@ -28,7 +28,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService,$location){
     searchService.list().then(function(data){
-      $scope.searches=data;
+      $scope.searches=data.reverse();
     });
 
     $scope.ids= [];
@@ -50,23 +50,21 @@ angular.module('searches-list', ['thirdparties', 'environment'])
     };
 
     $scope.getSearchIds = function(){
+      var searchIdList = [];
+
       //obtain search object
       $scope.selectedIds.forEach(function(entry) {
         var s= $scope.searches[entry];
-        //extract serachId and add it to the set
-        if ($scope.searchIds===''){
-          $scope.searchIds=$scope.searchIds.concat(s.searchId);
-          $scope.titles=$scope.titles.concat(s.title);
-        }
-        else{
-          $scope.searchIds=$scope.searchIds.concat(',').concat(s.searchId);
-          $scope.titles=$scope.titles.concat(',').concat(s.title);
-        }
-
+        searchIdList.push({id: s.searchId, title: s.title});
       });
+
+      var sortedSearchIdList = _.sortBy(searchIdList, function(s){return s.searchId;}).reverse();
+
+      $scope.searchIds = _.pluck(sortedSearchIdList, 'id').join(',');
+      $scope.titles = _.pluck(sortedSearchIdList, 'title').join(',');
+
       var comparePath= 'compare/'.concat($scope.searchIds);
       $location.path(comparePath).search({param:$scope.titles});
-
 
     };
     $scope.checkAll = function () {
