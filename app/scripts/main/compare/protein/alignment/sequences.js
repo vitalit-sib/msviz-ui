@@ -38,7 +38,8 @@ angular.module('sequences', ['thirdparties', 'environment'])
           return oneInfo.id === database;
         });
 
-        return sourceList[0].version;
+        var databaseName = (sourceList[0].version) ? sourceList[0].version : database;
+        return databaseName;
       });
     };
 
