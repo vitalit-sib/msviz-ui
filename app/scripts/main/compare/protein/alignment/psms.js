@@ -10,8 +10,10 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     var addSelectedPSM = function(scope, pvizPsm){
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
 
+
+      //we change runId by searchId to make it compatible with MaxQuant
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
-      spectrumService.findByRunIdAndId(pvizPsm.spectrumId.runId, pvizPsm.spectrumId.id).then(function (spectrum) {
+      spectrumService.findByRunIdAndId(pvizPsm.searchId, pvizPsm.spectrumId.id).then(function (spectrum) {
         var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
         scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});

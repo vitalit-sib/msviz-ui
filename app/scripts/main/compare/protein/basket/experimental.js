@@ -22,8 +22,8 @@ angular.module('experimental', ['thirdparties', 'environment'])
      * @param {string} pid the spextrum id within that run
      * @returns {httpPromise} of an ExpMSMSSpectrum
      */
-    SprectrumService.prototype.findByRunIdAndId = function (runId, id) {
-      return httpProxy.get('/exp/spectrum/' + runId + '/' + id+'?sortByMoz=true&mostIntense=200');
+    SprectrumService.prototype.findByRunIdAndId = function (searchId, id) {
+      return httpProxy.get('/exp/spectrum/' + searchId + '/' + id+'?sortByMoz=true&mostIntense=200');
     };
 
 

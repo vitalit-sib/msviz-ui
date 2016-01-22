@@ -20,7 +20,11 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
 
         pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
-        spectrumService.findByRunIdAndId($scope.runId, $scope.spectrumId).then(function (spectrum) {
+
+        //we change runId by searchId to make it compatible with MaxQuant
+        //console.log("estoy buscando por esto" + $scope.runId)
+        //console.log("debería buscar por " + $scope.searchId)
+        spectrumService.findByRunIdAndId($scope.searchId, $scope.spectrumId).then(function (spectrum) {
           pvizPsm.fishTones.spectrum = fishtonifyService.convertSpectrum(spectrum);
           var spAttr = pvizPsm.fishTones.spectrum.attributes;
           var ms2Info = {precCharge: spAttr.precCharge, precIntensity: spAttr.precIntensity, precMoz: spAttr.precMoz, retentionTime: spAttr.retentionTime, searchId: pvizPsm.searchId};

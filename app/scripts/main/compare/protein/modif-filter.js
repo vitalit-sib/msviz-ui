@@ -68,6 +68,7 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
       var _this = this;
 
       _this._selectedModification = modif;
+      console.log("la modificacion es : " + modif)
 
       psmService.findAllProteinRefsBySearchIds(_this._searchIds, _this._selectedModification).then(function () {
         _this.onComplete(_this);

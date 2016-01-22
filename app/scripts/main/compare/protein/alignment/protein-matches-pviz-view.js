@@ -153,8 +153,10 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
           var psm = sortedPsm[0];
           var prot = psm.proteinList[0];
 
+
           // we can add the spectrum title here
-          spectrumService.findByRunIdAndId(psm.spectrumId.runId, psm.spectrumId.id).then(function (spectrum) {
+          //we change runId by searchId to make it compatible with MaxQuant
+          spectrumService.findByRunIdAndId(psm.searchId, psm.spectrumId.id).then(function (spectrum) {
             var spTitle = 'scan: ' + spectrum.ref.scanNumber +
                           ' (' + (spectrum.ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
                           spectrum.ref.precursor.charge + '+ ' +
