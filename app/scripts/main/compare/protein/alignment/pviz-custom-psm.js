@@ -30,9 +30,8 @@ angular.module('pviz-custom-psm', ['thirdparties', 'environment', 'fishtones-wra
           sel.append('text')
             .text(function (m) {
               if(m.isSelected === true) {
-                var spId = m.data.spectrumId.id;
-                var spIdSplit = spId.split('.');
-                return spIdSplit[spIdSplit.length - 2];
+                //var spId = m.data.spectrumId.id;
+                return m.data.spectrumId.id;
               }
               return '';
             });

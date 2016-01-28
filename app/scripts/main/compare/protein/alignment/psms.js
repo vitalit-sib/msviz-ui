@@ -13,6 +13,9 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
 
       //we change runId by searchId to make it compatible with MaxQuant
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
+
+      console.log("searchId is in psms ")
+      console.log(pvizPsm.searchId)
       spectrumService.findByRunIdAndId(pvizPsm.searchId, pvizPsm.spectrumId.id).then(function (spectrum) {
         var sp = fishtonifyService.convertSpectrum(spectrum);
         pvizPsm.fishTones.spectrum = sp;
