@@ -67,7 +67,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
 
       var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId;
-      console.log(url)
       window.open(url, '_blank');
     };
 
