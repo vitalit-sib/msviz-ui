@@ -58,7 +58,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
         searchIdList.push({id: s.searchId, title: s.title});
       });
 
-      var sortedSearchIdList = _.sortBy(searchIdList, function(s){return s.searchId;}).reverse();
+      var sortedSearchIdList = _.sortBy(searchIdList, function(s){return s.id;}).reverse();
 
       $scope.searchIds = _.pluck(sortedSearchIdList, 'id').join(',');
       $scope.titles = _.pluck(sortedSearchIdList, 'title').join(',');
@@ -67,6 +67,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       $location.path(comparePath).search({param:$scope.titles});
 
     };
+
     $scope.checkAll = function () {
 
       $scope.ids.forEach(function (item) {
