@@ -11,7 +11,7 @@ angular.module('results-controller', ['thirdparties', 'environment'])
         var rawLastModif = (x.lastModif) ? (x.lastModif) : 0;
 
         return {'searchId' :x._id, 'lastModif' : lastModif, 'firstModif' : firstModif, rawLastModif: rawLastModif};
-      })
+      });
       $scope.resultList = dataModif;
     });
 
