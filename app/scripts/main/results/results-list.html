@@ -3,11 +3,15 @@
   <thead>
   <tr>
     <th>SearchId</th>
+    <th>Last modification</th>
+    <th>Creation time</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="id in searchIds">
-    <td><a href="#/result/{{id}}">{{id}}</a></td>
+  <tr ng-repeat="res in resultList | orderBy:'-rawLastModif'">
+    <td><a href="#/result/{{res.searchId}}">{{res.searchId}}</a></td>
+    <td>{{res.lastModif.toDateString()}}</td>
+    <td>{{res.firstModif.toDateString()}}</td>
   </tr>
   </tbody>
 </table>

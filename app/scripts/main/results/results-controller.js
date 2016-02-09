@@ -3,7 +3,16 @@ angular.module('results-controller', ['thirdparties', 'environment'])
 
   .controller('ResultsCtrl', function($scope, resultsService) {
     resultsService.list().then(function (data) {
-      $scope.searchIds = data;
+      var dataModif = _.map(data, function(x) {
+
+        var lastModif = (x.lastModif) ? (new Date(x.lastModif)) : null;
+        var firstModif = (x.firstModif) ? (new Date(x.firstModif)) : null;
+        // put entries with no date information at the end of the list
+        var rawLastModif = (x.lastModif) ? (x.lastModif) : 0;
+
+        return {'searchId' :x._id, 'lastModif' : lastModif, 'firstModif' : firstModif, rawLastModif: rawLastModif};
+      })
+      $scope.resultList = dataModif;
     });
 
   })
