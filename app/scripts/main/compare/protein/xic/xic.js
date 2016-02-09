@@ -18,14 +18,17 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
     var link = function (scope, elm) {
 
       var updateXics = function(xics, retentionTime, searchId){
-        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId);
+
+        // the new id should be the one just added
+        var newId = _.max(scope.$parent.selectedItems, function(x){return x.id;}).id;
+
+        // and we pass the id to the view
+        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId);
 
         scope.xicModel = view.model;
 
-        // lets store the view in main scope
-        var currentId = view.localId;
-        _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingAreaXic = view.scalingArea;
-        _.findWhere(scope.$parent.selectedItems, {id: currentId}).scalingContextXic= view.scalingContext;
+        _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingAreaXic = view.scalingArea;
+        _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingContextXic= view.scalingContext;
 
         scope.$on('conflict-table-expanded', function(event, tableExpanded){
           scope.tableExpanded = tableExpanded;
