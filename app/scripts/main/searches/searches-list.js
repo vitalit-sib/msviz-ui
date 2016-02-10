@@ -28,7 +28,8 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService, $location, _){
     searchService.list().then(function(data){
-      $scope.searches = _.sortBy(data, 'creationDate');
+      // to make the sorting back compatible (to times without the creationDate), we reverse the data before sorting it
+      $scope.searches = _.sortBy(data.reverse(), 'creationDate');
     });
 
     $scope.ids= [];
