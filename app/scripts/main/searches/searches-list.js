@@ -7,7 +7,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
  * Access to Searches
  *
  */
-  .service('searchService', function (httpProxy) {
+  .service('searchService', function (httpProxy, _) {
     var SearchService = function () {
       return this;
     };
@@ -28,7 +28,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService,$location){
     searchService.list().then(function(data){
-      $scope.searches=data.reverse();
+      $scope.searches = _.sortBy(data, 'creationDate')
     });
 
     $scope.ids= [];
