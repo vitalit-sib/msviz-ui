@@ -23,15 +23,32 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       return httpProxy.get('/search');
     };
 
+    SearchService.prototype.deleteMatchInfo = function (searchId) {
+        return httpProxy.delete('/search/' + searchId);
+    };
+
+    SearchService.prototype.deleteSpectra = function (searchId) {
+      return httpProxy.delete('/exp/msrun/' + searchId);
+    };
+
     return new SearchService();
   })
 
   .controller('SearchListCtrl', function($scope, searchService, $location, _){
-    searchService.list().then(function(data){
-      // to make the sorting back compatible (to times without the creationDate), we reverse the data before sorting it
-      $scope.searches = _.sortBy(data.reverse(), 'creationDate');
-    });
 
+    $scope.getSearchList = function(){
+      searchService.list().then(function(data){
+        // to make the sorting back compatible (to times without the creationDate), we reverse the data before sorting it
+        $scope.searches = _.sortBy(data.reverse(), 'creationDate');
+      });
+    };
+
+    /**
+     * get list of available searches and sort them by creation date
+     */
+    $scope.getSearchList();
+
+    // create empty variables
     $scope.ids= [];
     $scope.selectedIds = [];
     $scope.searchIds='';
@@ -40,6 +57,11 @@ angular.module('searches-list', ['thirdparties', 'environment'])
     $scope.addId = function($index){
       $scope.ids.push($index);
     };
+
+    /**
+     * add an when selecting a checkbox
+     * @param $index
+     */
     $scope.updateId= function($index){
       var i=$scope.selectedIds.indexOf($index);
       if(i> -1){
@@ -50,6 +72,9 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       }
     };
 
+    /**
+     * parse the selected searchIds and go to the compare view
+     */
     $scope.getSearchIds = function(){
       var searchIdList = [];
 
@@ -69,14 +94,31 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
     };
 
-    $scope.checkAll = function () {
+    /**
+     * delete the selected searchIds
+     */
+    $scope.deleteSearchIds = function(){
+      var searchIdList = [];
 
-      $scope.ids.forEach(function (item) {
-        //set true
-        $scope.ids[item].checked = true ;
-        //add to selected
-        $scope.selectedIds.push(item);
+      //obtain search object
+      $scope.selectedIds.forEach(function(entry) {
+        var s= $scope.searches[entry];
+        searchIdList.push(s.searchId);
       });
+
+      var searchIdString = searchIdList.join(',');
+
+      searchService.deleteMatchInfo(searchIdString).then(function () {
+        console.log('match info deleted');
+        // reload the list when entries were deleted
+        $scope.getSearchList();
+      });
+
+      // we don't wait for an answer in this case, just a little console.log
+      searchService.deleteSpectra(searchIdList).then(function(){
+        console.log('spectra deleted');
+      });
+
     };
 
 

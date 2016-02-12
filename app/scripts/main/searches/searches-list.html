@@ -1,4 +1,29 @@
 <h1>Searches</h1>
+<p>
+  <button class="btn btn-default" type="submit" ng-click="getSearchIds()">Compare</button>
+  <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+</p>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete selected searches?</h4>
+      </div>
+      <div class="modal-body">
+        <p ng-repeat="myId in selectedIds">
+          {{searches[myId].searchId}}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger" ng-click="deleteSearchIds()" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <table class="table table-striped">
     <thead>
     <tr>
@@ -28,7 +53,4 @@
     </tbody>
 
   </table>
-
-<button class="btn btn-default" type="submit" ng-click="getSearchIds()">Compare</button>
-<!--button class="btn btn-default" type="submit" ng-model="selectedAll" ng-click="checkAll()">Check All</button-->
 
