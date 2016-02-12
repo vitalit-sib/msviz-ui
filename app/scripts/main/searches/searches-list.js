@@ -112,6 +112,11 @@ angular.module('searches-list', ['thirdparties', 'environment'])
         console.log('match info deleted');
         // reload the list when entries were deleted
         $scope.getSearchList();
+
+        $scope.ids= [];
+        $scope.selectedIds = [];
+        $scope.searchIds='';
+        $scope.titles='';
       });
 
       // we don't wait for an answer in this case, just a little console.log
@@ -120,7 +125,6 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       });
 
     };
-
 
 });
 
