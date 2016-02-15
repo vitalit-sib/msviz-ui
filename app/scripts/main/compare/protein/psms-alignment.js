@@ -27,7 +27,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
         )
           .then(function (args) {
             $scope.proteinMatch = new ProteinMatch(args[0], args[1], {targetModification: $scope.modifFilter.getSelectedModification()});
-          }, function(reason){
+          }, function(){
             $scope.proteinNotFound = $scope.proteinAC;
             $scope.dbNotFound = source;
 
