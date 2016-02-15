@@ -1,3 +1,9 @@
+<div ng-if="dbNotFound" class="alert alert-danger">
+  <p>Could not load protein <em>{{proteinNotFound}}</em> from database <em>{{dbNotFound}}</em>.</p>
+  <p>Please load missing database <strong>{{dbNotFound}}</strong>.</p>
+  <p>If the database is already loaded, please make sure you use the correct protein identifiers.</p>
+</div>
+
 <div>
   <div class="row">
     <div class="col-xs-3"><h3>{{proteinAC}}</h3></div>
