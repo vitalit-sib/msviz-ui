@@ -22,14 +22,25 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     };
 
     var link = function (scope, elm) {
+
+      pviz.FeatureDisplayer.setMousemovementCallback(function(e){
+        scope.coordinates = e;
+      });
+
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
         scope.$broadcast('show-match', {type: 'psm', bean: ft.data});
       });
+
+      pviz.FeatureDisplayer.addMouseoutCallback(['psm'], function () {
+        scope.$broadcast('hide-match', undefined);
+      });
+
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
         addSelectedPSM(scope, ft.data);
         scope.pvizView.addSelPsm(ft.data);
         scope.pvizView.refreshView();
       });
+
       scope.$watch('proteinMatch', function (protMatch) {
         if (protMatch === undefined) {
           return;
@@ -110,14 +121,34 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
  *  * bean: the object
  */
   .controller('detailedMatchCtrl', function ($scope) {
+    // activate popover
+    angular.element('#detailInfoPopover').popover();
+
     $scope.$on('show-match', function (undefined, args) {
+
+      // get the current mouse position
+      var x = $scope.coordinates[0];
+      var y = $scope.coordinates[1];
+
+      // open the popover at the correct position
+      angular.element('#detailInfoPopover').show();
+      angular.element('#detailInfoPopover').css('left', (x + 30) + 'px');
+      angular.element('#detailInfoPopover').css('top', (y - 10) + 'px');
+
       delete $scope.psm;
       delete $scope.psmIsoModif;
 
       $scope[args.type] = args.bean;
       $scope.$apply();
     });
+
+    $scope.$on('hide-match', function () {
+      angular.element('#detailInfoPopover').hide();
+    });
+
   })
+
+
 
 
 /**

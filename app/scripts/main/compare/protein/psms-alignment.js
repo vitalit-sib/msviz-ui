@@ -9,7 +9,6 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     $scope.proteinAC = acSourcePair[0];
     $scope.database = acSourcePair[1];
 
-
     $scope.$on('show-xic-emit', function (undefined, args) {
       $scope.$broadcast('show-xic-broadcast', args);
 

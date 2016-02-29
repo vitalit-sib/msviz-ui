@@ -1,5 +1,11 @@
-<div class="well match-one-liner {{psm.matchInfo.isRejected?'rejected':''}}">
-  {{psm.spTitle}}<br>
-  {{psm.fishTones.richSeq.toString()}}<br>
-  <small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small>
-</div>
+
+
+ <div class="match-one-liner popover right" id="detailInfoPopover">
+    <h3 class="popover-title" style="white-space: nowrap;">{{psm.spTitle}}</h3>
+    <div class="popover-content">
+      <p style="word-wrap:break-word;">{{psm.fishTones.richSeq.toString()}}</p>
+      <p><small>Mascot score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong> - Localisation score: <strong>{{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</strong> %</small></p>
+    </div>
+  </div>
+
+
