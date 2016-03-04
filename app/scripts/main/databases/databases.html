@@ -1,0 +1,18 @@
+<h3>Databases</h3>
+<button type="button" class="btn btn-default" ngf-select="uploadFiles($files)" multiple="multiple">Upload files</button>
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Database</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="res in databasesList | orderBy:'-rawLastModif'">
+    <td></thd><button ng-click="deleteEntry(res)" showtype="button" class="btn btn-default btn-xs">
+      <span class="glyphicon glyphicon-trash"></span>
+    </button></td>
+    <td>{{res}}</td>
+  </tr>
+  </tbody>
+</table>

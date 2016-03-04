@@ -28,7 +28,9 @@ angular
     'xic',
     'xic-services',
     'results-services',
-    'results-controller'
+    'results-controller',
+    'databases-services',
+    'databases-controller'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -42,6 +44,10 @@ angular
       .when('/results', {
         templateUrl: 'scripts/main/results/results-list.html',
         controller: 'ResultsCtrl'
+      })
+      .when('/databases', {
+        templateUrl: 'scripts/main/databases/databases.html',
+        controller: 'DatabasesCtrl'
       })
       .when('/result/:searchId', {
         templateUrl: 'scripts/main/results/result.html',
