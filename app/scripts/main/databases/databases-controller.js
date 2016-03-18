@@ -50,11 +50,7 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
       // SEND THE FILES.
       $http(request)
         .success(function (d) {
-            databasesService.listFasta().then(function (data) {
-              console.log("listing")
-              $scope.databasesList = data;
-            });
-
+          location.reload();
         })
         .error(function () {
         });
