@@ -1,5 +1,15 @@
 <h3>Databases</h3>
-<button type="button" class="btn btn-default" ngf-select="uploadFiles($files)" multiple="multiple">Upload files</button>
+
+<body ng-app="fupApp">
+<div ng-controller="DatabasesCtrl">
+
+  <input type="file" id="file1" name="file" multiple
+         ng-files="getTheFiles($files)" />
+
+  <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+</div>
+</body>
+
 <table class="table table-striped table-bordered">
   <thead>
   <tr>
