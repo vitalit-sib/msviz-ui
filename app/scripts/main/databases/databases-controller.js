@@ -1,60 +1,38 @@
 'use strict';
-angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpload'])
+angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpload','databases-services'])
 
-  .controller('DatabasesCtrl', function($scope, databasesService,Upload,$timeout) {
+  .controller('DatabasesCtrl', function($scope, databasesService,Upload,$timeout,EnvConfig) {
     databasesService.listFasta().then(function (data) {
       $scope.databasesList = data;
     });
 
     //add method
-    $scope.uploadFiles = function (files) {
-        $scope.files = files;
-        if (files && files.length) {
-          Upload.upload({
-            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+
+
+    $scope.uploadFiles = function (file) {
+      console.log(file)
+        if (file) {
+          file.upload= Upload.upload({
+
+            url: EnvConfig.backendUrl + '/sequences/' + file[0].name + '/fasta',
             data: {
-              files: files
-            }
-          }).then(function (response) {
+              file: file
+            },
+            headers: {'method':'POST', 'Content-Type': undefined}
+          });
+
+          file.upload.then(function (response) {
             $timeout(function () {
-              $scope.result = response.data;
+              file.result = response.data;
             });
           }, function (response) {
-            if (response.status > 0) {
+            if (response.status > 0)
               $scope.errorMsg = response.status + ': ' + response.data;
-            }
           }, function (evt) {
-            $scope.progress =
-              Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            file.progress = Math.min(100, parseInt(100.0 *
+            evt.loaded / evt.total));
           });
         }
-      console.log("add into mongo databases")
-      $scope.files.forEach(function(fasta) {
-        var fastaName= fasta.name.substr(0, fasta.name.indexOf('.'));
-        databasesService.addFasta(fastaName)
-      })
-
-      databasesService.listFasta().then(function (data) {
-        $scope.databasesList = data;
-      });
-
-      };
-
-    /**
-     * delete the selected searchIds
-     */
-    $scope.deleteEntry = function(sourceId){
-
-        databasesService.deleteFasta(sourceId).then(function () {
-          // reload the list when entries were deleted
-         console.log("clean time")
-          databasesService.listFasta().then(function (data) {
-            $scope.databasesList = data;
-          });
-        });
-
     };
-
-
   })
 

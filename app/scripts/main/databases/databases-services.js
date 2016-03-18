@@ -11,7 +11,10 @@ angular.module('databases-services', ['thirdparties', 'environment'])
     };
 
     DatabasesServices.prototype.addFasta = function(sourceId) {
-      return httpProxy.put('/sequences/' + sourceId + '/fasta');
+      return httpProxy.post('/sequences/' + sourceId + '/fasta'
+        //,{transformRequest: angular.identity,
+        //headers: {'Content-Type': 'text/plain'}}
+         );
     };
 
     DatabasesServices.prototype.deleteFasta = function (sourceId) {
