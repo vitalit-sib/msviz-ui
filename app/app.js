@@ -30,8 +30,7 @@ angular
     'results-services',
     'results-controller',
     'databases-services',
-    'databases-controller',
-    'database-upload'
+    'databases-controller'
   ])
   .config(function ($routeProvider) {
     $routeProvider

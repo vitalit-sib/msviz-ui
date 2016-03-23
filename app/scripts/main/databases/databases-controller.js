@@ -30,65 +30,39 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
       });
     }
 
-
     var filesData = new FormData();
     $scope.getTheFiles = function ($files) {
       filesData=$files[0]
     };
 
-    // NOW UPLOAD THE FILES.
-    $scope.uploadFiles = function () {
-      var request = {
-        method: 'POST',
-        url: EnvConfig.backendUrl + '/sequences/' + filesData.name + '/fasta',
-        data: filesData,
-        headers: {
-          'Content-Type': undefined
-        }
-      };
+    //UPLOAD THE FILES.
+      $scope.uploadFiles = function () {
+        if (($scope.databasesList.indexOf(filesData.name) < 0)){
 
-      // SEND THE FILES.
-      $http(request)
-        .success(function (d) {
-          location.reload();
-        })
-        .error(function () {
-        });
+          console.log("no existe" + filesData.name)
+        var request = {
+          method: 'POST',
+          url: EnvConfig.backendUrl + '/sequences/' + filesData.name + '/fasta',
+          data: filesData,
+          headers: {
+            'Content-Type': undefined
+          }
+        };
+
+        // SEND THE FILES.
+        $http(request)
+          .success(function (d) {
+            location.reload();
+          })
+          .error(function () {
+          });
+      }
+        else {
+          console.log("yaaa existe" + filesData.name)
+          $scope.databaseFound=filesData.name
+          $scope.$apply();
+        }
     }
+
   });
-/*
-  .controller('DatabasesCtrl', function($scope, databasesService,Upload,$timeout,EnvConfig) {
-    databasesService.listFasta().then(function (data) {
-      $scope.databasesList = data;
-    });
-
-    //add method
-
-
-    $scope.uploadFiles = function (file) {
-      console.log(file)
-        if (file) {
-          file.upload= Upload.upload({
-
-            url: EnvConfig.backendUrl + '/sequences/' + file[0].name + '/fasta',
-            data: {
-              file: file
-            },
-            headers: {'method':'POST', 'Content-Type': undefined}
-          });
-
-          file.upload.then(function (response) {
-            $timeout(function () {
-              file.result = response.data;
-            });
-          }, function (response) {
-            if (response.status > 0)
-              $scope.errorMsg = response.status + ': ' + response.data;
-          }, function (evt) {
-            file.progress = Math.min(100, parseInt(100.0 *
-            evt.loaded / evt.total));
-          });
-        }
-    };
-  })*/
 
