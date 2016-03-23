@@ -3,16 +3,16 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
   .directive('ngFiles', ['$parse', function ($parse) {
 
-    function fn_link(scope, element, attrs) {
+    function fnLink(scope, element, attrs) {
       var onChange = $parse(attrs.ngFiles);
       element.on('change', function (event) {
         onChange(scope, { $files: event.target.files });
       });
-    };
+    }
 
     return {
-      link: fn_link
-    }
+      link: fnLink
+    };
   } ])
   .controller('DatabasesCtrl', function ($scope,databasesService,$http,EnvConfig) {
 
@@ -28,18 +28,16 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
           $scope.databasesList = data;
         });
       });
-    }
+    };
 
     var filesData = new FormData();
     $scope.getTheFiles = function ($files) {
-      filesData=$files[0]
+      filesData=$files[0];
     };
 
     //UPLOAD THE FILES.
       $scope.uploadFiles = function () {
         if (($scope.databasesList.indexOf(filesData.name) < 0)){
-
-          console.log("no existe" + filesData.name)
         var request = {
           method: 'POST',
           url: EnvConfig.backendUrl + '/sequences/' + filesData.name + '/fasta',
@@ -51,18 +49,17 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
         // SEND THE FILES.
         $http(request)
-          .success(function (d) {
+          .success(function () {
             location.reload();
           })
           .error(function () {
           });
       }
         else {
-          console.log("yaaa existe" + filesData.name)
-          $scope.databaseFound=filesData.name
+          $scope.databaseFound=filesData.name;
           $scope.$apply();
         }
-    }
+    };
 
   });
 

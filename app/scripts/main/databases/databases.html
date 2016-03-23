@@ -4,15 +4,14 @@
   <p>Please load  database with different name if necessary.</p>
 </div>
 <body ng-app="fupApp">
-<div ng-controller="DatabasesCtrl">
+
 
   <input type="file" id="file1" name="file" multiple
          ng-files="getTheFiles($files)" />
 
   <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
-</div>
-</body>
 
+</body>
 <table class="table table-striped table-bordered">
   <thead>
   <tr>
@@ -29,3 +28,5 @@
   </tr>
   </tbody>
 </table>
+
+
