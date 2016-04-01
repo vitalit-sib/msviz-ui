@@ -37,7 +37,8 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
     //UPLOAD THE FILES.
       $scope.uploadFiles = function () {
-        if (($scope.databasesList.indexOf(filesData.name) < 0)){
+        //Check first if there are not databases
+        if (($scope.databasesList == undefined) || ($scope.databasesList.indexOf(filesData.name) < 0)){
         var request = {
           method: 'POST',
           url: EnvConfig.backendUrl + '/sequences/' + filesData.name + '/fasta',
