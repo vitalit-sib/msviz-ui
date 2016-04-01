@@ -1,6 +1,19 @@
 'use strict';
 angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUpload'])
 
+  .directive('ngFiles', ['$parse', function ($parse) {
+
+    function fnLink(scope, element, attrs) {
+      var onChange = $parse(attrs.ngFiles);
+      element.on('change', function (event) {
+        onChange(scope, { $files: event.target.files });
+      });
+    }
+
+    return {
+      link: fnLink
+    };
+  } ])
 .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
     var filesData = new FormData();
@@ -9,10 +22,10 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
     };
 
     $scope.uploadFiles = function () {
-
+        var fileType='maxquant';
         var request = {
           method: 'POST',
-          url: EnvConfig.backendUrl + '/uploads/',
+          url: EnvConfig.backendUrl + '/uploads/' + fileType,
           data: filesData,
           headers: {
             'Content-Type': undefined
@@ -23,6 +36,7 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
         $http(request)
           .success(function () {
             location.reload();
+            $scope.fileUploaded="upload"
           })
           .error(function () {
           });

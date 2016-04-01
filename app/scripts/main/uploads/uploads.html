@@ -1,5 +1,5 @@
 <h3>Upload</h3>
-
+<div ng-if="fileUploaded" class="alert alert-success" role="alert">File uploaded</div>
 <body ng-app="fupApp">
 <input type="file" id="file1" name="file" multiple
        ng-files="getTheFiles($files)" />
