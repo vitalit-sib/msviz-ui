@@ -36,7 +36,7 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
         $http(request)
           .success(function () {
             location.reload();
-            $scope.fileUploaded="upload"
+            $scope.fileUploaded='upload';
           })
           .error(function () {
           });
