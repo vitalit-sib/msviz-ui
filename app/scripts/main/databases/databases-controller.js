@@ -37,7 +37,7 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
     //UPLOAD THE FILES.
       $scope.uploadFiles = function () {
-        //Check first if there are not databases
+        //Check first if the database was already inserted
         if (($scope.databasesList === undefined) || ($scope.databasesList.indexOf(filesData.name) < 0)){
         var request = {
           method: 'POST',
