@@ -1,6 +1,21 @@
 <h3>Upload</h3>
 <div ng-if="fileUploaded" class="alert alert-success" role="alert">File uploaded</div>
 
+<div class="row">
+  <div class="col-md-1">
+    <label>
+      <input type="radio" ng-model="fileType" value="mascot">
+      Mascot
+    </label><br/>
+    <label>
+      <input type="radio" ng-model="fileType" value="maxquant">
+      MaxQuant
+    </label><br/>
+  </div>
+</div>
+
+<br>
+
 <input type="file" id="fileUpload" name="fileUpload" multiple
        ng-files="getTheFiles($files)" />
 

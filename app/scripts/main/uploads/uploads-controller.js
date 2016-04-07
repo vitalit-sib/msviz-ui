@@ -28,13 +28,14 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
           url: EnvConfig.backendUrl + '/uploads/' + fileType,
           data: filesData,
           headers: {
-            'Content-Type': filesData.type
+            'Content-Type': undefined
           }
         };
 
         // SEND THE FILES.
         $http(request)
           .success(function () {
+            location.reload();
             $scope.fileUploaded='upload';
           })
           .error(function () {
