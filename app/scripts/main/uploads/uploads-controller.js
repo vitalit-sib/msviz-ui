@@ -16,6 +16,9 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
   } ])
 .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
+    // set default fileType
+    $scope.fileType = "mascot";
+
     var filesData = new FormData();
     $scope.getTheFiles = function ($files) {
       filesData=$files[0];
@@ -23,22 +26,24 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
 
     $scope.uploadFiles = function () {
         var fileType='maxquant';
-        var request = {
-          method: 'POST',
-          url: EnvConfig.backendUrl + '/uploads/' + fileType,
-          data: filesData,
-          headers: {
-            'Content-Type': undefined
-          }
-        };
+      console.log($scope.fileType);
 
-        // SEND THE FILES.
-        $http(request)
-          .success(function () {
-            location.reload();
-            $scope.fileUploaded='upload';
-          })
-          .error(function () {
-          });
+      var request = {
+        method: 'POST',
+        url: EnvConfig.backendUrl + '/uploads/' + $scope.fileType,
+        data: filesData,
+        headers: {
+          'Content-Type': undefined
+        }
+      };
+
+      // SEND THE FILES.
+      $http(request)
+        .success(function () {
+          location.reload();
+          $scope.fileUploaded='upload';
+        })
+        .error(function () {
+        });
     };
 });
