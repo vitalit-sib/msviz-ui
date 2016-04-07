@@ -16,16 +16,19 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
   } ])
 .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
+    // default fileType
+    $scope.fileType = 'mascot';
+
     var filesData = new FormData();
     $scope.getTheFiles = function ($files) {
       filesData=$files[0];
     };
 
     $scope.uploadFiles = function () {
-        var fileType='maxquant';
+
         var request = {
           method: 'POST',
-          url: EnvConfig.backendUrl + '/uploads/' + fileType,
+          url: EnvConfig.backendUrl + '/uploads/' + $scope.fileType,
           data: filesData,
           headers: {
             'Content-Type': undefined
