@@ -47,7 +47,7 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
             $scope.fileUploaded='upload';
           })
           .error(function () {
-            $scope.fileFailed='error'
+            $scope.fileFailed='error';
           });
     };
 });
