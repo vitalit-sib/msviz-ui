@@ -45,9 +45,11 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
         $http(request)
           .success(function () {
             $scope.fileUploaded='upload';
+            $scope.hideProgressBar = true;
           })
           .error(function () {
             $scope.fileFailed='error';
+            $scope.hideProgressBar = true;
           });
     };
 });

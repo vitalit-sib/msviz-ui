@@ -55,9 +55,11 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
         // SEND THE FILES.
         $http(request)
           .success(function () {
+            $scope.hideProgressBar = true;
             location.reload();
           })
           .error(function () {
+            $scope.hideProgressBar = true;
           });
       }
         else {
