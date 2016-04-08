@@ -16,6 +16,8 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
   } ])
   .controller('DatabasesCtrl', function ($scope,databasesService,$http,EnvConfig) {
 
+    // hide progress bar at the beginning
+    $scope.hideProgressBar = true;
 
     databasesService.listFasta().then(function (data) {
       $scope.databasesList = data;
@@ -37,6 +39,8 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
     //UPLOAD THE FILES.
       $scope.uploadFiles = function () {
+        $scope.hideProgressBar = false;
+
         //Check first if the database was already inserted
         if (($scope.databasesList === undefined) || ($scope.databasesList.indexOf(filesData.name) < 0)){
         var request = {

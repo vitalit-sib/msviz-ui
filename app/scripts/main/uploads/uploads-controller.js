@@ -14,7 +14,8 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
       link: fnLink
     };
   } ])
-.controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
+
+  .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
     // default fileType
     $scope.fileType = 'mascot';
