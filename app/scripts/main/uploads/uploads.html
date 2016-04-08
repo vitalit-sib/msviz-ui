@@ -20,4 +20,9 @@
 <input type="file" id="fileUpload" name="fileUpload" multiple
        ng-files="getTheFiles($files)" />
 
-<input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+<br>
+
+<p>
+  <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+  <img src="images/Loading_icon.gif"  height="45" alt="IsPogressing" ng-hide="hideProgressBar">
+</p>

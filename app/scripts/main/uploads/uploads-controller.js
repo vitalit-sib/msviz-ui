@@ -17,6 +17,9 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
 
   .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
+    // hide progress bar at the beginning
+    $scope.hideProgressBar = true;
+
     // default fileType
     $scope.fileType = 'mascot';
 
@@ -26,6 +29,8 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
     };
 
     $scope.uploadFiles = function () {
+
+      $scope.hideProgressBar = false;
 
         var request = {
           method: 'POST',
