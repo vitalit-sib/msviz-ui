@@ -1,5 +1,5 @@
 'use strict';
-angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-filter'])
+angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-filter', 'as.sortable'])
 
 /**
  * @ngdoc service
@@ -165,6 +165,16 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
   .controller('MultiSearchListCtrl', function($scope,$routeParams,$location, multiSearchService, ModifFilter) {
     $scope.searchIds = $routeParams.searchIds.split(',');
     $scope.titles =$location.search().param.split(',');
+
+    //Create searchInfo list containing searchIds, titles, index
+    $scope.listSearchInfo = [];
+    var searchInfo= {} ;
+
+    for (var i = 0; i < $scope.searchIds.length; i++) {
+      searchInfo = {searchId:$scope.searchIds[i],title:$scope.titles[i], index:i+1};
+      console.log(searchInfo);
+      $scope.listSearchInfo.push(searchInfo);
+    }
 
     multiSearchService.findByMultiSearchId($scope.searchIds,'').then(function (data) {
       $scope.proteins = multiSearchService.prepareProteinInfos(data, $scope.searchIds);

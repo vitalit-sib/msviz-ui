@@ -21,6 +21,7 @@ angular.module('sequences', ['thirdparties', 'environment'])
      * @returns {httpPromise} of an object
      */
     SequenceService.prototype.get = function (ac, source) {
+
       return httpProxy.get('/sequence/' + source + '/' + ac);
     };
 
@@ -38,6 +39,9 @@ angular.module('sequences', ['thirdparties', 'environment'])
           return oneInfo.id === database;
         });
 
+        console.log(database);
+        console.log(searchInfos);
+        console.log(sourceList);
         var databaseName = (sourceList[0].version) ? sourceList[0].version : database;
         return databaseName;
       });

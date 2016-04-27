@@ -3,13 +3,21 @@
   <div class="col-xs-3"><modif-filter filter="modifFilter"></modif-filter></div>
 </div>
 
+<ul data-as-sortable data-ng-model="listSearchInfo">
+  <li ng-repeat="item in listSearchInfo" data-as-sortable-item>
+    <div data-as-sortable-item-handle >
+      Sample {{item.index}} :<strong>{{item.searchId}}</strong><small><i> {{item.title}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][item.searchId]}} </strong></small>
+    </div>
+  </li>
+</ul>
+
 <table class="table table-bordered">
   <br>
   <thead>
   <tr>
     <th>AC</th>
     <th ng-repeat="searchId in searchIds">Score {{$index + 1}}</th>
-    <th ng-repeat="searchId in searchIds"># PSMs {{$index+ 1}}</th>
+    <th ng-repeat="searchId in searchIds"># PSMs {{$index + 1}}</th>
     <th ng-repeat="searchId in searchIds"># Seqs {{$index + 1}}</th>
   </tr>
   </thead>

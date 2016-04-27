@@ -31,7 +31,8 @@ angular
     'results-controller',
     'databases-services',
     'databases-controller',
-    'uploads-controller'
+    'uploads-controller',
+    'as.sortable'
   ])
   .config(function ($routeProvider) {
     $routeProvider
