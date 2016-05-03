@@ -174,7 +174,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
 
 
     $scope.dragControlListeners = {
-        orderChanged: function(event) {$scope.searchIdList = _.pluck($scope.listSearchInfo, 'searchId');}
+        orderChanged: function() {$scope.searchIdList = _.pluck($scope.listSearchInfo, 'searchId');}
     };
 
     for (var i = 0; i < $scope.searchIds.length; i++) {
@@ -182,13 +182,11 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       $scope.listSearchInfo.push(searchInfo);
     }
 
-    console.log("sin modif " + $scope.searchIds);
     multiSearchService.findByMultiSearchId($scope.searchIds,'').then(function (data) {
       $scope.proteins = multiSearchService.prepareProteinInfos(data, $scope.searchIds);
     });
 
     var showProtein = function () {
-      console.log($scope.listSearchInfo);
       var withModif = ($scope.modifFilter.getSelectedModification()!== undefined)? '?withModif='+ $scope.modifFilter.getSelectedModification():'';
 
       multiSearchService.findByMultiSearchId($routeParams.searchIds, withModif).then(function (data){
