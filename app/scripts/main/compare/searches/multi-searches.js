@@ -165,23 +165,30 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
   .controller('MultiSearchListCtrl', function($scope,$routeParams,$location, multiSearchService, ModifFilter) {
     $scope.searchIds = $routeParams.searchIds.split(',');
     $scope.titles =$location.search().param.split(',');
+    $scope.searchIdList = $scope.searchIds;
 
     //Create searchInfo list containing searchIds, titles, index
     $scope.listSearchInfo = [];
     var searchInfo= {} ;
 
+
+
+    $scope.dragControlListeners = {
+        orderChanged: function(event) {$scope.searchIdList = _.pluck($scope.listSearchInfo, 'searchId');}
+    };
+
     for (var i = 0; i < $scope.searchIds.length; i++) {
       searchInfo = {searchId:$scope.searchIds[i],title:$scope.titles[i], index:i+1};
-      console.log(searchInfo);
       $scope.listSearchInfo.push(searchInfo);
     }
 
+    console.log("sin modif " + $scope.searchIds);
     multiSearchService.findByMultiSearchId($scope.searchIds,'').then(function (data) {
       $scope.proteins = multiSearchService.prepareProteinInfos(data, $scope.searchIds);
     });
 
     var showProtein = function () {
-
+      console.log($scope.listSearchInfo);
       var withModif = ($scope.modifFilter.getSelectedModification()!== undefined)? '?withModif='+ $scope.modifFilter.getSelectedModification():'';
 
       multiSearchService.findByMultiSearchId($routeParams.searchIds, withModif).then(function (data){
@@ -190,6 +197,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
     };
 
     $scope.modifFilter = new ModifFilter({onComplete: showProtein, searchIds:$scope.searchIds});
+
   })
 
 ;
