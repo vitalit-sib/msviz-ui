@@ -1,6 +1,6 @@
 <h3>Upload</h3>
 <div ng-if="fileUploaded" class="alert alert-success" role="alert">File uploaded</div>
-<div ng-if="fileFailed" class="alert alert-danger" role="alert">File error. Please check the file format and if the file already exists</div>
+<div ng-if="fileFailed" class="alert alert-danger" role="alert">ZIP parsing error. Please verify your ZIP file and if the Searches already exist in MsViz.</div>
 
 <div class="row">
   <div class="col-md-6">
@@ -16,6 +16,9 @@
 </div>
 
 <br>
+
+<!-- <label for="inputIntThreshold">Email address</label>
+<input type="email" class="form-control" id="inputIntThreshold" value=10000> -->
 
 <input type="file" id="fileUpload" name="fileUpload" multiple
        ng-files="getTheFiles($files)" />
