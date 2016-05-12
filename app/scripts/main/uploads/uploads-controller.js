@@ -14,7 +14,11 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
       link: fnLink
     };
   } ])
-.controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
+
+  .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
+
+    // hide progress bar at the beginning
+    $scope.hideProgressBar = true;
 
     // default fileType
     $scope.fileType = 'mascot';
@@ -25,6 +29,8 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
     };
 
     $scope.uploadFiles = function () {
+
+      $scope.hideProgressBar = false;
 
         var request = {
           method: 'POST',
@@ -39,9 +45,11 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
         $http(request)
           .success(function () {
             $scope.fileUploaded='upload';
+            $scope.hideProgressBar = true;
           })
           .error(function () {
             $scope.fileFailed='error';
+            $scope.hideProgressBar = true;
           });
     };
 });
