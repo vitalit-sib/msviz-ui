@@ -98,6 +98,8 @@ angular.module('searches-list', ['thirdparties', 'environment'])
      * delete the selected searchIds
      */
     $scope.deleteSearchIds = function(){
+      $scope.showDeletionAlert = true;
+
       var searchIdList = [];
 
       //obtain search object
@@ -108,21 +110,28 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
       var searchIdString = searchIdList.join(',');
 
-      searchService.deleteMatchInfo(searchIdString).then(function () {
-        console.log('match info deleted');
-        // reload the list when entries were deleted
-        $scope.getSearchList();
-
-        $scope.ids= [];
-        $scope.selectedIds = [];
-        $scope.searchIds='';
-        $scope.titles='';
-      });
-
-      // we don't wait for an answer in this case, just a little console.log
+      // first we remove the spectra
       searchService.deleteSpectra(searchIdList).then(function(){
         console.log('spectra deleted');
+
+        // and then we remove the infos
+        searchService.deleteMatchInfo(searchIdString).then(function () {
+          console.log('match info deleted');
+          // reload the list when entries were deleted
+          $scope.getSearchList();
+
+          $scope.ids= [];
+          $scope.selectedIds = [];
+          $scope.searchIds='';
+          $scope.titles='';
+
+          // show the right information
+          $scope.showDeletionAlert = false;
+          $scope.showDeletionFinished = true;
+        });
+
       });
+
 
     };
 
