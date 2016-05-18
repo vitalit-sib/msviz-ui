@@ -15,7 +15,7 @@ angular.module('environment', ['angularytics'])
     if (isProd) {
       return {
         isProd: true,
-        backendUrl: 'http://msviz.vital-it.ch/backend'
+        backendUrl: 'https://msviz.vital-it.ch/backend'
       };
     } else {
       return {
