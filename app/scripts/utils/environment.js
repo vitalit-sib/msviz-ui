@@ -13,6 +13,7 @@ angular.module('environment', ['angularytics'])
   .service('EnvConfig', function ($location, Angularytics) {
     var isProd = $location.$$port === 80;
     if (isProd) {
+      console.log('https://msviz.vital-it.ch/backend');
       return {
         isProd: true,
         backendUrl: 'https://msviz.vital-it.ch/backend'
