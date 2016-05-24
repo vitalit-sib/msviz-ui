@@ -24,7 +24,8 @@ angular.module('xic-services', ['thirdparties', 'environment', 'fishtones-wrappe
       var view = new fishtones.wet.XICMultiPaneView({
         model: xicCol,
         el: elm,
-        groupBy: groupFunction
+        groupBy: groupFunction,
+        orderBy: searchIds
       });
 
       //these two lines just to fool out jshint
