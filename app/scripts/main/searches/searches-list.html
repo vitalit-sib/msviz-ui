@@ -58,7 +58,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="search in searches | orderBy:'-creationDate'" ng-init="addId($index)">
-      <td><input type="checkbox" ng-model="selected" ng-change="updateId($index)" ></td>
+      <td><input type="checkbox" ng-model="selected" ng-change="updateId($index)"></td>
       <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
       <td>

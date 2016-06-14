@@ -38,7 +38,7 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
     $scope.getSearchList = function(){
       searchService.list().then(function(data){
-        $scope.searches = data;
+        $scope.searches =  _.sortBy(data, 'creationDate').reverse();
       });
     };
 
