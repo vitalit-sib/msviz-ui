@@ -62,7 +62,7 @@
       <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
       <td>{{search.title}}</td>
       <td>
-        <p ng-repeat="elem in search.database">{{elem.id}}<small ng-if="elem.version">({{elem.version}}, {{elem.entries}} prot.)</small></p>
+        <p ng-repeat="elem in search.database">{{elem.id}} <small ng-if="elem.version">({{elem.version}})</small></p>
       </td>
       <td>{{search.username}}</td>
       <td>{{search.enzyme}}</td>
