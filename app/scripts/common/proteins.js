@@ -161,10 +161,13 @@ angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-i
       var tModif = _this.getTargetModification();
 
       var seqArray = _this.getProtein().sequence.split('');
+
+
       _.each(_this.getMyBestPSMs(), function (psm) {
         var isModifAtPos = function (p) {
           return _.contains(psm.pep.modificationNames[p], tModif);
         };
+
         _.each(psm.proteinList, function (prot) {
           var pos;
           for (pos = prot.startPos; pos <= prot.endPos; pos++) {

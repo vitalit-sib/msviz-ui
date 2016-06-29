@@ -10,7 +10,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     var addSelectedPSM = function(scope, pvizPsm){
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
 
-
       //we change runId by searchId to make it compatible with MaxQuant
       pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
@@ -22,7 +21,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     };
 
     var link = function (scope, elm) {
-
       pviz.FeatureDisplayer.setMousemovementCallback(function(e){
         scope.coordinates = e;
       });
@@ -36,6 +34,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
 
       pviz.FeatureDisplayer.addClickCallback(['psm'], function (ft) {
+
         addSelectedPSM(scope, ft.data);
         scope.pvizView.addSelPsm(ft.data);
         scope.pvizView.refreshView();
@@ -145,7 +144,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     $scope.$on('hide-match', function () {
       angular.element('#detailInfoPopover').hide();
     });
-
   })
 
 

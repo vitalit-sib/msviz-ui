@@ -9,7 +9,7 @@
     </div>
     <div ng-if="!tableExpanded">
       <p style="word-wrap: break-word">{{psm.fishTones.richSeq.toString()}}</p>
-      <p><small>Mascot score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small></p>
+      <p><small>Main score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small></p>
     </div>
   </div>
   <div ng-show="tableExpanded">
@@ -18,7 +18,7 @@
       <tr>
         <th>#</th>
         <th>Peptide</th>
-        <th>Mascot score</th>
+        <th>Main score</th>
         <th>Localisation score [%]</th>
       </tr>
       </thead>

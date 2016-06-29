@@ -39,9 +39,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
       var acs = Object.keys(data);
 
       acs.forEach(function(ac){
-        //console.log(ac);
         var searchIds = Object.keys(data[ac]);
-        //console.log(searchIds);
         searchIds.forEach(function(searchId){
 
           //Save number of proteins foreach searchId

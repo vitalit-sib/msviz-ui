@@ -20,13 +20,11 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       _this.selPsms = [];
 
       _this.protMatch = protMatch;
-
       var seqEntry = new pviz.SeqEntry({sequence: protMatch.getProtein().sequence});
       var view = new pviz.SeqEntryAnnotInteractiveView({
         model: seqEntry,
         el: elm
       });
-
       view.render();
 
       // we need the seqEntry later to be able to refresh the view
@@ -36,17 +34,14 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       // we add all the features to the view
       _this.refreshView();
-
       return _this;
     };
 
 
     ProteinMatchesGlobalPvizView.prototype.refreshView = function () {
       var _this = this;
-
       // first we clear the view
       _this.seqEntry.clear();
-
       // then we set again all features
       _this.seqEntry.addFeatures(_this.getFeaturesAATargetModif());
       _this.seqEntry.addFeatures(_this.getFeaturesPTMsCount());
@@ -167,7 +162,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
 
           return {
-            groupSet: psm.searchId,
+            groupSet: 'A' + psm.searchId,
             category: 'psms',
             categoryName: '',
             type: 'psm',
@@ -266,7 +261,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var _this = this;
       return _.map(_this.protMatch.getAminoAcidInfo(), function (psms) {
         return {
-          groupSet: psms.searchId,
+          groupSet: 'A' + psms.searchId,
           category: 'ptmCounts',
           categoryName: '',
           type: 'ptmCount',
@@ -290,7 +285,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       return _.map( _this.protMatch.getAminoAcidInfo(), function (aai) {
         return {
-          groupSet: aai.searchId,
+          groupSet: 'A' + aai.searchId,
           category: 'aaInfos',
           categoryName: '',
           type: 'aaInfo',
@@ -353,7 +348,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       var psmInfo = {
         // rank: psm.matchInfo.rank,
-        searchId: psm.searchId,
+        searchId: 'A' + psm.searchId,
         spNr: psm.spectrumId.id
       };
 
