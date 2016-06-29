@@ -1,0 +1,31 @@
+<h3>Upload</h3>
+<div ng-if="fileUploaded" class="alert alert-success" role="alert">File uploaded</div>
+<div ng-if="fileFailed" class="alert alert-danger" role="alert">ZIP parsing error. Please verify your ZIP file and if the Searches already exist in MsViz.</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <label>
+      <input type="radio" ng-model="fileType" value="mascot">
+      Mascot
+    </label><br/>
+    <label>
+      <input type="radio" ng-model="fileType" value="maxquant">
+      MaxQuant
+    </label><br/>
+  </div>
+</div>
+
+<br>
+
+<!-- <label for="inputIntThreshold">Email address</label>
+<input type="email" class="form-control" id="inputIntThreshold" value=10000> -->
+
+<input type="file" id="fileUpload" name="fileUpload" multiple
+       ng-files="getTheFiles($files)" />
+
+<br>
+
+<p>
+  <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+  <img src="images/Loading_icon.gif"  height="45" alt="IsPogressing" ng-hide="hideProgressBar">
+</p>

@@ -1,32 +1,38 @@
 <h3>Databases</h3>
-<div ng-if="databaseFound" class="alert alert-danger">
-  <p>Could not load database <em>{{databaseFound}}</em> because it already exist.</p>
-  <p>Please load  database with different name if necessary.</p>
-</div>
-<body ng-app="fupApp">
 
 
-  <input type="file" id="file1" name="file" multiple
-         ng-files="getTheFiles($files)" />
 
-  <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+  <div ng-if="databaseFound" class="alert alert-danger">
+    <p>Could not load database <em>{{databaseFound}}</em> because it already exist.</p>
+    <p>Please load  database with different name if necessary.</p>
+  </div>
 
-</body>
-<table class="table table-striped table-bordered">
-  <thead>
-  <tr>
-    <th></th>
-    <th>Database</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="res in databasesList | orderBy:'-rawLastModif'">
-    <td></thd><button ng-click="deleteEntry(res)" showtype="button" class="btn btn-default btn-xs">
-      <span class="glyphicon glyphicon-trash"></span>
-    </button></td>
-    <td>{{res}}</td>
-  </tr>
-  </tbody>
-</table>
+    <input type="file" id="file1" name="file" multiple
+           ng-files="getTheFiles($files)" />
 
+  <br>
+
+  <p>
+      <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+      <img src="images/Loading_icon.gif"  height="45" alt="IsPogressing" ng-hide="hideProgressBar">
+  </p>
+
+  <br>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Database</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="res in databasesList | orderBy:'-rawLastModif'">
+      <td></thd><button ng-click="deleteEntry(res)" showtype="button" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button></td>
+      <td>{{res}}</td>
+    </tr>
+    </tbody>
+  </table>
 

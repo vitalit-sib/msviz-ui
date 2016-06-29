@@ -12,11 +12,13 @@
   <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
   <link rel="stylesheet" href="bower_components/sib-fishtones-js/dist/fishtones-js.css" />
   <link rel="stylesheet" href="bower_components/sib-pviz/dist/sib-pviz-core.css" />
+  <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/pviz.css">
+  <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.style.css" />
   <!-- endbuild -->
 </head>
 <body ng-app="msvizUiApp">
@@ -37,23 +39,32 @@
 				</span>
       </li>
       <li><a href='#/'
-             class='linkTitle'>msViz
+             class='linkTitle'>MsViz
         <small>1.0.1</small>
       </a></li>
     </ul>
 
 
+    <ul class="nav navbar-nav navbar-left">
+      <li><a href="#/searches">Searches</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Upload <span
+          class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#/uploads">Results</a></li>
+          <li><a href="#/databases">Databases</a></li>
+        </ul>
+      </li>
+      <li><a href="#/results">Result basket</a></li>
+      <li><a href="http://msviz-docs.vital-it.ch/src/usage.html" style="color:#337ab7"><strong>Documentation</strong></a></li>
+    </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#/databases">databases</a></li>
-      <li><a href="#/results">results</a></li>
-      <li><a href="#/searches">searches</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span
           class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
           <li><a href="docs/index.html">javaScript API</a></li>
           <li swagger-doc></li>
-          <li><a href="https://github.com/vitalit-sib/msviz-backend">source code</a></li>
           <li class="divider"></li>
           <li><a href="#/about">about</a></li>
         </ul>
@@ -116,6 +127,7 @@
 <script src="bower_components/sib-pviz/dist/sib-pviz-bundle.min.js"></script>
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -145,6 +157,7 @@
 <script src="scripts/main/results/results-controller.js"></script>
 <script src="scripts/main/databases/databases-services.js"></script>
 <script src="scripts/main/databases/databases-controller.js"></script>
+<script src="scripts/main/uploads/uploads-controller.js"></script>
 <!-- endbuild -->
 
 

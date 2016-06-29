@@ -8,7 +8,7 @@
   </thead>
   <tbody>
   <!--<tr ng-repeat="xic in xicPeaks track by $index">-->
-  <tr ng-repeat="xic in xicPeaks | orderBy:'searchId'">
+  <tr ng-repeat="xic in xicPeaks">
     <td>{{xic.searchId}}</td>
     <td>{{xic.rt}}</td>
     <td>{{xic.int}}</td>

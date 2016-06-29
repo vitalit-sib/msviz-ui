@@ -30,7 +30,9 @@ angular
     'results-services',
     'results-controller',
     'databases-services',
-    'databases-controller'
+    'databases-controller',
+    'uploads-controller',
+    'as.sortable'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -48,6 +50,10 @@ angular
       .when('/databases', {
         templateUrl: 'scripts/main/databases/databases.html',
         controller: 'DatabasesCtrl'
+      })
+      .when('/uploads', {
+        templateUrl: 'scripts/main/uploads/uploads.html',
+        controller: 'UploadsCtrl'
       })
       .when('/result/:searchId', {
         templateUrl: 'scripts/main/results/result.html',

@@ -21,6 +21,7 @@ angular.module('sequences', ['thirdparties', 'environment'])
      * @returns {httpPromise} of an object
      */
     SequenceService.prototype.get = function (ac, source) {
+
       return httpProxy.get('/sequence/' + source + '/' + ac);
     };
 

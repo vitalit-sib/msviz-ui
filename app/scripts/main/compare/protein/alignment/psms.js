@@ -41,10 +41,11 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
 
       scope.$watch('proteinMatch', function (protMatch) {
+
         if (protMatch === undefined) {
           return;
         }
-        var view = new ProteinMatchesGlobalPvizView(elm, protMatch);
+        var view = new ProteinMatchesGlobalPvizView(elm, protMatch, scope.searchIds);
         scope.pvizView = view;
         return view;
       });

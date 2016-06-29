@@ -11,13 +11,17 @@ angular.module('environment', ['angularytics'])
     AngularyticsProvider.setEventHandlers(['Console', 'GoogleUniversal']);
   })
   .service('EnvConfig', function ($location, Angularytics) {
-    var isProd = $location.$$port === 80;
-    if (isProd) {
+    if ($location.$$port === 80) {
       return {
         isProd: true,
         backendUrl: 'http://msviz.vital-it.ch/backend'
       };
-    } else {
+    } else if ($location.$$port === 443){
+      return {
+        isProd: true,
+        backendUrl: 'https://msviz.vital-it.ch/backend'
+      };
+    } else{
       return {
         isProd: false,
         backendUrl: 'http://localhost:9000'

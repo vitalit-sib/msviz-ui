@@ -1,25 +1,33 @@
 <div class="row">
-  <div class="col-xs-8"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index + 1}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][searchId]}} </strong></small></p></div>
-  <div class="col-xs-3"><modif-filter filter="modifFilter"></modif-filter></div>
-</div>
+  <!--div class="col-xs-8"><p class="text-left" ng-repeat="searchId in searchIds">Sample {{$index + 1}} : <strong>{{searchId}}</strong><small><i> {{titles[$index]}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][searchId]}} </strong></small></p></div-->
+  <div class="col-xs-6">
+    <ul data-as-sortable="dragControlListeners" data-ng-model="listSearchInfo">
+      <li ng-repeat="item in listSearchInfo" data-as-sortable-item>
+        <div data-as-sortable-item-handle >
+          Sample {{item.index}} :<strong>{{item.searchId}}</strong><small><i> {{item.title}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of proteins= <strong>{{proteins['amountProteinHash'][item.searchId]}} </strong></small>
+        </div>
+      </li>
+    </ul></div>
+    <div class="col-xs-3"><modif-filter filter="modifFilter"></modif-filter></div>
+  </div>
 
-<table class="table table-bordered">
-  <br>
-  <thead>
-  <tr>
-    <th>AC</th>
-    <th ng-repeat="searchId in searchIds">Score {{$index + 1}}</th>
-    <th ng-repeat="searchId in searchIds"># PSMs {{$index+ 1}}</th>
-    <th ng-repeat="searchId in searchIds"># Seqs {{$index + 1}}</th>
-  </tr>
-  </thead>
-  <tbody>
-   <tr ng-repeat="prot in proteins['proteinInfos'] | orderBy:'-score' track by $index">
-    <td><a href="/#/compare/{{searchIds.join(',')}}/protein/{{prot.ac}}:{{prot.source}}">{{prot.ac}}</a></td>
-     <td ng-repeat="values in prot['datatable'] track by $index">
-       {{values}}
-     </td>
-   </tr>
-  </tbody>
-</table>
+  <table class="table table-bordered">
+    <br>
+    <thead>
+    <tr>
+      <th>AC</th>
+      <th ng-repeat="searchId in searchIds">Score {{$index + 1}}</th>
+      <th ng-repeat="searchId in searchIds"># PSMs {{$index + 1}}</th>
+      <th ng-repeat="searchId in searchIds"># Seqs {{$index + 1}}</th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="prot in proteins['proteinInfos'] | orderBy:'-score' track by $index">
+      <td><a href="/#/compare/{{searchIdList.join(',')}}/protein/{{prot.ac}}:{{prot.source}}">{{prot.ac}}</a></td>
+       <td ng-repeat="values in prot['datatable'] track by $index">
+         {{values}}
+       </td>
+     </tr>
+    </tbody>
+  </table>
 

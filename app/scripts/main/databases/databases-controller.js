@@ -16,6 +16,8 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
   } ])
   .controller('DatabasesCtrl', function ($scope,databasesService,$http,EnvConfig) {
 
+    // hide progress bar at the beginning
+    $scope.hideProgressBar = true;
 
     databasesService.listFasta().then(function (data) {
       $scope.databasesList = data;
@@ -37,7 +39,10 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
 
     //UPLOAD THE FILES.
       $scope.uploadFiles = function () {
-        if (($scope.databasesList.indexOf(filesData.name) < 0)){
+        $scope.hideProgressBar = false;
+
+        //Check first if the database was already inserted
+        if (($scope.databasesList === undefined) || ($scope.databasesList.indexOf(filesData.name) < 0)){
         var request = {
           method: 'POST',
           url: EnvConfig.backendUrl + '/sequences/' + filesData.name + '/fasta',
@@ -50,9 +55,11 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
         // SEND THE FILES.
         $http(request)
           .success(function () {
+            $scope.hideProgressBar = true;
             location.reload();
           })
           .error(function () {
+            $scope.hideProgressBar = true;
           });
       }
         else {
