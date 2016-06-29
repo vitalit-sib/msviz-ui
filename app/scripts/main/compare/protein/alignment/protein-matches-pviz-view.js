@@ -163,7 +163,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
 
           return {
-            groupSet: 'A' + psm.searchId,
+            groupSet: psm.searchId,
             category: 'psms',
             categoryName: '',
             type: 'psm',
@@ -262,7 +262,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       var _this = this;
       return _.map(_this.protMatch.getAminoAcidInfo(), function (psms) {
         return {
-          groupSet: 'A' + psms.searchId,
+          groupSet: psms.searchId,
           category: 'ptmCounts',
           categoryName: '',
           type: 'ptmCount',
@@ -286,7 +286,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       return _.map( _this.protMatch.getAminoAcidInfo(), function (aai) {
         return {
-          groupSet: 'A' + aai.searchId,
+          groupSet: aai.searchId,
           category: 'aaInfos',
           categoryName: '',
           type: 'aaInfo',
@@ -349,7 +349,7 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
       var psmInfo = {
         // rank: psm.matchInfo.rank,
-        searchId: 'A' + psm.searchId,
+        searchId: psm.searchId,
         spNr: psm.spectrumId.id
       };
 
