@@ -60,8 +60,15 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
         return view;
       };
 
+      // get the MS1 peaks
       var getXic = function(searchId, moz){
         var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=10.0&rtTolerance=10.0';
+        return httpProxy.get(uri);
+      };
+
+      // and get the MS2 spectra
+      var getMs2 = function(searchId, moz){
+        var uri = '/exp/spectra/' + searchId + '/' + moz + '?tolerance=10.0';
         return httpProxy.get(uri);
       };
 
@@ -71,11 +78,13 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
 
       scope.searchIds.forEach(function(searchId) {
         backendCalls.push(getXic(searchId, ms2Info.precMoz));
+        backendCalls.push(getMs2(searchId, ms2Info.precMoz));
       });
 
       $q.all(
         backendCalls
       ).then(function(args){
+          console.log(args);
           updateXics(args, ms2Info.retentionTime, ms2Info.searchId);
       });
 
