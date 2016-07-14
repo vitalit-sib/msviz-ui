@@ -32,14 +32,16 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       });
 
       // sort the searchIds in ascending order
-      var sortedSearchId = $scope.searchIds.sort();
+      //not sorting anymore, otherwise is not keeping the order given by user
+      //var sortedSearchId = $scope.searchIds.sort();
 
       var resultEntry = {
         'proteinAC':item.firstPsm.proteinList[0].proteinRef.AC,
         'peptideSeq':item.firstPsm.fishTones.richSeq.toString(),
         'startPos':item.firstPsm.proteinList[0].startPos,
         'endPos':item.firstPsm.proteinList[0].endPos,
-        'searchIds':sortedSearchId.join(','),
+        //'searchIds':sortedSearchId.join(','),
+        'searchIds':$scope.searchIds.join(','),
         'spectrumId': item.firstPsm.spectrumId,
         'score': item.firstPsm.matchInfo.score.mainScore,
         'localizationScore': item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
