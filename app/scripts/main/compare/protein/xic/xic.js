@@ -1,6 +1,41 @@
 'use strict';
-angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
+angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
+  .controller('xicController', function($scope){
+    // remove the popup from the pviz view
+    angular.element('#detailInfoPopover').hide();
+
+    angular.element('#xicPopover').popover();
+
+    $scope.$on('show-prec-info', function (undefined, args) {
+      $scope.popoverText = args;
+      $scope.$apply();
+      angular.element('#xicPopover').show();
+    });
+
+    $scope.$on('hide-prec-info', function (undefined) {
+      angular.element('#xicPopover').hide();
+    });
+
+  })
+
+/**
+ * @ngdoc directive
+ * @name matches.directive:xicPopover
+ * @description the popover when moving over the precursors in the XIC
+ */
+  .directive('xicPopover', function () {
+    return {
+      restrict: 'E',
+      templateUrl: 'scripts/main/compare/protein/xic/xic-popover.html'
+    };
+  })
+
+/**
+ * @ngdoc directive
+ * @name matches.directive:xicTable
+ * @description the table showing the xic values after quantitation
+ */
   .directive('xicTable', function () {
     return {
       templateUrl: 'scripts/main/compare/protein/basket/xic-table.html',
@@ -13,7 +48,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, xicFishtonesView, _, httpProxy, $q) {
+.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones) {
 
     var link = function (scope, elm) {
 
@@ -23,7 +58,7 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
         var newId = _.max(scope.$parent.selectedItems, function(x){return x.id;}).id;
 
         // and we pass the id to the view
-        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId);
+        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope);
 
         scope.xicModel = view.model;
 
@@ -60,6 +95,86 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
         return view;
       };
 
+      var xicFishtonesView = function(elm, xics, searchIds, selRetentionTime, selSearchId, localId, scope) {
+        //localId ++;
+        var myLocalId = localId;
+
+        // create an unused injection object
+        var injection = new fishtones.wet.Injection();
+
+        //XIC will be added to the collection, triggering an automatic render event
+        var xicCol = new fishtones.wet.XICCollection();
+
+        // group by name
+        var groupFunction = function(xic){
+          return xic.attributes.name;
+        };
+
+        var view = new fishtones.wet.XICMultiPaneView({
+          model: xicCol,
+          el: elm,
+          groupBy: groupFunction,
+          orderBy: searchIds
+        });
+
+        //these two lines just to fool out jshint
+        var _yo = view.yo;
+        _yo++;
+
+
+        //
+        var createPrecursorPeak = function(ms2Info) {
+          // create info to show in popover
+          var precInfo = ms2Info.ref.precursor;
+
+          var popoverTitle = 'scan: ' +
+            ms2Info.ref.scanNumber +
+            ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
+            precInfo.charge + '+ ' +
+            precInfo.moz.toFixed(4) + 'Da';
+
+          return new fishtones.match.PrecursorPeak({
+            retentionTime: ms2Info.ref.precursor.retentionTime,
+            isSource: (ms2Info.ref.precursor.retentionTime === selRetentionTime) ? (true) : (false),
+            //onclickCallback : function() {scope.$broadcast('show-prec-info', 'hoho');}
+            mouseoutCallback: function() {scope.$broadcast('hide-prec-info', null);},
+            mouseoverCallback: function() {scope.$broadcast('show-prec-info', popoverTitle);}
+          });
+        };
+
+
+        // the ms1 and ms2 infos come in pairs
+        for(var i=0; i<xics.length; i=i+2){
+          var xicMs1Data = xics[i];
+          var ms2Data = xics[i+1];
+
+          // create the precursor information objects
+          var precursors = _.map(ms2Data, createPrecursorPeak);
+
+          var xic = new fishtones.wet.XIC();
+
+          xic.set({'retentionTimes': xicMs1Data.rt});
+          xic.set({'intensities': xicMs1Data.intensities});
+          xic.set({'injection': injection});
+          xic.set({'name': searchIds[i]});
+          xic.set({'target': 0});
+          xic.set({'precursors': precursors});
+
+          // add retention time only if it was selected by this searchId
+          if(searchIds[i] === selSearchId) {
+            xic.set({'selectedRt': selRetentionTime});
+          }
+
+          xicCol.add(xic);
+        }
+
+        view.localId = myLocalId;
+
+        return view;
+      };
+
+
+
       // get the MS1 peaks
       var getXic = function(searchId, moz){
         var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=10.0&rtTolerance=10.0';
@@ -84,7 +199,6 @@ angular.module('xic', ['thirdparties', 'environment', 'xic-services'])
       $q.all(
         backendCalls
       ).then(function(args){
-          console.log(args);
           updateXics(args, ms2Info.retentionTime, ms2Info.searchId);
       });
 
