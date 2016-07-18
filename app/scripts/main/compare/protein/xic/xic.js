@@ -15,8 +15,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
       // get the current mouse position
       var x = $scope.coordinates[0];
       var y = $scope.coordinates[1];
-      angular.element('#xicPopover').css('left', (x + 30) + 'px');
-      angular.element('#xicPopover').css('top', (y - 10) + 'px');
+      angular.element('#xicPopover').css('left', (x - 280) + 'px');
+      angular.element('#xicPopover').css('top', (y - 80) + 'px');
     });
 
     $scope.$on('hide-prec-info', function (undefined) {
@@ -117,6 +117,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
         };
 
         var view = new fishtones.wet.XICMultiPaneView({
+          mousemoveCallback: function(coordinates) {scope.coordinates = coordinates;},
           model: xicCol,
           el: elm,
           groupBy: groupFunction,
@@ -144,8 +145,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             isSource: (ms2Info.ref.precursor.retentionTime === selRetentionTime) ? (true) : (false),
             //onclickCallback : function() {scope.$broadcast('show-prec-info', 'hoho');}
             mouseoutCallback: function() {scope.$broadcast('hide-prec-info', null);},
-            mouseoverCallback: function() {scope.$broadcast('show-prec-info', popoverTitle);},
-            mousemoveCallback: function(coordinates) {scope.coordinates = coordinates; console.log(coordinates);}
+            mouseoverCallback: function() {scope.$broadcast('show-prec-info', popoverTitle);}
           });
         };
 
