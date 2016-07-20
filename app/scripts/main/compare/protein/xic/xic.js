@@ -1,6 +1,5 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
-
 /**
  * @ngdoc directive
  * @name matches.directive:xicPopover
@@ -19,8 +18,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
         angular.element(elId).show();
 
         // get the current mouse position
-        var x = scope.coordinates[0];
-        var y = scope.coordinates[1];
+        var x = scope.$parent.coordinates[0];
+        var y = scope.$parent.coordinates[1];
         angular.element(elId).css('left', (x - 280) + 'px');
         angular.element(elId).css('top', (y - 20) + 'px');
       });
@@ -118,7 +117,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
         };
 
         var view = new fishtones.wet.XICMultiPaneView({
-          mousemoveCallback: function(coordinates) {scope.coordinates = coordinates;},
+          // we have to store the mouse position in the parent scope, for that the xicPopover can access it
+          mousemoveCallback: function(coordinates) {scope.$parent.coordinates = coordinates;},
           model: xicCol,
           el: elm,
           groupBy: groupFunction,
@@ -180,8 +180,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
         return view;
       };
-
-
 
       // get the MS1 peaks
       var getXic = function(searchId, moz){
