@@ -1,9 +1,9 @@
-<div class="xic-popover popover right" id="xicPopover">
+<div class="xic-popover popover right" id="xicPopover-{{myId}}">
   <h3 class="popover-title" style="white-space: nowrap;">{{popoverText}}</h3>
   <div class="popover-content">
     <!-- <p style="word-wrap:break-word;">{{psm.fishTones.richSeq.toString()}}</p> -->
     <p><small>Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong> - Localisation score: <strong>{{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</strong> %</small></p>
-
+    <em>{{tictoc}}</em>
   </div>
 </div>
 

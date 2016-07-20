@@ -1,39 +1,40 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
-  .controller('xicController', function($scope){
-    // remove the popup from the pviz view
-    angular.element('#detailInfoPopover').hide();
-
-    angular.element('#xicPopover').popover();
-
-    $scope.$on('show-prec-info', function (undefined, args) {
-      $scope.popoverText = args;
-      $scope.$apply();
-      angular.element('#xicPopover').show();
-
-      // get the current mouse position
-      var x = $scope.coordinates[0];
-      var y = $scope.coordinates[1];
-      angular.element('#xicPopover').css('left', (x - 280) + 'px');
-      angular.element('#xicPopover').css('top', (y - 80) + 'px');
-    });
-
-    $scope.$on('hide-prec-info', function (undefined) {
-      angular.element('#xicPopover').hide();
-    });
-
-  })
-
 /**
  * @ngdoc directive
  * @name matches.directive:xicPopover
  * @description the popover when moving over the precursors in the XIC
  */
   .directive('xicPopover', function () {
+
+    function link(scope){
+      var elId = '#xicPopover-' + scope.myId;
+
+      angular.element(elId).popover();
+
+      scope.$on('show-prec-info', function (undefined, args) {
+        scope.popoverText = args;
+        scope.$apply();
+        angular.element(elId).show();
+
+        // get the current mouse position
+        var x = scope.coordinates[0];
+        var y = scope.coordinates[1];
+        angular.element(elId).css('left', (x - 280) + 'px');
+        angular.element(elId).css('top', (y - 20) + 'px');
+      });
+
+      scope.$on('hide-prec-info', function (undefined) {
+        angular.element(elId).hide();
+      });
+    }
+
     return {
       restrict: 'E',
-      templateUrl: 'scripts/main/compare/protein/xic/xic-popover.html'
+      templateUrl: 'scripts/main/compare/protein/xic/xic-popover.html',
+      scope:{myId: '@myId'},
+      link: link
     };
   })
 
