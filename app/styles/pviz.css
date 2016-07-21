@@ -1,6 +1,6 @@
 g.data.psms.psm line {
   stroke: grey;
-  stroke-width: 2;
+  stroke-width: 1;
 }
 
 g.data.psms.psm line.selected {
@@ -9,7 +9,7 @@ g.data.psms.psm line.selected {
 }
 
 g.data.psms.psm:hover line {
-  stroke-width: 4;
+  stroke-width: 5;
 }
 
 g.data.psms.psm text {
