@@ -133,17 +133,17 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
         //
         var createPrecursorPeak = function(ms2Info) {
           // create info to show in popover
-          var precInfo = ms2Info.ref.precursor;
+          var precInfo = ms2Info.precursor;
 
           var popoverTitle = 'scan: ' +
-            ms2Info.ref.scanNumber +
+            ms2Info.scanNumber +
             ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
             precInfo.charge + '+ ' +
             precInfo.moz.toFixed(4) + 'Da';
 
           return new fishtones.match.PrecursorPeak({
-            retentionTime: ms2Info.ref.precursor.retentionTime,
-            isSource: (ms2Info.ref.precursor.retentionTime === selRetentionTime) ? (true) : (false),
+            retentionTime: ms2Info.precursor.retentionTime,
+            isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
             //onclickCallback : function() {scope.$broadcast('show-prec-info', 'hoho');}
             mouseoutCallback: function() {scope.$broadcast('hide-prec-info', null);},
             mouseoverCallback: function() {scope.$broadcast('show-prec-info', popoverTitle);}
@@ -189,7 +189,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
       // and get the MS2 spectra
       var getMs2 = function(searchId, moz){
-        var uri = '/exp/spectra/' + searchId + '/' + moz + '?tolerance=10.0';
+        var uri = '/exp/spectra-ref/' + searchId + '/' + moz + '?tolerance=10.0';
         return httpProxy.get(uri);
       };
 
