@@ -37,8 +37,10 @@
             <span class="glyphicon glyphicon-remove"></span>
           </button>
         </div>
-        <xic-popover my-id="{{item.id}}"></xic-popover>
-        <div xic-fishtones style="height:150px"></div>
+        <div ng-controller="XicController">
+          <xic-popover my-id="{{item.id}}"></xic-popover>
+          <div xic-fishtones style="height:150px"></div>
+        </div>
         <div style="height:30px;"/>
         <xic-table></xic-table>
       </div>

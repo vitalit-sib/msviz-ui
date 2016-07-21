@@ -1,5 +1,10 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
+
+  .controller('XicController', function(){
+    // we need this controller to store the mouse coordinates
+  })
+
 /**
  * @ngdoc directive
  * @name matches.directive:xicPopover
