@@ -44,7 +44,7 @@ g.data.psms.psm circle.is-firstWithConflict {
 }
 
 g.data.psms.psm:hover circle {
-  stroke-width: 4;
+  stroke-width: 6;
 }
 
 g.data.ptmCounts.ptmCount circle {
@@ -57,7 +57,7 @@ g.data.psmIsoModifs.psmIsoModif line {
 }
 
 g.data.psmIsoModifs.psmIsoModif:hover line {
-  stroke-width: 4;
+  stroke-width: 6;
 }
 
 g.data.psmIsoModifs.psmIsoModif circle, g.data.psmIsoModifs.psmIsoModif path {
@@ -71,7 +71,7 @@ g.data.psmIsoModifs.psmIsoModif circle.is-target, g.data.psmIsoModifs.psmIsoModi
 }
 
 g.data.psmIsoModifs.psmIsoModif:hover circle, g.data.psmIsoModifs.psmIsoModif:hover path {
-  stroke-width: 4;
+  stroke-width: 6;
 }
 
 g.data.aaInfos.aaInfo line {
