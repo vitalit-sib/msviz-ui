@@ -5,7 +5,6 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
   .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
 
     $scope.removePvizPopover = function(){
-      console.log('remove popover');
       angular.element('#detailInfoPopover').hide();
     };
 
