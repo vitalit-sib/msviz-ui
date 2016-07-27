@@ -26,7 +26,6 @@ angular
     'sequences',
     'experimental',
     'xic',
-    'xic-services',
     'results-services',
     'results-controller',
     'databases-services',

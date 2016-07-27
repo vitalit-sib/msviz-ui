@@ -1,8 +1,12 @@
 'use strict';
-angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'xic-services'])
+angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment'])
 
 
   .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
+
+    $scope.removePvizPopover = function(){
+      angular.element('#detailInfoPopover').hide();
+    };
 
     $scope.searchIds = $routeParams.searchIds.split(',');
     var acSourcePair = $routeParams.proteinAC.split(':');

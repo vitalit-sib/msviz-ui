@@ -1,0 +1,8 @@
+<div class="xic-popover popover right" id="xicPopover-{{myId}}">
+  <h3 class="popover-title" style="white-space: nowrap;">{{popoverPsm.title}}</h3>
+  <div class="popover-content" ng-if="popoverPsm.richSeq">
+    <p style="word-wrap:break-word;">{{popoverPsm.richSeq}}</p>
+    <p><small>Main score: <strong>{{popoverPsm.mainScore | number:0}}</strong> - Localisation score: <strong>{{popoverPsm.localisationScore | number:0}}</strong> %</small></p>
+  </div>
+</div>
+
