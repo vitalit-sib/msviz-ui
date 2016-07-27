@@ -18,7 +18,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
       angular.element(elId).popover();
 
       scope.$on('show-prec-info', function (undefined, args) {
-        scope.popoverText = args;
+        scope.popoverPsm = args;
+
         scope.$apply();
         angular.element(elId).show();
 
@@ -65,16 +66,10 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
       var updateXics = function (xics, retentionTime, searchId) {
 
-        console.log(xics);
-        console.log(retentionTime);
-        console.log(searchId);
-
         // the new id should be the one just added
         var newId = _.max(scope.$parent.selectedItems, function (x) {
           return x.id;
         }).id;
-
-
 
         // and we pass the id to the view
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope);
@@ -156,19 +151,32 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             precInfo.charge + '+ ' +
             precInfo.moz.toFixed(4) + 'Da';
 
-          console.log(ms2Info);
+          var popoverPsm = {title: popoverTitle};
 
-          //var popoverInfo = {title: popoverTitle, mainScore: ms2Info.}
+          // create the PSM info if available
+          if(ms2Info.psm){
+            // create the annotated peptide seqeunce
+            var rs = new fishtones.dry.RichSequence().fromString(ms2Info.psm.pep.sequence);
+            _.each(ms2Info.psm.pep.modificationNames, function (mods, i) {
+              _.each(mods, function (modName) {
+                rs.addModification(i - 1, fishtones.dry.ResidueModificationDictionary.get(modName));
+              });
+            });
+
+            popoverPsm.richSeq = rs.toString();
+            popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
+            popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
+          }
 
           return new fishtones.match.PrecursorPeak({
             retentionTime: ms2Info.precursor.retentionTime,
             isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
-            //onclickCallback : function() {scope.$broadcast('show-prec-info', 'hoho');}
+            isIdentified: (popoverPsm.richSeq) ? (true) : (false),
             mouseoutCallback: function () {
               scope.$broadcast('hide-prec-info', null);
             },
             mouseoverCallback: function () {
-              scope.$broadcast('show-prec-info', popoverTitle);
+              scope.$broadcast('show-prec-info', popoverPsm);
             }
           });
         };
@@ -324,8 +332,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
           for(var k=0; k < xic.ms2.length; k++){
             var psm = psms[idx];
             // keep only the first ranking psm
-            var bestPsm = _.findWhere(psm, function(x) { return x.matchInfo.rank === 1; });
-            xicAndMs2[i].ms2[k].psm = bestPsm;
+            var bestPsm = _.filter(psm, function(x) { return x.matchInfo.rank === 1; });
+            xicAndMs2[i].ms2[k].psm = bestPsm[0];
 
             idx++;
           }
