@@ -261,7 +261,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
         $q.all(
           xicBackendCalls.concat(ms2BackendCalls)
         ).then(function(xicAndMs2) {
-            var merged = mergeXicAndMs2(xicAndMs2)
+            var merged = mergeXicAndMs2(xicAndMs2);
             addPsm(merged);
           });
 
@@ -300,7 +300,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
           var ms2List = xicAndMs2[i].ms2;
           for(var k=0; k < ms2List.length; k++){
             var ms2 = ms2List[k];
-            psmBackendCalls.push(getPSM(ms2.spectrumId.runId, ms2.spectrumId.id))
+            psmBackendCalls.push(getPSM(ms2.spectrumId.runId, ms2.spectrumId.id));
           }
         }
 
@@ -313,7 +313,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
         });
 
-      }
+      };
 
       /**
        * merge the PSM into the MS2 infos
@@ -349,7 +349,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
       var ms2Info = scope.item.ms2Info;
       createXics(scope.searchIds);
 
-    }
+    };
 
   return {
     link: link,
