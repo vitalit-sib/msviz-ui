@@ -194,7 +194,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             xic.set({'retentionTimes': xicMs1Data.rt});
             xic.set({'intensities': xicMs1Data.intensities});
             xic.set({'injection': injection});
-            xic.set({'name': searchIds[i / 2]});
+            xic.set({'name': searchIds[i]});
             xic.set({'target': 0});
             xic.set({'precursors': precursors});
 
