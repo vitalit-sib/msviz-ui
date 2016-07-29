@@ -163,6 +163,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
               });
             });
 
+            popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
             popoverPsm.richSeq = rs.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
