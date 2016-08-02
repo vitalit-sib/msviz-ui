@@ -39,8 +39,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
 
       scope.$on('psm-selected', function (undefined, args) {
-        console.log('psm was selected');
-        console.log(args);
         scope.pvizView.addSelPsm(args);
         scope.pvizView.refreshView();
       });

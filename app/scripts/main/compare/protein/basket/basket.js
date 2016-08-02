@@ -7,10 +7,16 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     var acSourcePair = $routeParams.proteinAC.split(':');
     $scope.proteinAC = acSourcePair[0];
     $scope.selectedItems = [];
+    $scope.runAndSpUniqueIds = [];
     $scope.selectedItemsId = -1;
 
     $scope.$on('basket-add', function (event, item) {
-      $scope.addSelected(item);
+      // we only add elements to the basket if they're not already there
+      var newRunAndSpUniqueId = item.bean.spectrumId.runId + item.bean.spectrumId.id;
+      if(! _.find($scope.runAndSpUniqueIds, function(x){ return x === newRunAndSpUniqueId; })) {
+        $scope.runAndSpUniqueIds.push(newRunAndSpUniqueId);
+        $scope.addSelected(item);
+      }
     });
 
     $scope.addSelected = function (item) {
