@@ -172,7 +172,12 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
                 var sp = fishtonifyService.convertSpectrum(spectrum);
                 ms2Info.psm.fishTones.spectrum = sp;
                 scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
+
+                // tell pviz that a new psm was selected
+                var spectrumId = {id: ms2Info.psm.spectrumId.id};
+                scope.$emit('psm-selected', {searchId: ms2Info.psm.searchId, spectrumId: spectrumId});
               });
+
             },
             mouseoutCallback: function () {
               scope.$broadcast('hide-prec-info', null);

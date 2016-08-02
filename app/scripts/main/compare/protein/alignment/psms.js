@@ -38,6 +38,13 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
         scope.pvizView.refreshView();
       });
 
+      scope.$on('psm-selected', function (undefined, args) {
+        console.log('psm was selected');
+        console.log(args);
+        scope.pvizView.addSelPsm(args);
+        scope.pvizView.refreshView();
+      });
+
       scope.$watch('proteinMatch', function (protMatch) {
 
         if (protMatch === undefined) {
