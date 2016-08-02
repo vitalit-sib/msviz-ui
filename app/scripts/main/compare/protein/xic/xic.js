@@ -172,6 +172,9 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             retentionTime: ms2Info.precursor.retentionTime,
             isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
             isIdentified: (popoverPsm.richSeq) ? (true) : (false),
+            onclickCallback: function() {
+              console.log('open spectrum');
+            },
             mouseoutCallback: function () {
               scope.$broadcast('hide-prec-info', null);
             },
