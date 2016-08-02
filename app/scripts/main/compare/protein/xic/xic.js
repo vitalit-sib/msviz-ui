@@ -1,5 +1,5 @@
 'use strict';
-angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental'])
 
   .controller('XicController', function(){
     // we need this controller to store the mouse coordinates
@@ -60,7 +60,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService) {
+.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService, spectrumService) {
 
     var link = function (scope, elm) {
 
@@ -155,8 +155,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
           // create the PSM info if available
           if(ms2Info.psm){
-            var rs = fishtonifyService.buildRichSeq(ms2Info.psm)
-
+            var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
+            ms2Info.psm.fishTones = rs;
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
@@ -167,12 +167,12 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
             isIdentified: (popoverPsm.richSeq) ? (true) : (false),
             onclickCallback: function() {
-              /*
-              var sp = fishtonifyService.convertSpectrum(spectrum);
-              pvizPsm.fishTones.spectrum = sp;
-              scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});
-               */
-              console.log('open spectrum');
+              // create object to send to basket
+              spectrumService.findSpByRunIdAndId(ms2Info.psm.searchId, ms2Info.psm.spectrumId.id).then(function (spectrum) {
+                var sp = fishtonifyService.convertSpectrum(spectrum);
+                ms2Info.psm.fishTones.spectrum = sp;
+                scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
+              });
             },
             mouseoutCallback: function () {
               scope.$broadcast('hide-prec-info', null);
