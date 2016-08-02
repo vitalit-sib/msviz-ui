@@ -60,7 +60,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones) {
+.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService) {
 
     var link = function (scope, elm) {
 
@@ -155,15 +155,9 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
 
           // create the PSM info if available
           if(ms2Info.psm){
-            // create the annotated peptide seqeunce
-            var rs = new fishtones.dry.RichSequence().fromString(ms2Info.psm.pep.sequence);
-            _.each(ms2Info.psm.pep.modificationNames, function (mods, i) {
-              _.each(mods, function (modName) {
-                rs.addModification(i - 1, fishtones.dry.ResidueModificationDictionary.get(modName));
-              });
-            });
+            var rs = fishtonifyService.buildRichSeq(ms2Info.psm)
 
-            popoverPsm.richSeq = rs.toString();
+            popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
           }
@@ -173,6 +167,11 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper'])
             isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
             isIdentified: (popoverPsm.richSeq) ? (true) : (false),
             onclickCallback: function() {
+              /*
+              var sp = fishtonifyService.convertSpectrum(spectrum);
+              pvizPsm.fishTones.spectrum = sp;
+              scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});
+               */
               console.log('open spectrum');
             },
             mouseoutCallback: function () {
