@@ -10,9 +10,10 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       var _this = this;
 
       var psm = new fishtones.match.PSMAlignment({
-        richSequence: ftPSM.richSeq,
+        richSequence: (ftPSM.richSeq) ? (ftPSM.richSeq) : (new fishtones.dry.RichSequence().fromString('')),
         expSpectrum: ftPSM.spectrum
       });
+
       var view = new fishtones.match.MatchSpectrumView({
         model: psm,
         el: elm,

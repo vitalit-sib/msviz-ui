@@ -11,26 +11,42 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     $scope.selectedItemsId = -1;
 
     $scope.$on('basket-add', function (event, item) {
+
       // we only add elements to the basket if they're not already there
       var newRunAndSpUniqueId = item.bean.spectrumId.runId + item.bean.spectrumId.id;
       if(! _.find($scope.runAndSpUniqueIds, function(x){ return x === newRunAndSpUniqueId; })) {
         $scope.runAndSpUniqueIds.push(newRunAndSpUniqueId);
+
         $scope.addSelected(item);
       }
+
     });
 
+    /**
+     * add a new element to the basket
+     * @param item
+     */
     $scope.addSelected = function (item) {
       $scope.selectedItemsId ++;
 
-      // info for XIC
-      var sp = item.bean.fishTones.spectrum.attributes;
-      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.searchId};
+      var sp = (item.bean.fishTones) ? (item.bean.fishTones.spectrum.attributes) : (item.bean.spectrum.attributes);
+      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.spectrumId.runId, scanNr: item.bean.spectrumId.id};
 
-      // info for spectrum and XIC
-      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
+      // construct info for XIC
+      // check wether psm info is available
+      var newEntry;
+      if(item.type === 'psm'){
+        newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
+      }else{
+        newEntry = {id: $scope.selectedItemsId, type:item.type, fishTones: {spectrum: item.bean.spectrum}, ms2Info: ms2Info};
+      }
       $scope.selectedItems.push(newEntry);
     };
 
+    /**
+     * add the selected rt and intensities to the results
+     * @param item
+     */
     $scope.addToResults = function(item){
 
       var myXicPeaks = _.map(item.xicPeaks, function(el){
@@ -71,6 +87,11 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
     };
 
+    /**
+     * open a new tab showing a large version of the spectrum and XIC
+     *
+     * @param spectrum
+     */
     $scope.zoomSpectrum = function(spectrum){
       //open a new tab for the spectrum
       var spectrumId=spectrum.firstPsm.spectrumId.id;
@@ -99,26 +120,28 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       });
     };
 
-    $scope.removeSelectedPSM = function (psm) {
-      $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
-        return e.firstPsm !== psm;
-      });
+    $scope.removeSelectedPSM = function (searchId, scanNr) {
+      $scope.removeSelectedSp(searchId, scanNr);
 
       var psmInfo = {
         // rank: psm.matchInfo.rank,
-        searchId: psm.searchId,
-        spNr: psm.spectrumId.id
+        searchId: searchId,
+        spNr: scanNr
       };
       $scope.$emit('basket-remove', psmInfo);
     };
 
-    $scope.loadXic = function (psm) {
-      // create object of intersting information
-      var sp = psm.firstPsm.fishTones.spectrum.attributes;
-      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: psm.firstPsm.searchId};
+    $scope.removeSelectedSp = function(searchId, scanNr) {
+      // remove the items in the basket
+      $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
+        return (e.ms2Info.spectrumId !== searchId && e.ms2Info.scanNr !== scanNr);
+      });
 
-      // first we send it up
-        $scope.$emit('show-xic-emit', ms2Info);
+      // remove the list of unique id's
+      var runAndSpUniqueId = searchId + scanNr;
+      $scope.runAndSpUniqueIds = _.filter($scope.runAndSpUniqueIds, function(e) {
+        return e !== runAndSpUniqueId;
+      });
     };
 
   })

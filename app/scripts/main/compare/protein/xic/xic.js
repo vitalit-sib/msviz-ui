@@ -168,16 +168,22 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             isIdentified: (popoverPsm.richSeq) ? (true) : (false),
             onclickCallback: function() {
               // create object to send to basket
-              spectrumService.findSpByRunIdAndId(ms2Info.psm.searchId, ms2Info.psm.spectrumId.id).then(function (spectrum) {
-                var sp = fishtonifyService.convertSpectrum(spectrum);
-                ms2Info.psm.fishTones.spectrum = sp;
-                scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
+                spectrumService.findSpByRunIdAndId(ms2Info.spectrumId.runId, ms2Info.spectrumId.id).then(function (spectrum) {
+                  var sp = fishtonifyService.convertSpectrum(spectrum);
+                  // if there is no psm available, it will be of type 'sp'
+                  if(ms2Info.psm){
+                    ms2Info.psm.fishTones.spectrum = sp;
+                    scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
+                  } else {
+                    var onlySp = spectrum.ref;
+                    onlySp.spectrum = sp;
+                    scope.$emit('basket-add', {type: 'sp', bean: onlySp});
+                  }
 
-                // tell pviz that a new psm was selected
-                var spectrumId = {id: ms2Info.psm.spectrumId.id};
-                scope.$emit('psm-selected', {searchId: ms2Info.psm.searchId, spectrumId: spectrumId});
-              });
-
+                  // tell pviz that a new psm was selected
+                  var spectrumId = {id: spectrum.ref.spectrumId.id};
+                  scope.$emit('psm-selected', {searchId: spectrum.ref.spectrumId.runId, spectrumId: spectrumId});
+                });
             },
             mouseoutCallback: function () {
               scope.$broadcast('hide-prec-info', null);
