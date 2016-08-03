@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-          <button ng-click="zoomSpectrum(item)" showtype="button" class="btn btn-default btn-small">
+          <button ng-click="zoomSpectrum(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-zoom-in"></span>
           </button>
           <button ng-click="item.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">

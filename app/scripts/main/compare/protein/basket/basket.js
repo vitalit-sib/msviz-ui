@@ -92,13 +92,9 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
      *
      * @param spectrum
      */
-    $scope.zoomSpectrum = function(spectrum){
+    $scope.zoomSpectrum = function(searchId, scanNr){
       //open a new tab for the spectrum
-      var spectrumId=spectrum.firstPsm.spectrumId.id;
-      var runId=spectrum.firstPsm.spectrumId.runId;
-
-
-      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + spectrumId + '/runId/' + runId;
+      var url='/#/details/' + $scope.searchIds + '/protein/' +$scope.proteinAC + '/spectrumId/' + scanNr + '/runId/' + searchId;
       window.open(url, '_blank');
     };
 
