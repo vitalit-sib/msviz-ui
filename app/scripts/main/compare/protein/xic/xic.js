@@ -162,6 +162,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             ms2Info.psm.fishTones = rs;
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
+            popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
           }
 
