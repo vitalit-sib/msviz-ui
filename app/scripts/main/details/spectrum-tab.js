@@ -2,8 +2,6 @@
 angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service'])
   .controller('DetailsTabCtrl', function ($scope, $q, _,psmService, spectrumService, fishtones, fishtonifyService, pviz, $routeParams) {
     $scope.searchIds = $routeParams.searchIds.split(',');
-    var acSourcePair = $routeParams.proteinAC.split(':');
-    var proteinAC = acSourcePair[0];
     var runId=$routeParams.runId;
     var spectrumId=$routeParams.spectrumId;
     $scope.spectra=[];
@@ -16,7 +14,7 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
 
       var addSelectedPSM = function(pvizPsmList){
 
-        var pvizPsm = undefined;
+        var pvizPsm;
 
         // if there are  psms found
         if(pvizPsmList.length >= 1){
