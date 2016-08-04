@@ -18,8 +18,8 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
 
         var pvizPsm = undefined;
 
-        // if there are no psms found
-        if(pvizPsmList.length < 1){
+        // if there are  psms found
+        if(pvizPsmList.length >= 1){
           pvizPsm = pvizPsmList[0];
         }
 
@@ -30,7 +30,7 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
             precCharge: spectrum.ref.precursor.charge,
             precIntensity: spectrum.ref.precursor.intensity,
             precMoz: spectrum.ref.precursor.moz,
-            retentionTime: spectrum.ref.precursor.intensity.retentionTime,
+            retentionTime: spectrum.ref.precursor.retentionTime,
             searchId: runId,
             scanNr: spectrumId
           };
@@ -38,11 +38,11 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
           // info for spectrum and XIC
           var newEntry;
           if(pvizPsm){
+            pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
             pvizPsm.fishTones.spectrum = fishtonesSp;
-            pvizPsm.fishTones.spectrum.richSeq = fishtonifyService.buildRichSeq(pvizPsm);
             pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
-            newEntry = {type:'psm', firstPsm: pvizPsm, otherPsms: [], ms2Info: ms2Info, fishTones: {spectrum: fishtonesSp}};
+            newEntry = {type:'psm', firstPsm: pvizPsm, otherPsms: [], ms2Info: ms2Info};
           }else{
             newEntry = {type:'sp', ms2Info: ms2Info, firstPsm: {fishTones: {spectrum: fishtonesSp} } };
           }
