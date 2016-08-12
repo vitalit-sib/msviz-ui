@@ -29,6 +29,23 @@
 </div>
 
 <!--
+ Show detailed information about the current status of the job
+-->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myUploadModel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myUploadLabel">Upload is {{selStatus.code}}</h4>
+      </div>
+      <div class="modal-body">
+        {{selStatus.message}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
  Showing this alert while deleting data
 -->
 
@@ -54,12 +71,16 @@
       <th>Enzyme</th>
       <th>Parent Tolerance</th>
       <th>Fragment Tolerance</th>
+      <th>Status</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="search in searches | orderBy:'-creationDate'" ng-init="addId($index)">
-      <td><input type="checkbox" ng-model="selected" ng-change="updateId($index)"></td>
-      <td><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
+      <td ng-if="search.status.code!='done'"></td>
+      <td ng-if="search.status.code=='done'"><input type="checkbox" ng-model="selected" ng-change="updateId($index)"></td>
+      <td ng-if="search.status.code=='done'"><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
+      <td ng-if="search.status.code=='processing'" style="color:silver">{{search.searchId}}</td>
+      <td ng-if="search.status.code=='error'" style="color:silver">{{formatSearchIdError(search.searchId)}}</td>
       <td>{{search.title}}</td>
       <td>
         <p ng-repeat="elem in search.database">{{elem.id}} <small ng-if="elem.version">({{elem.version}})</small></p>
@@ -68,6 +89,14 @@
       <td>{{search.enzyme}}</td>
       <td>{{search.parentTolerance}}</td>
       <td>{{search.fragmentTolerance}}</td>
+      <td ng-if="search.status.code=='done'"><button type="button" class="btn btn-success btn-xs" ng-click="setUploadModal(search.status)">ok</button></td>
+      <td ng-if="search.status.code=='processing'"><button type="button" class="btn btn-primary btn-xs" ng-click="setUploadModal(search.status)">loading ..</button></td>
+      <td ng-if="search.status.code=='error'">
+        <button type="button" class="btn btn-danger btn-xs" ng-click="setUploadModal(search.status)">error</button>
+        <button ng-click="deleteOneSearchId(search.searchId)" showtype="button" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </td>
     </tr>
     </tbody>
 
