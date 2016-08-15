@@ -15,6 +15,14 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-6">
+    <input type="checkbox" ng-model="intThreshold.activated" ng-change="changeIntThresholdStyle()">
+    <label ng-style="intThreshold.style">MS1 intensity threshold</label>
+    <input ng-show="intThreshold.activated" type="number" ng-model="intThreshold.value">
+  </div>
+</div>
+
 <br>
 
 <!-- <label for="inputIntThreshold">Email address</label>

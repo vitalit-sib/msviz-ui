@@ -17,6 +17,14 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
 
   .controller('UploadsCtrl', function ($scope,$http,EnvConfig) {
 
+    // set the default values for ms1 intensity threshold filters
+    $scope.intThreshold = {activated: false, value: 10000, style: {color: 'lightgrey'} };
+
+    // make the label grey if it is not activated
+    $scope.changeIntThresholdStyle = function() {
+      $scope.intThreshold.style.color = ($scope.intThreshold.activated) ? 'black' : 'lightgrey';
+    };
+
     // hide progress bar at the beginning
     $scope.hideProgressBar = true;
 
@@ -32,9 +40,11 @@ angular.module('uploads-controller', ['thirdparties', 'environment','ngFileUploa
 
       $scope.hideProgressBar = false;
 
+        var intThresh = ($scope.intThreshold.activated) ? ($scope.intThreshold.value) : 1;
+
         var request = {
           method: 'POST',
-          url: EnvConfig.backendUrl + '/uploads/' + $scope.fileType,
+          url: EnvConfig.backendUrl + '/uploads/' + $scope.fileType + '?intensityThr=' + intThresh,
           data: filesData,
           headers: {
             'Content-Type': undefined
