@@ -38,16 +38,16 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
     // remove the heading timestamp from SearchIds that failed
     $scope.formatSearchIdError = function(str){
-      var done = str.replace(/^(\d+\_)/,"");
+      var done = str.replace(/^(\d+\_)/,'');
       return done;
-    }
+    };
 
     // delete the selected searchId
     $scope.deleteOneSearchId = function(searchId){
       searchService.deleteMatchInfo(searchId).then(function(){
         $scope.getSearchList();
-      })
-    }
+      });
+    };
 
     $scope.getSearchList = function(){
       searchService.list().then(function(data){
