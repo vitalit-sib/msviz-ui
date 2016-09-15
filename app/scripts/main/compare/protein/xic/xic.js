@@ -148,6 +148,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           // create info to show in popover
           var precInfo = ms2Info.precursor;
 
+
           var popoverTitle = 'scan: ' +
             ms2Info.scanNumber +
             ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
@@ -158,12 +159,16 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
           // create the PSM info if available
           if(ms2Info.psm){
+
+
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
+            //We add only the first AC in the list for the correspondent protein
+            popoverPsm.AC = ms2Info.psm.proteinList[0].proteinRef.AC ;
           }
 
           return new fishtones.match.PrecursorPeak({
