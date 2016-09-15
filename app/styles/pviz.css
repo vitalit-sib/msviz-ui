@@ -100,3 +100,14 @@ g.selectedRange rect {
   fill: lightgreen;
 }
 
+.groupset-title text {
+  font-family: Arial;
+}
+
+.tick text {
+  font-family: Arial;
+}
+
+.feature text {
+  font-family: Arial;
+}

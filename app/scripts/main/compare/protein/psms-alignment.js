@@ -1,8 +1,33 @@
 'use strict';
-angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment'])
+angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'svg-export'])
 
 
-  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter) {
+  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, d3, svgExport) {
+
+    $scope.exportSvg = function(fileType){
+
+      var svg = d3.select('.pviz')[0][0];
+
+      // get the height of this SVG element
+      var height = svg.getBBox().height;
+      var width = svg.getBoundingClientRect().width;
+
+      var svgString = svgExport.getSvgString(svg, width, height);
+
+      if(fileType === 'png'){
+        // prepare the callback
+        var save = function(dataBlob){
+          saveAs(dataBlob,'pviz.png');
+        };
+
+        // save the PNG
+        svgExport.svgString2Png(svgString, width, height, save);
+      }else{
+        var blob = new Blob([ svgString ], {type: 'image/svg+xml;charset=utf-8'});
+        saveAs(blob,'pviz.svg');
+      }
+
+    };
 
     $scope.removePvizPopover = function(){
       angular.element('#detailInfoPopover').hide();

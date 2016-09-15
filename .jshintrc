@@ -20,6 +20,8 @@
   "globals": {
     "angular": false,
     "_": false,
-    "$": false
+    "$": false,
+    "saveAs": false,
+    "unescape": false
   }
 }
