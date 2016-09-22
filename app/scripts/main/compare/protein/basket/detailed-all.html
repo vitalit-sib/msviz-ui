@@ -30,27 +30,19 @@
             <span class="glyphicon glyphicon-magnet"></span>
           </button>
         </div>
-          <div ng-if="item.type === 'psm'">
-            <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-              <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
-              <button ng-click="addToResults(item)" showtype="button"
-                      class="btn btn-default btn-small">
-                <span class="glyphicon glyphicon-shopping-cart"></span>
-              </button>
-              <button ng-click="removeSelectedPSM(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button"
-                      class="btn btn-default btn-small">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </div>
-          </div>
-          <div ng-if="item.type === 'sp'">
-            <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-            <button ng-click="removeSelectedSp(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button"
-                    class="btn btn-default btn-small">
-              <span class="glyphicon glyphicon-remove"></span>
-            </button>
-          </div>
+
+        <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+          <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
+          <button ng-click="addToResults(item)" showtype="button"
+                  class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+          </button>
+          <button ng-click="removeSelectedPSM(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button"
+                  class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
         </div>
+
         <div ng-controller="XicController">
           <xic-popover my-id="{{item.id}}"></xic-popover>
           <div xic-fishtones style="height:150px"></div>
