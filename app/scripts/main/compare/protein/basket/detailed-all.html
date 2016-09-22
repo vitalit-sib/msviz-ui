@@ -12,14 +12,9 @@
             <span class="glyphicon glyphicon-magnet"></span>
           </button>
         </div>
-        <div ng-if="item.type === 'psm'">
-          <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
-          <div style="height:30px;"/>
-          <matches-psm-box psm="item.firstPsm"></matches-psm-box>
-        </div>
-        <div ng-if="item.type === 'sp'">
-          <div matches-fishtones-psm-spectrum fishtonespsm="item.fishTones" style="height:150px" />
-        </div>
+        <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
+        <div style="height:30px;"/>
+        <matches-psm-box psm="item.firstPsm"></matches-psm-box>
       </div>
       <div class="col-sm-6">
         <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
@@ -33,6 +28,13 @@
 
         <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
           <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
+          <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href ng-click="exportSvg('svg');">SVG</a></li>
+            <li><a href ng-click="exportSvg('png');">PNG</a></li>
+          </ul>
           <button ng-click="addToResults(item)" showtype="button"
                   class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-shopping-cart"></span>
