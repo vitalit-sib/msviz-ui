@@ -10,6 +10,15 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
     $scope.runAndSpUniqueIds = [];
     $scope.selectedItemsId = -1;
 
+
+    $scope.exportSvg = function(elId, svgType, fileType){
+      console.log(elId);
+      console.log(svgType);
+      console.log(fileType);
+      console.log($scope.selectedItems);
+      var svg = d3.select('.pviz')[0][0];
+    }
+
     $scope.$on('basket-add', function (event, item) {
 
       // we only add elements to the basket if they're not already there
