@@ -1,6 +1,6 @@
 'use strict';
 angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams, httpProxy) {
+  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams, httpProxy, svgExport, d3) {
 
     $scope.showAddedLabel = false;
     $scope.searchIds = $routeParams.searchIds.split(',');
@@ -12,12 +12,31 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
 
 
     $scope.exportSvg = function(elId, svgType, fileType){
-      console.log(elId);
-      console.log(svgType);
-      console.log(fileType);
-      console.log($scope.selectedItems);
-      var svg = d3.select('.pviz')[0][0];
-    }
+
+      // select the correct SVG element
+      var selEl = d3.select('#' + svgType + '_' + elId)[0][0];
+      var svg = (svgType === 'xic') ? selEl.childNodes[0] : selEl.childNodes[1];
+
+      // get the height of this SVG element
+      var height = svg.getBBox().height;
+      var width = svg.getBoundingClientRect().width;
+
+      var svgString = svgExport.getSvgString(svg, width, height);
+
+      if(fileType === 'png'){
+        // prepare the callback
+        var save = function(dataBlob){
+          saveAs(dataBlob, svgType + '.png');
+        };
+
+        // save the PNG
+        svgExport.svgString2Png(svgString, width, height, save);
+      }else{
+        var blob = new Blob([ svgString ], {type: 'image/svg+xml;charset=utf-8'});
+        saveAs(blob, svgType + '.svg');
+      }
+
+    };
 
     $scope.$on('basket-add', function (event, item) {
 

@@ -111,3 +111,12 @@ g.selectedRange rect {
 .feature text {
   font-family: Arial;
 }
+
+text.xic.title {
+  font-family: Arial;
+}
+
+
+svg.d3-widget-match-spectrum text.title{
+  font-family: Arial;
+}
