@@ -157,8 +157,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
           // create the PSM info if available
           if(ms2Info.psm){
-
-            console.log("psm")
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
             popoverPsm.richSeq = rs.richSeq.toString();
