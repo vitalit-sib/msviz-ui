@@ -13,6 +13,16 @@
   <br>
   <div class="row">
     <div class="col-sm-6" ng-mouseleave="removePvizPopover();">
+      <div class="btn-group pull-right">
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href ng-click="exportSvg('svg');">SVG</a></li>
+          <li><a href ng-click="exportSvg('png');">PNG</a></li>
+        </ul>
+      </div>
+
       <matches-one-liner ng-controller="detailedMatchCtrl"></matches-one-liner>
       <matches-psm-pviz></matches-psm-pviz>
     </div>

@@ -31,7 +31,8 @@ angular
     'databases-services',
     'databases-controller',
     'uploads-controller',
-    'as.sortable'
+    'as.sortable',
+    'svg-export'
   ])
   .config(function ($routeProvider) {
     $routeProvider

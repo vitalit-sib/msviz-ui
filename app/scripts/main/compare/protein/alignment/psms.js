@@ -124,6 +124,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
  *  * bean: the object
  */
   .controller('detailedMatchCtrl', function ($scope) {
+
     // activate popover
     angular.element('#detailInfoPopover').popover();
 
