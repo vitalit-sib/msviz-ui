@@ -168,7 +168,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             popoverPsm.AC = acList.join() ;
 
             //Add massDiff to title
-            popoverTitle= popoverTitle + ' massDiff ' + ms2Info.psm.matchInfo.massDiff;
+            popoverTitle= popoverTitle + ' massDiff ' + ms2Info.psm.matchInfo.massDiff + "ppm";
           }
           popoverPsm.title =popoverTitle;
 
