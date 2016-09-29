@@ -159,6 +159,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           if(ms2Info.psm){
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
+            popoverPsm.prevAA = _.map(ms2Info.psm.proteinList, function(x) {return x.previousAA}).toString();
+            popoverPsm.nxtAA=_.map(ms2Info.psm.proteinList, function(x) {return x.nextAA}).toString();
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
