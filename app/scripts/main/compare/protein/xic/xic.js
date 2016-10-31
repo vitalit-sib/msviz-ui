@@ -147,29 +147,32 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         var createPrecursorPeak = function (ms2Info) {
           // create info to show in popover
           var precInfo = ms2Info.precursor;
-
-
           var popoverTitle = 'scan: ' +
             ms2Info.scanNumber +
             ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
             precInfo.charge + '+ ' +
             precInfo.moz.toFixed(4) + 'Da';
 
-          var popoverPsm = {title: popoverTitle};
+          var popoverPsm = {title:''};
 
           // create the PSM info if available
           if(ms2Info.psm){
-
-
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
+            popoverPsm.prevAA = _.map(ms2Info.psm.proteinList, function(x) {return x.previousAA;}).toString();
+            popoverPsm.nxtAA=_.map(ms2Info.psm.proteinList, function(x) {return x.nextAA;}).toString();
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
             popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
-            //We add only the first AC in the list for the correspondent protein
-            popoverPsm.AC = ms2Info.psm.proteinList[0].proteinRef.AC ;
+            //We add the whole list for the correspondent protein
+            var acList = _.map(ms2Info.psm.proteinList, function(x) {return x.proteinRef.AC;});
+            popoverPsm.AC = acList.join() ;
+
+            //Add massDiff to title
+            popoverTitle= popoverTitle + ' massDiff ' + ms2Info.psm.matchInfo.massDiff + 'ppm';
           }
+          popoverPsm.title =popoverTitle;
 
           return new fishtones.match.PrecursorPeak({
             retentionTime: ms2Info.precursor.retentionTime,

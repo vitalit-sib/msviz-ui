@@ -156,10 +156,13 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
             var spTitle = 'scan: ' + ref.scanNumber +
                           ' (' + (ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
                           ref.precursor.charge + '+ ' +
-                          ref.precursor.moz.toFixed(4) + 'Da';
+                          ref.precursor.moz.toFixed(4) + 'Da' +
+                          ' massDiff ' + psm.matchInfo.massDiff + 'ppm';
             psm.spTitle = spTitle;
-          });
 
+            psm.prevAA= _.map(psm.proteinList, function(x){return x.previousAA;}).toString();
+            psm.nxtAA= _.map(psm.proteinList, function(x){return x.nextAA;}).toString();
+          });
 
 
           return {

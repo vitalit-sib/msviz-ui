@@ -1,9 +1,9 @@
 
 
  <div class="match-one-liner popover right" id="detailInfoPopover">
-    <h3 class="popover-title" style="white-space: nowrap;">{{psm.spTitle}}</h3>
+    <h3 class="popover-title" >{{psm.spTitle}}</h3>
     <div class="popover-content">
-      <p style="word-wrap:break-word;">{{psm.fishTones.richSeq.toString()}}</p>
+      <p style="word-wrap:break-word;">{{psm.prevAA}}.{{psm.fishTones.richSeq.toString()}}.{{psm.nxtAA}}</p>
       <p><small>Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong> - Localisation score: <strong>{{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</strong> %</small></p>
     </div>
  </div>
