@@ -2,18 +2,31 @@
 angular.module('results-controller', ['thirdparties', 'environment'])
 
   .controller('ResultsCtrl', function($scope, resultsService) {
-    resultsService.list().then(function (data) {
-      var dataModif = _.map(data, function(x) {
 
-        var lastModif = (x.lastModif) ? (new Date(x.lastModif)) : null;
-        var firstModif = (x.firstModif) ? (new Date(x.firstModif)) : null;
-        // put entries with no date information at the end of the list
-        var rawLastModif = (x.lastModif) ? (x.lastModif) : 0;
+    $scope.listBaskets = function () {
+      resultsService.list().then(function (data) {
+        var dataModif = _.map(data, function (x) {
 
-        return {'searchId' :x._id, 'lastModif' : lastModif, 'firstModif' : firstModif, rawLastModif: rawLastModif};
+          var lastModif = (x.lastModif) ? (new Date(x.lastModif)) : null;
+          var firstModif = (x.firstModif) ? (new Date(x.firstModif)) : null;
+          // put entries with no date information at the end of the list
+          var rawLastModif = (x.lastModif) ? (x.lastModif) : 0;
+
+          return {'searchId': x._id, 'lastModif': lastModif, 'firstModif': firstModif, rawLastModif: rawLastModif};
+        });
+        $scope.resultList = dataModif;
       });
-      $scope.resultList = dataModif;
-    });
+    };
+
+
+    $scope.deleteBySearchIds = function(searchIds) {
+      resultsService.deleteBySearchIds(searchIds).then(function(){
+        $scope.listBaskets();
+      });
+    };
+
+    // make the initial call to the basket
+    $scope.listBaskets();
 
   })
 

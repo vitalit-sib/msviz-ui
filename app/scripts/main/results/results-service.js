@@ -11,7 +11,11 @@ angular.module('results-services', ['thirdparties', 'environment'])
     };
 
     BasketServices.prototype.deleteEntry = function (id) {
-      return httpProxy.delete('/basket/' + id.$oid);
+      return httpProxy.delete('/basket/by-mongo/' + id.$oid);
+    };
+
+    BasketServices.prototype.deleteBySearchIds = function (searchIds) {
+      return httpProxy.delete('/basket/by-search/' + searchIds);
     };
 
     BasketServices.prototype.findBySearchId = function (searchId) {
