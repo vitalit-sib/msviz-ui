@@ -13,12 +13,13 @@
     <th></th>
     <th>ProteinAC</th>
     <th>Peptide</th>
-    <th>Scan#</th>
+    <th>Scan<br>number</th>
     <th>Rt</th>
     <th>Moz</th>
     <th>Charge</th>
     <th>Score</th>
-    <th>L.score</th>
+    <th>Localization<br>score</th>
+    <th>Match diff<br>[ppm]</th>
     <th ng-repeat="id in searchIds">{{id}}<br>Rt</th>
     <th ng-repeat="id in searchIds">{{id}}<br>Int</th>
   </tr>
@@ -36,6 +37,7 @@
     <td>{{e.precCharge}}</td>
     <td>{{e.score.toFixed(0)}}</td>
     <td>{{e.localizationScore.toFixed(0)}}</td>
+    <td>{{e.ppmDiff.toFixed(2)}}</td>
     <td ng-repeat="p in e.xicPeaks">{{p.rt}}</td>
     <td ng-repeat="p in e.xicPeaks">{{p.intensity.toExponential(2)}}</td>
   </tr>

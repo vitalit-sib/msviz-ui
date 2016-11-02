@@ -100,7 +100,8 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
         'rtSelected': {'lowerRt':10, 'upperRt':30},
         'xicPeaks': myXicPeaks,
         'nextAA': item.firstPsm.nxtAA,
-        'prevAA': item.firstPsm.prevAA
+        'prevAA': item.firstPsm.prevAA,
+        'ppmDiff': item.firstPsm.ppmDiff
       };
 
       // put the data to the bakend and show the label
