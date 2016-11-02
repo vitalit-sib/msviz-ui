@@ -15,7 +15,7 @@ angular.module('results-services', ['thirdparties', 'environment'])
     };
 
     BasketServices.prototype.deleteBySearchIds = function (searchIds) {
-      return httpProxy.delete('/basket/by-search/' + searchIds);
+      return httpProxy.delete('/basket/' + searchIds);
     };
 
     BasketServices.prototype.findBySearchId = function (searchId) {
