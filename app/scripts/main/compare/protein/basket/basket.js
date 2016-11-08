@@ -1,6 +1,6 @@
 'use strict';
-angular.module('matches-basket', ['thirdparties', 'environment'])
-  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams, httpProxy, svgExport, d3) {
+angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'])
+  .controller('MatchesBasketCtrl', function ($scope, $q, _,$location,$routeParams, httpProxy, svgExport, d3, searchService) {
 
     $scope.showAddedLabel = false;
     $scope.searchIds = $routeParams.searchIds.split(',');
@@ -44,7 +44,6 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       var newRunAndSpUniqueId = item.bean.spectrumId.runId + item.bean.spectrumId.id;
       if(! _.find($scope.runAndSpUniqueIds, function(x){ return x === newRunAndSpUniqueId; })) {
         $scope.runAndSpUniqueIds.push(newRunAndSpUniqueId);
-
         $scope.addSelected(item);
       }
 
@@ -65,10 +64,30 @@ angular.module('matches-basket', ['thirdparties', 'environment'])
       var newEntry;
       if(item.type === 'psm'){
         newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: item.bean, otherPsms: [], ms2Info: ms2Info};
+        // we store the fragment precision into the fishTones for correct peak-matching
+        searchService.get(newEntry.firstPsm.searchId).then(function(res){
+          var resArr = res.fragmentTolerance.split(/\s+/);
+          newEntry.firstPsm.fishTones.fragmentTolerance = resArr[0];
+
+          switch(resArr[1].charAt(0).toLowerCase()){
+            case 'p':
+              newEntry.firstPsm.fishTones.fragmentToleranceUnit = 'ppm';
+              break;
+            case 'd':
+              newEntry.firstPsm.fishTones.fragmentToleranceUnit = 'dalton';
+              break;
+            default:
+              newEntry.firstPsm.fishTones.fragmentToleranceUnit = undefined;
+          }
+
+          $scope.selectedItems.push(newEntry);
+        });
+
       }else{
         newEntry = {id: $scope.selectedItemsId, type:item.type, fishTones: {spectrum: item.bean.spectrum}, ms2Info: ms2Info};
+        $scope.selectedItems.push(newEntry);
       }
-      $scope.selectedItems.push(newEntry);
+
     };
 
     /**

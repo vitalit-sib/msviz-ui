@@ -26,7 +26,9 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
           // transform dalton mass diff into ppm
           psm.ppmDiff = psm.matchInfo.massDiff * 1000000 / (psm.pep.molMass - psm.matchInfo.massDiff);
           psm.fishTones = fishtonifyService.buildRichSeq(psm);
+          psm.fishTones.searchId = psm.searchId;
       });
+
       return psms;
     };
 

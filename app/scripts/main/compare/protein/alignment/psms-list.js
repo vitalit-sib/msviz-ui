@@ -18,7 +18,8 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       var view = new fishtones.match.MatchSpectrumView({
         model: psm,
         el: elm,
-        tol: 1000,
+        tol: ftPSM.fragmentTolerance || (500) ,
+        tolUnity: ftPSM.fragmentToleranceUnit || 'ppm',
         xZoomable: true
       });
       view.render();

@@ -31,6 +31,10 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       return httpProxy.delete('/exp/msrun/' + searchId);
     };
 
+    SearchService.prototype.get = function(searchId){
+      return httpProxy.get('/search/' + searchId);
+    };
+
     return new SearchService();
   })
 
