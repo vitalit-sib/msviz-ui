@@ -79,7 +79,7 @@
       <td ng-if="search.status.code!='done'"></td>
       <td ng-if="search.status.code=='done'"><input type="checkbox" ng-model="selected" ng-change="updateId($index)"></td>
       <td ng-if="search.status.code=='done'"><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
-      <td ng-if="search.status.code=='processing'" style="color:silver">{{search.searchId}}</td>
+      <td ng-if="search.status.code=='loading'" style="color:silver">{{search.searchId}}</td>
       <td ng-if="search.status.code=='error'" style="color:silver">{{formatSearchIdError(search.searchId)}}</td>
       <td>{{search.title}}</td>
       <td>
@@ -90,7 +90,7 @@
       <td>{{search.parentTolerance}}</td>
       <td>{{search.fragmentTolerance}}</td>
       <td ng-if="search.status.code=='done'"><button type="button" class="btn btn-success btn-xs" ng-click="setUploadModal(search.status)">ok</button></td>
-      <td ng-if="search.status.code=='processing'"><button type="button" class="btn btn-primary btn-xs" ng-click="setUploadModal(search.status)">loading ..</button></td>
+      <td ng-if="search.status.code=='loading'"><button type="button" class="btn btn-primary btn-xs" ng-click="setUploadModal(search.status)">loading ..</button></td>
       <td ng-if="search.status.code=='error'">
         <button type="button" class="btn btn-danger btn-xs" ng-click="setUploadModal(search.status)">error</button>
         <button ng-click="deleteOneSearchId(search.searchId)" showtype="button" class="btn btn-default btn-xs">
