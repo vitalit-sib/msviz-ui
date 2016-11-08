@@ -102,22 +102,27 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
 
       // sort the searchIds in ascending order
       //not sorting anymore, otherwise is not keeping the order given by user
-      //var sortedSearchId = $scope.searchIds.sort();
+      var sortedSearchId = $scope.searchIds.sort();
+
+      // we also have to sort the myXicPeaks
+      var sortedXicPeaks = _.sortBy(myXicPeaks, function(el){
+        return el.searchId;
+      });
 
       var resultEntry = {
         'proteinAC':item.firstPsm.proteinList[0].proteinRef.AC,
         'peptideSeq':item.firstPsm.fishTones.richSeq.toString(),
         'startPos':item.firstPsm.proteinList[0].startPos,
         'endPos':item.firstPsm.proteinList[0].endPos,
-        //'searchIds':sortedSearchId.join(','),
-        'searchIds':$scope.searchIds.join(','),
+        'searchIds':sortedSearchId.join(','),
+        //'searchIds':$scope.searchIds.join(','),
         'spectrumId': item.firstPsm.spectrumId,
         'score': item.firstPsm.matchInfo.score.mainScore,
         'localizationScore': item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
         'ppmTolerance': 10,
         'rtZoom': {'lowerRt':10, 'upperRt':30},
         'rtSelected': {'lowerRt':10, 'upperRt':30},
-        'xicPeaks': myXicPeaks,
+        'xicPeaks': sortedXicPeaks,
         'nextAA': item.firstPsm.nxtAA,
         'prevAA': item.firstPsm.prevAA,
         'ppmDiff': item.firstPsm.ppmDiff
