@@ -1,5 +1,5 @@
 'use strict';
-angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental'])
+angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service'])
 
   .controller('XicController', function(){
     // we need this controller to store the mouse coordinates
@@ -60,7 +60,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService, spectrumService) {
+.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService, spectrumService, psmService) {
 
     var link = function (scope, elm) {
 
@@ -142,7 +142,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         var _yo = view.yo;
         _yo++;
 
-
         // create a PrecursorPeak from the ms2Info
         var createPrecursorPeak = function (ms2Info) {
           // create info to show in popover
@@ -170,7 +169,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             popoverPsm.AC = acList.join() ;
 
             //Add massDiff to title
-            var ppmDiff = ms2Info.psm.matchInfo.massDiff * 1000000 / (ms2Info.psm.pep.molMass - ms2Info.psm.matchInfo.massDiff);
+            var ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.massDiffUnit);
             popoverTitle= popoverTitle + ' massDiff: ' + ppmDiff.toFixed(2) + ' ppm';
           }
           popoverPsm.title =popoverTitle;

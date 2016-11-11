@@ -1,6 +1,6 @@
 'use strict';
-angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service'])
-  .controller('DetailsTabCtrl', function ($scope, $q, _,psmService, spectrumService, fishtones, fishtonifyService, pviz, $routeParams) {
+angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service','searches-list'])
+  .controller('DetailsTabCtrl', function ($scope, $q, _,psmService, spectrumService, fishtones, fishtonifyService, pviz, $routeParams, searchService) {
     $scope.searchIds = $routeParams.searchIds.split(',');
     var runId=$routeParams.runId;
     var spectrumId=$routeParams.spectrumId;
@@ -41,11 +41,30 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
             pvizPsm.fishTones.theoMoz = fishtones.dry.MassBuilder.computeMassRichSequence(pvizPsm.fishTones.richSeq);
 
             newEntry = {type:'psm', firstPsm: pvizPsm, otherPsms: [], ms2Info: ms2Info};
+            // we store the fragment precision into the fishTones for correct peak-matching
+            searchService.get(newEntry.firstPsm.searchId).then(function(res) {
+              var resArr = res.fragmentTolerance.split(/\s+/);
+              newEntry.firstPsm.fishTones.fragmentTolerance = resArr[0];
+
+              switch (resArr[1].charAt(0).toLowerCase()) {
+                case 'p':
+                  newEntry.firstPsm.fishTones.fragmentToleranceUnit = 'ppm';
+                  break;
+                case 'd':
+                  newEntry.firstPsm.fishTones.fragmentToleranceUnit = 'dalton';
+                  break;
+                default:
+                  newEntry.firstPsm.fishTones.fragmentToleranceUnit = undefined;
+              }
+
+              $scope.spectra.push(newEntry);
+            });
+
           }else{
             newEntry = {type:'sp', ms2Info: ms2Info, firstPsm: {fishTones: {spectrum: fishtonesSp} } };
+            $scope.spectra.push(newEntry);
           }
 
-          $scope.spectra.push(newEntry);
         });
       };
 

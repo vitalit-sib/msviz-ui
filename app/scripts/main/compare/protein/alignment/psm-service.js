@@ -8,6 +8,7 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
  *
  */
   .service('psmService', function (_, $http, EnvConfig, httpProxy, fishtonifyService) {
+
     var PSMService = function () {
       return this;
     };
@@ -23,13 +24,20 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
 
     PSMService.prototype.addFishtonesObjects = function (psms) {
       _.each(psms, function (psm) {
-          // transform dalton mass diff into ppm
-          psm.ppmDiff = psm.matchInfo.massDiff * 1000000 / (psm.pep.molMass - psm.matchInfo.massDiff);
+          // transform dalton mass diff into ppm if necessary
+          psm.ppmDiff = PSMService.prototype.convertToPpm(psm.pep.molMass, psm.matchInfo.massDiff, psm.matchInfo.massDiffUnit);
           psm.fishTones = fishtonifyService.buildRichSeq(psm);
           psm.fishTones.searchId = psm.searchId;
       });
 
       return psms;
+    };
+
+    PSMService.prototype.convertToPpm = function(moz, massDiff, currentUnit){
+      if(currentUnit === 'dalton'){
+        return massDiff * 1000000 / (moz - massDiff);
+      }
+      return massDiff;
     };
 
     /**
