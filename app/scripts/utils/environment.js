@@ -21,6 +21,11 @@ angular.module('environment', ['angularytics'])
         isProd: true,
         backendUrl: 'https://msviz.vital-it.ch/backend'
       };
+    } else if ($location.$$host === '192.168.99.100'){
+     return {
+       isProd: true,
+       backendUrl: 'http://192.168.99.100:9000'
+     };
     } else{
       return {
         isProd: false,
