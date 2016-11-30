@@ -1,5 +1,5 @@
 'use strict';
-angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service'])
+angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service', 'matches-protein'])
 
   .controller('XicController', function(){
     // we need this controller to store the mouse coordinates
@@ -18,6 +18,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
       angular.element(elId).popover();
 
       scope.$on('show-prec-info', function (undefined, args) {
+        console.log(args);
         scope.popoverPsm = args;
 
         scope.$apply();
@@ -60,7 +61,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
  * @name matches.directive:matchesFishtonesPsmSpectrum
  * @description display a fishtones PSM spectrum view
  */
-.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService, spectrumService, psmService) {
+.directive('xicFishtones', function (pviz, _, httpProxy, $q, fishtones, fishtonifyService, spectrumService, psmService, psmConvertionService) {
 
     var link = function (scope, elm) {
 
@@ -163,7 +164,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
-            popoverPsm.localisationScore = ms2Info.psm.matchInfo.score.scoreMap['Mascot:delta score'];
+            popoverPsm.localisationScore = psmConvertionService.posScoreFromMatchInfo(ms2Info.psm.matchInfo);
             //We add the whole list for the correspondent protein
             var acList = _.map(ms2Info.psm.proteinList, function(x) {return x.proteinRef.AC;});
             popoverPsm.AC = acList.join() ;

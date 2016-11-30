@@ -1,11 +1,11 @@
 'use strict';
-angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thirdparties', 'environment', 'fishtones-wrapper'])
+angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thirdparties', 'environment', 'fishtones-wrapper', 'matches-protein'])
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmPviz
  * @description pviz one protein among multiple searches
  */
-  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtones, fishtonifyService, spectrumService, _) {
+  .directive('matchesPsmPviz', function (pviz, ProteinMatchesGlobalPvizView, fishtones, fishtonifyService, spectrumService, psmConvertionService) {
 
     var addSelectedPSM = function(scope, pvizPsm){
       pvizPsm.fishTones = fishtonifyService.buildRichSeq(pvizPsm);
@@ -27,15 +27,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
 
         // add the position probability either from scoreMap or from highestModifProbability
-        var posScore = ft.data.matchInfo.score.scoreMap['Mascot:delta score'];
-        if(! posScore){
-          var probs = ft.data.matchInfo.highestModifProbability;
-          if(probs){
-            posScore = _.reduce(probs, function(memo, v, k) { memo.push(k.substring(0, 2) + ':' + v); return memo;}, []).join(';');
-          }
-        }else{
-          posScore += '%';
-        }
+        var posScore = psmConvertionService.posScoreFromMatchInfo(ft.data.matchInfo);
 
         ft.data.matchInfo.posScore = posScore;
 

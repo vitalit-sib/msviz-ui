@@ -2,6 +2,34 @@
 angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-iso-modif'])
 
 /**
+ * common services for psm convertions
+ */
+  .service('psmConvertionService', function() {
+    var PsmConvertionService = function () {
+      return this;
+    };
+
+    PsmConvertionService.prototype.posScoreFromMatchInfo = function (matchInfo) {
+      var posScore = matchInfo.score.scoreMap['Mascot:delta score'];
+      if (!posScore) {
+        var probs = matchInfo.highestModifProbability;
+        if (probs) {
+          posScore = _.reduce(probs, function (memo, v, k) {
+            memo.push(k.substring(0, 2) + ':' + v);
+            return memo;
+          }, []).join(';');
+        }
+      } else {
+        posScore += '%';
+      }
+      return posScore;
+    }
+
+    return new PsmConvertionService();
+
+  })
+
+/**
  * @ngdoc service
  * @name proteinMatches.service:proteinMatchesService
  * @description

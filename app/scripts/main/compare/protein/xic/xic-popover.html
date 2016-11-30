@@ -2,7 +2,11 @@
   <h3 class="popover-title" >{{popoverPsm.title}}</h3>
   <div class="popover-content" ng-if="popoverPsm.richSeq">
     <p style="word-wrap:break-word;">{{popoverPsm.prevAA}}.{{popoverPsm.richSeq}}.{{popoverPsm.nxtAA}}</p>
-    <p><small>Main score: <strong>{{popoverPsm.mainScore | number:0}}</strong> - Localisation score: <strong>{{popoverPsm.localisationScore | number:0}}</strong> % - AC: <strong>{{popoverPsm.AC}}</strong></small></p>
+    <small>Main score: <strong>{{popoverPsm.mainScore | number:0}}</strong></small><br>
+    <div ng-if="popoverPsm.localisationScore">
+      <small>Localisation score: <strong>{{popoverPsm.localisationScore}}</strong></small><br>
+    </div>
+    <small>Protein ACs: <strong>{{popoverPsm.AC}}</strong></small>
     <p ng-if="popoverPsm.isRejected"><span class="label label-danger">below threshold</span></p>
   </div>
 </div>
