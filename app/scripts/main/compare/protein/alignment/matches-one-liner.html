@@ -4,7 +4,10 @@
     <h3 class="popover-title" >{{psm.spTitle}}</h3>
     <div class="popover-content">
       <p style="word-wrap:break-word;">{{psm.prevAA}}.{{psm.fishTones.richSeq.toString()}}.{{psm.nxtAA}}</p>
-      <p><small>Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong> - Localisation score: <strong>{{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}}</strong> %</small></p>
+      <div><small>Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong></small></div>
+      <div ng-if="psm.matchInfo.posScore">
+        <small>Localisation probs: <strong>{{psm.matchInfo.posScore}}</strong></small></p>
+      </div>
     </div>
  </div>
 

@@ -9,7 +9,15 @@
     </div>
     <div ng-if="!tableExpanded">
       <p style="word-wrap: break-word">{{psm.fishTones.richSeq.toString()}}</p>
-      <p><small>Main score: {{psm.matchInfo.score.mainScore | number:0}} - Localisation score: {{psm.matchInfo.score.scoreMap['Mascot:delta score'] | number:0}} %</small></p>
+        <small>
+          Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong>
+          <div ng-if="!psm.matchInfo.modificationProbabilities && psm.matchInfo.posScore">
+            Localisation score: <strong>{{psm.matchInfo.posScore}}</strong>
+          </div>
+        </small>
+          <div ng-repeat="(k,v) in psm.matchInfo.modificationProbabilities">
+            <small>{{k}} probs: {{v}}</small>
+          </div>
     </div>
   </div>
   <div ng-show="tableExpanded">
