@@ -18,7 +18,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
       angular.element(elId).popover();
 
       scope.$on('show-prec-info', function (undefined, args) {
-        console.log(args);
         scope.popoverPsm = args;
 
         scope.$apply();

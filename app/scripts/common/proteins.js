@@ -23,7 +23,7 @@ angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-i
         posScore += '%';
       }
       return posScore;
-    }
+    };
 
     return new PsmConvertionService();
 
