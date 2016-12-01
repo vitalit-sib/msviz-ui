@@ -1,6 +1,6 @@
 'use strict';
-angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service','searches-list'])
-  .controller('DetailsTabCtrl', function ($scope, $q, _,psmService, spectrumService, fishtones, fishtonifyService, pviz, $routeParams, searchService) {
+angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','psm-service','searches-list', 'matches-protein'])
+  .controller('DetailsTabCtrl', function ($scope, $q, _,psmService, spectrumService, fishtones, fishtonifyService, pviz, $routeParams, searchService, psmConvertionService) {
     $scope.searchIds = $routeParams.searchIds.split(',');
     var runId=$routeParams.runId;
     var spectrumId=$routeParams.spectrumId;
@@ -19,6 +19,7 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
         // if there are  psms found
         if(pvizPsmList.length >= 1){
           pvizPsm = pvizPsmList[0];
+          pvizPsm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(pvizPsm.matchInfo);
         }
 
         spectrumService.findSpByRunIdAndId(runId, spectrumId).then(function (spectrum) {
