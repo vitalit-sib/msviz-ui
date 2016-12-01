@@ -67,6 +67,7 @@
       <th>SearchId</th>
       <th>Title</th>
       <th>Database</th>
+      <th>Search engine</th>
       <th>Username</th>
       <th>Enzyme</th>
       <th>Parent Tolerance</th>
@@ -85,6 +86,7 @@
       <td>
         <p ng-repeat="elem in search.database">{{elem.id}} <small ng-if="elem.version">({{elem.version}})</small></p>
       </td>
+      <td>{{search.searchEngine}}</td>
       <td>{{search.username}}</td>
       <td>{{search.enzyme}}</td>
       <td>{{search.parentTolerance}}</td>
