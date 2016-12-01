@@ -6,4 +6,19 @@
   <br>
   <br>
   <div matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:250px" />
+  <br>
+  <hr>
+  <div>
+    <p style="word-wrap: break-word">{{item.firstPsm.fishTones.richSeq.toString()}}</p>
+    <small>
+      Main score: <strong>{{item.firstPsm.matchInfo.score.mainScore | number:0}}</strong>
+      <div ng-if="!item.firstPsm.matchInfo.modificationProbabilities && item.firstPsm.matchInfo.posScore">
+        Localisation score: <strong>{{item.firstPsm.matchInfo.posScore}}</strong>
+      </div>
+    </small>
+    <div ng-repeat="(k,v) in item.firstPsm.matchInfo.modificationProbabilities">
+      <small>{{k}} scores: {{v}}</small>
+    </div>
+  </div>
 </div>
+<hr>
