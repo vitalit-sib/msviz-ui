@@ -25,7 +25,7 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
     PSMService.prototype.addFishtonesObjects = function (psms) {
       _.each(psms, function (psm) {
           // transform dalton mass diff into ppm if necessary
-          psm.ppmDiff = PSMService.prototype.convertToPpm(psm.pep.molMass, psm.matchInfo.massDiff, psm.matchInfo.massDiffUnit);
+          psm.ppmDiff = PSMService.prototype.convertToPpm(psm.pep.molMass, psm.matchInfo.massDiff, psm.matchInfo.chargeState, psm.matchInfo.massDiffUnit);
           psm.fishTones = fishtonifyService.buildRichSeq(psm);
           psm.fishTones.searchId = psm.searchId;
       });
@@ -33,9 +33,9 @@ angular.module('psm-service', ['thirdparties', 'environment', 'fishtones-wrapper
       return psms;
     };
 
-    PSMService.prototype.convertToPpm = function(moz, massDiff, currentUnit){
+    PSMService.prototype.convertToPpm = function(theoMass, massDiff, chargeState, currentUnit){
       if(currentUnit === 'dalton'){
-        return massDiff * 1000000 / (moz - massDiff);
+        return (massDiff * chargeState / theoMass * 1000000);
       }
       return massDiff;
     };
