@@ -169,7 +169,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             popoverPsm.AC = acList.join() ;
 
             //Add massDiff to title
-            var ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.massDiffUnit);
+            var ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.chargeState, ms2Info.psm.matchInfo.massDiffUnit);
             popoverTitle= popoverTitle + ' massDiff: ' + ppmDiff.toFixed(2) + ' ppm';
           }
           popoverPsm.title =popoverTitle;
