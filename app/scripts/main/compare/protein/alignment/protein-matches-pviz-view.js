@@ -160,8 +160,8 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
                           ' massDiff: ' + psm.ppmDiff.toFixed(2) + ' ppm';
             psm.spTitle = spTitle;
 
-            psm.prevAA= _.map(psm.proteinList, function(x){return x.previousAA;}).toString();
-            psm.nxtAA= _.map(psm.proteinList, function(x){return x.nextAA;}).toString();
+            psm.prevAA= (_.first(psm.proteinList)).previousAA.toString();
+            psm.nxtAA= (_.first(psm.proteinList)).nextAA.toString();
           });
 
 
