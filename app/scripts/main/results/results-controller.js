@@ -18,7 +18,6 @@ angular.module('results-controller', ['thirdparties', 'environment'])
       });
     };
 
-
     $scope.deleteBySearchIds = function(searchIds) {
       resultsService.deleteBySearchIds(searchIds).then(function(){
         $scope.listBaskets();

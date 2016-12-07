@@ -102,7 +102,7 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
 
       // sort the searchIds in ascending order
       //not sorting anymore, otherwise is not keeping the order given by user
-      var sortedSearchId = $scope.searchIds.sort();
+      var sortedSearchId = $scope.searchIds.concat().sort();
 
       // we also have to sort the myXicPeaks
       var sortedXicPeaks = _.sortBy(myXicPeaks, function(el){
