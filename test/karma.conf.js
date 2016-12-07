@@ -27,8 +27,8 @@ module.exports = function(config) {
       'bower_components/angularytics/dist/angularytics.min.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'bower_components/lodash/lodash.min.js',
-      'bower_components/fishtones/dist/fishtones-js-bundle-min.js',
-      'bower_components/pviz/dist/pviz-bundle.min.js',
+      'bower_components/sib-fishtones-js/dist/fishtones-js-bundle-min.js',
+      'bower_components/sib-pviz/dist/sib-pviz-bundle.min.js',
       'app/scripts/**/*.js',
       'test/spec/unit/**/*Spec.js'
     ],
@@ -67,11 +67,24 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    // Original setting:
+    browsers: ['PhantomJS'],
+
+    /*
+    // ###########################
+    // Local settings:
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-jasmine'
+    ],
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'], //'XXChrome'
-
+    //browsers: ['PhantomJS'], //'XXChrome'
+    browsers: ['Chrome'],
+    // Local setting stops here
+    // ###########################
+    */
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -1,7 +1,7 @@
 'use strict';
-angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service', 'matches-protein'])
+angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service', 'matches-protein', 'table-expand-service'])
 
-  .controller('XicController', function(){
+  .controller('XicController', function($scope){
     // we need this controller to store the mouse coordinates
   })
 
@@ -48,10 +48,26 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
  * @name matches.directive:xicTable
  * @description the table showing the xic values after quantitation
  */
-  .directive('xicTable', function () {
+  .directive('xicTable', function (TableExpandedService) {
+
+    var link = function(scope) {
+
+      // set default for tableExpanded
+      scope.tableExpanded = false;
+
+      // we set the isExpanded from the conflict table (in psms.js)
+      var setIsExpanded = function(isExpanded){
+        scope.tableExpanded = isExpanded;
+      };
+
+      TableExpandedService.notifyOnChange(scope.item.id, setIsExpanded);
+    };
+
     return {
       templateUrl: 'scripts/main/compare/protein/basket/xic-table.html',
-      restrict: 'E'
+      restrict: 'E',
+      scope: false,
+      link: link
     };
   })
 
@@ -81,10 +97,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingAreaXic = view.scalingArea;
           _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingContextXic = view.scalingContext;
         }
-
-        scope.$on('conflict-table-expanded', function (event, tableExpanded) {
-          scope.tableExpanded = tableExpanded;
-        });
 
         scope.xicModel.on('change', function () {
 

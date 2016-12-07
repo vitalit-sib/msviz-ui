@@ -24,7 +24,7 @@
         <div ng-if="item.type === 'psm'">
           <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
           <div style="height:30px;"/>
-          <matches-psm-box psm="item.firstPsm"></matches-psm-box>
+          <matches-psm-box psm="item.firstPsm" itemid="item.id"></matches-psm-box>
         </div>
         <div ng-if="item.type === 'sp'">
           <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.fishTones" style="height:150px" />

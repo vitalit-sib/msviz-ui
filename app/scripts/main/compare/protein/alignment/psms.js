@@ -1,5 +1,5 @@
 'use strict';
-angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thirdparties', 'environment', 'fishtones-wrapper', 'matches-protein'])
+angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thirdparties', 'environment', 'fishtones-wrapper', 'matches-protein', 'table-expand-service'])
 /**
  * @ngdoc directive
  * @name matches.directive:matchesPsmPviz
@@ -91,7 +91,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       template: '<div style="width:100%; height:400px"></div>'
     };
   })
-  .controller('MatchesPSMCtrl', function ($scope, _, psmService) {
+  .controller('MatchesPSMCtrl', function ($scope, _, psmService, TableExpandedService) {
     $scope.loadPSMSForSpectrum = function () {
       psmService.findAllBySearchIdAndSpectrumId($scope.psm.searchId, $scope.psm.spectrumId.id)
         .then(function (psms) {
@@ -102,9 +102,9 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
     };
     $scope.loadPSMSForSpectrum();
 
-    $scope.expandOtherMatchTable = function () {
-      var tableExpanded = $scope.tableExpanded?false:true;
-      $scope.$emit('conflict-table-expanded', tableExpanded);
+    $scope.expandOtherMatchTable = function (itemid) {
+      var tableExpanded = $scope.tableExpanded ? false : true;
+      TableExpandedService.setStatus(itemid, tableExpanded);
       $scope.tableExpanded = tableExpanded;
     };
   })
@@ -116,7 +116,10 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
   .directive('matchesPsmBox', function () {
     return {
       restrict: 'E',
-      scope: {psm: '='},
+      scope: {
+        psm: '=',
+        itemid: '='
+      },
       templateUrl: 'scripts/main/compare/protein/basket/matches-psm-box.html'
     };
   })
