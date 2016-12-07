@@ -1,7 +1,7 @@
 'use strict';
 angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'experimental', 'psm-service', 'matches-protein', 'table-expand-service'])
 
-  .controller('XicController', function($scope){
+  .controller('XicController', function(){
     // we need this controller to store the mouse coordinates
   })
 
