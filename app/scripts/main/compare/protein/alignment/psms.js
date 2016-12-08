@@ -27,7 +27,7 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       pviz.FeatureDisplayer.addMouseoverCallback(['psm'], function (ft) {
 
         // add the position probability either from scoreMap or from highestModifProbability
-        var posScore = psmConvertionService.posScoreFromMatchInfo(ft.data.matchInfo);
+        var posScore = psmConvertionService.posScoreFromMatchInfo(ft.data.matchInfo, 1);
 
         ft.data.matchInfo.posScore = posScore;
 

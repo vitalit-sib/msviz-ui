@@ -19,7 +19,7 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
         // if there are  psms found
         if(pvizPsmList.length >= 1){
           pvizPsm = pvizPsmList[0];
-          pvizPsm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(pvizPsm.matchInfo);
+          pvizPsm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(pvizPsm.matchInfo, 1);
         }
 
         spectrumService.findSpByRunIdAndId(runId, spectrumId).then(function (spectrum) {

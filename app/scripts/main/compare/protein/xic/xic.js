@@ -175,7 +175,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             popoverPsm.richSeq = rs.richSeq.toString();
             popoverPsm.mainScore = ms2Info.psm.matchInfo.score.mainScore;
             popoverPsm.isRejected = ms2Info.psm.matchInfo.isRejected;
-            popoverPsm.localisationScore = psmConvertionService.posScoreFromMatchInfo(ms2Info.psm.matchInfo);
+            popoverPsm.localisationScore = psmConvertionService.posScoreFromMatchInfo(ms2Info.psm.matchInfo, 1);
             //We add the whole list for the correspondent protein
             var acList = _.map(ms2Info.psm.proteinList, function(x) {return x.proteinRef.AC;});
             popoverPsm.AC = acList.join() ;

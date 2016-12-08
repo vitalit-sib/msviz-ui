@@ -9,13 +9,14 @@ angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-i
       return this;
     };
 
-    PsmConvertionService.prototype.posScoreFromMatchInfo = function (matchInfo) {
-      var posScore = matchInfo.score.scoreMap['Mascot:delta score'];
+    PsmConvertionService.prototype.posScoreFromMatchInfo = function (matchInfo, precision) {
+      var mascotScore = matchInfo.score.scoreMap['Mascot:delta score'];
+      var posScore = (mascotScore) ? (parseFloat(mascotScore).toFixed(precision)) : undefined;
       if (!posScore) {
         var probs = matchInfo.highestModifProbability;
         if (probs) {
           posScore = _.reduce(probs, function (memo, v, k) {
-            memo.push(k.substring(0, 2) + ':' + v);
+            memo.push(k.substring(0, 2) + ':' + parseFloat(v).toFixed(precision));
             return memo;
           }, []).join(';');
         }
