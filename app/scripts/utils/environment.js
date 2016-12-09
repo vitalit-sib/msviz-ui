@@ -26,10 +26,11 @@ angular.module('environment', ['angularytics'])
        isProd: true,
        backendUrl: 'http://192.168.99.100:9000'
      };
-    } else{
+
+    } else if ($location.$$port === '9001'){
       return {
-        isProd: false,
-        backendUrl: 'http://dockerdev.vital-it.ch:9000'
+        isProd: true,
+        backendUrl: 'http://' + $location.$$host +':9000'
       };
     }
 
