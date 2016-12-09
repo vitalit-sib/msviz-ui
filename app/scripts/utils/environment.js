@@ -29,7 +29,7 @@ angular.module('environment', ['angularytics'])
     } else{
       return {
         isProd: false,
-        backendUrl: 'http://localhost:9000'
+        backendUrl: 'http://dockerdev.vital-it.ch:9000'
       };
     }
 
