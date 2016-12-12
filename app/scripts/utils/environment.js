@@ -11,26 +11,15 @@ angular.module('environment', ['angularytics'])
     AngularyticsProvider.setEventHandlers(['Console', 'GoogleUniversal']);
   })
   .service('EnvConfig', function ($location, Angularytics) {
-    if ($location.$$port === 80) {
+    if ($location.$$port === 9001){
       return {
-        isProd: true,
-        backendUrl: 'http://msviz.vital-it.ch/backend'
-      };
-    } else if ($location.$$port === 443){
-      return {
-        isProd: true,
-        backendUrl: 'https://msviz.vital-it.ch/backend'
-      };
-    } else if ($location.$$host === '192.168.99.100'){
-     return {
-       isProd: true,
-       backendUrl: 'http://192.168.99.100:9000'
-     };
-
-    } else if ($location.$$port === '9001'){
-      return {
-        isProd: true,
+        isProd: false,
         backendUrl: 'http://' + $location.$$host +':9000'
+      };
+    } else {
+      return {
+        isProd: true,
+        backendUrl: $location.protocol + $location.$$host + '/backend'
       };
     }
 
