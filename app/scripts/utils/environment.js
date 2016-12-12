@@ -17,9 +17,10 @@ angular.module('environment', ['angularytics'])
         backendUrl: 'http://' + $location.$$host +':9000'
       };
     } else {
+
       return {
         isProd: true,
-        backendUrl: $location.protocol + $location.$$host + '/backend'
+        backendUrl: $location.$$protocol + '://' + $location.$$host + '/backend'
       };
     }
 
