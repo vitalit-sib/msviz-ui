@@ -7,6 +7,8 @@
     <p>Please load  database with different name if necessary.</p>
   </div>
 
+<div ng-if="databaseUploaded" class="alert alert-success" role="alert">The database {{databaseUploaded}} was successfully inserted.</div>
+
     <input type="file" id="file1" name="file" multiple
            ng-files="getTheFiles($files)" />
 

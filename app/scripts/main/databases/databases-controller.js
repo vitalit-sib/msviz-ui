@@ -14,7 +14,8 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
       link: fnLink
     };
   } ])
-  .controller('DatabasesCtrl', function ($scope,databasesService,$http,EnvConfig) {
+
+  .controller('DatabasesCtrl', function ($scope, databasesService, $http, EnvConfig) {
 
     // hide progress bar at the beginning
     $scope.hideProgressBar = true;
@@ -56,10 +57,16 @@ angular.module('databases-controller', ['thirdparties', 'environment','ngFileUpl
         $http(request)
           .success(function () {
             $scope.hideProgressBar = true;
-            location.reload();
+            $scope.databaseUploaded = filesData.name;
+
+            // reload the database
+            databasesService.listFasta().then(function (data) {
+              $scope.databasesList = data;
+            });
           })
           .error(function () {
             $scope.hideProgressBar = true;
+            $scope.databaseUploaded = false;
           });
       }
         else {
