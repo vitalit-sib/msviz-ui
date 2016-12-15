@@ -12,7 +12,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       var psm = new fishtones.match.PSMAlignment({
         richSequence: (ftPSM.richSeq) ? (ftPSM.richSeq) : (new fishtones.dry.RichSequence().fromString('')),
         expSpectrum: ftPSM.spectrum,
-        annotatePhospho: (ftPSM.richSeq.toString().indexOf('Phospho') > -1) ? (true) : (false)
+        annotatePhospho: (ftPSM.richSeq.toString().match(/Phospho/g) || []).length
       });
 
       var view = new fishtones.match.MatchSpectrumView({
