@@ -24,7 +24,7 @@
     </thead>
     <tbody>
      <tr ng-repeat="prot in proteins['proteinInfos'] | orderBy:'-score' track by $index">
-      <td><a href="/#/compare/{{searchIdList.join(',')}}/protein/{{prot.ac}}:{{prot.source}}">{{prot.ac}}</a></td>
+      <td><a href="/#/compare/{{searchIdList.join(',')}}/protein/{{prot.ac}}:{{prot.source}}" target="_blank">{{prot.ac}}</a></td>
        <td ng-repeat="values in prot['datatable'] track by $index">
          {{values}}
        </td>

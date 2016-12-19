@@ -111,8 +111,9 @@ angular.module('searches-list', ['thirdparties', 'environment'])
       $scope.searchIds = _.pluck(sortedSearchIdList, 'id').join(',');
       $scope.titles = _.pluck(sortedSearchIdList, 'title').join(',');
 
-      var comparePath= 'compare/'.concat($scope.searchIds);
-      $location.path(comparePath).search({param:$scope.titles});
+      var comparePath= '#/compare/'.concat($scope.searchIds).concat('?param=' + $scope.titles);
+      //$location.path(comparePath).search({param:$scope.titles});
+      window.open(comparePath, '_blank');
 
     };
 

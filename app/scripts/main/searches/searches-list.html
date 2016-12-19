@@ -79,7 +79,7 @@
     <tr ng-repeat="search in searches | orderBy:'-creationDate'" ng-init="addId($index)">
       <td ng-if="search.status.code!='done'"></td>
       <td ng-if="search.status.code=='done'"><input type="checkbox" ng-model="selected" ng-change="updateId($index)"></td>
-      <td ng-if="search.status.code=='done'"><a href="#/proteins/{{search.searchId}}">{{search.searchId}}</a></td>
+      <td ng-if="search.status.code=='done'"><a href="#/proteins/{{search.searchId}}" target="_blank">{{search.searchId}}</a></td>
       <td ng-if="search.status.code=='loading'" style="color:silver">{{search.searchId}}</td>
       <td ng-if="search.status.code=='error'" style="color:silver">{{formatSearchIdError(search.searchId)}}</td>
       <td>{{search.title}}</td>
