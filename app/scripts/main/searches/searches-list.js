@@ -42,6 +42,13 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
     // reload the list of searches from the backend
     $scope.refreshSearches = function(){
+      // reset all variables
+      $scope.ids= [];
+      $scope.selectedIds = [];
+      $scope.searchIds='';
+      $scope.titles='';
+
+      // and reload the search list
       $scope.getSearchList();
     };
 
