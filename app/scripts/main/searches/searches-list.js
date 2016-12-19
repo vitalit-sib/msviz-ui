@@ -40,6 +40,11 @@ angular.module('searches-list', ['thirdparties', 'environment'])
 
   .controller('SearchListCtrl', function($scope, searchService, $location, _){
 
+    // reload the list of searches from the backend
+    $scope.refreshSearches = function(){
+      $scope.getSearchList();
+    };
+
     // remove the heading timestamp from SearchIds that failed
     $scope.formatSearchIdError = function(str){
       var done = str.replace(/^(\d+\_)/,'');

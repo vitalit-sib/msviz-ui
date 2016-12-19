@@ -1,7 +1,13 @@
 <h1>Searches</h1>
 <p>
   <button class="btn btn-default" type="submit" ng-click="getSearchIds()">Compare</button>
-  <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+  <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+  </button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="btn btn-default" ng-click="refreshSearches()">
+    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+  </button>
 </p>
 
 <!--
