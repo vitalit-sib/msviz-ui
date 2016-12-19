@@ -21,10 +21,6 @@ angular.module('databases-services', ['thirdparties', 'environment'])
       return httpProxy.delete('/sequences/' + sourceId);
     };
 
-/**
- *
-
-*/
     return new DatabasesServices();
   })
 
