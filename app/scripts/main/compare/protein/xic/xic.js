@@ -161,8 +161,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           var popoverTitle = 'scan: ' +
             ms2Info.scanNumber +
             ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
-            precInfo.charge + '+ ' +
-            precInfo.moz.toFixed(4) + 'Da';
+            'm/z: ' +
+            precInfo.moz.toFixed(4) + ' (' + precInfo.charge + '+' + ')';
 
           var popoverPsm = {title:''};
 

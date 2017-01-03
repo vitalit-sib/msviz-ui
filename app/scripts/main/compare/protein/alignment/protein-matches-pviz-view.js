@@ -155,8 +155,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
           spectrumService.findSpRefByRunIdAndId(psm.searchId, psm.spectrumId.id).then(function (ref) {
             var spTitle = 'scan: ' + ref.scanNumber +
                           ' (' + (ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
-                          ref.precursor.charge + '+ ' +
-                          ref.precursor.moz.toFixed(4) + 'Da' +
+                          'm/z: ' +
+                          ref.precursor.moz.toFixed(4) + ' (' + ref.precursor.charge + '+' +
+                          ') ' +
                           ' massDiff: ' + psm.ppmDiff.toFixed(2) + ' ppm';
             psm.spTitle = spTitle;
 
