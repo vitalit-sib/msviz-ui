@@ -158,16 +158,19 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         var createPrecursorPeak = function (ms2Info) {
           // create info to show in popover
           var precInfo = ms2Info.precursor;
+
           var popoverTitle = 'scan: ' +
             ms2Info.scanNumber +
-            ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ' +
-            'm/z: ' +
-            precInfo.moz.toFixed(4) + ' (' + precInfo.charge + '+' + ')';
+            ' (' + (precInfo.retentionTime / 60).toFixed(1) + 'min) ';
 
           var popoverPsm = {title:''};
 
           // create the PSM info if available
           if(ms2Info.psm){
+            // take moz from matchInfo if available
+            var moz = ms2Info.psm.matchInfo.moz ? ms2Info.psm.matchInfo.moz : precInfo.moz;
+            popoverTitle += 'm/z: ' + moz.toFixed(4);
+
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
             popoverPsm.prevAA = (_.first(ms2Info.psm.proteinList)).previousAA.toString();
@@ -183,7 +186,11 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             //Add massDiff to title
             var ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.chargeState, ms2Info.psm.matchInfo.massDiffUnit);
             popoverTitle= popoverTitle + ' massDiff: ' + ppmDiff.toFixed(2) + ' ppm';
+          }else{
+            popoverTitle += 'm/z: ' + precInfo.moz.toFixed(4);
           }
+
+          popoverTitle += ' (' + precInfo.charge + '+' + ')';
           popoverPsm.title =popoverTitle;
 
           return new fishtones.match.PrecursorPeak({
