@@ -23,12 +23,15 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
         }
 
         spectrumService.findSpByRunIdAndId(runId, spectrumId).then(function (spectrum) {
-          var fishtonesSp = fishtonifyService.convertSpectrum(spectrum);
+          // we take the moz from the PSM if available
+          var moz = pvizPsm.matchInfo.moz ? pvizPsm.matchInfo.moz : spectrum.ref.precursor.moz;
+
+          var fishtonesSp = fishtonifyService.convertSpectrum(spectrum, moz);
 
           var ms2Info = {
             precCharge: spectrum.ref.precursor.charge,
             precIntensity: spectrum.ref.precursor.intensity,
-            precMoz: spectrum.ref.precursor.moz,
+            precMoz: moz,
             retentionTime: spectrum.ref.precursor.retentionTime,
             searchId: runId,
             scanNr: spectrumId

@@ -18,12 +18,12 @@ angular.module('fishtones-wrapper', ['thirdparties'])
      * @name fishtones-wrapper.service:fishtonifyService#convertSpectrum
      * @methodOf fishtones-wrapper.service:fishtonifyService
      * @description convert a received spectrum into a fishTones.wet.ExpMSMSpectrum
-     * @param {Object} spectrum the msviz serialized specturm
+     * @param {Object} spectrum the msviz serialized spectrum
      * @returns {ExpMSMSSpectrum} spectrum
      */
-    FishtonifyService.prototype.convertSpectrum = function (spectrum) {
+    FishtonifyService.prototype.convertSpectrum = function (spectrum, moz) {
       return new fishtones.wet.ExpMSMSSpectrum({
-        precMoz: spectrum.ref.precursor.moz,
+        precMoz: moz,
         precIntensity: spectrum.ref.precursor.intensity,
         retentionTime: spectrum.ref.precursor.retentionTime,
         precCharge: spectrum.ref.precursor.charge,

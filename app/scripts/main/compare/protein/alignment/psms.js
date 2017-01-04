@@ -13,7 +13,10 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
 
       //we change runId by searchId to make it compatible with MaxQuant
       spectrumService.findSpByRunIdAndId(pvizPsm.searchId, pvizPsm.spectrumId.id).then(function (spectrum) {
-        var sp = fishtonifyService.convertSpectrum(spectrum);
+        // we take the moz from the PSM if available
+        var moz = pvizPsm.matchInfo.moz ? pvizPsm.matchInfo.moz : spectrum.ref.precursor.moz;
+
+        var sp = fishtonifyService.convertSpectrum(spectrum, moz);
         pvizPsm.fishTones.spectrum = sp;
         scope.$broadcast('basket-add', {type: 'psm', bean: pvizPsm});
       });
