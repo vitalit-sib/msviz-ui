@@ -200,7 +200,10 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             onclickCallback: function() {
               // create object to send to basket
                 spectrumService.findSpByRunIdAndId(ms2Info.spectrumId.runId, ms2Info.spectrumId.id).then(function (spectrum) {
-                  var sp = fishtonifyService.convertSpectrum(spectrum);
+                  // we take the moz from the PSM if available
+                  var moz = ms2Info.psm.matchInfo.moz ? ms2Info.psm.matchInfo.moz : spectrum.ref.precursor.moz;
+
+                  var sp = fishtonifyService.convertSpectrum(spectrum, moz);
                   // if there is no psm available, it will be of type 'sp'
                   if(ms2Info.psm){
                     ms2Info.psm.fishTones.spectrum = sp;
