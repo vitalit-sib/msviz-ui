@@ -80,7 +80,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
     var link = function (scope, elm) {
 
-      var updateXics = function (xics, retentionTime, searchId) {
+      var updateXics = function (xics, retentionTime, searchId, charge) {
 
         // the new id should be the one just added
         var newId = _.max(scope.$parent.selectedItems, function (x) {
@@ -88,7 +88,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         }).id;
 
         // and we pass the id to the view
-        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope);
+        var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope, charge);
 
         scope.xicModel = view.model;
 
@@ -124,7 +124,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         return view;
       };
 
-      var xicFishtonesView = function (elm, xics, searchIds, selRetentionTime, selSearchId, localId, scope) {
+      var xicFishtonesView = function (elm, xics, searchIds, selRetentionTime, selSearchId, localId, scope, selCharge) {
         //localId ++;
         var myLocalId = localId;
 
@@ -196,14 +196,15 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           return new fishtones.match.PrecursorPeak({
             retentionTime: ms2Info.precursor.retentionTime,
             isSource: (ms2Info.precursor.retentionTime === selRetentionTime) ? (true) : (false),
+            sameChargeAsSource: (ms2Info.precursor.charge === selCharge) ? (true) : (false),
             isIdentified: (popoverPsm.richSeq) ? (true) : (false),
             onclickCallback: function() {
               // create object to send to basket
                 spectrumService.findSpByRunIdAndId(ms2Info.spectrumId.runId, ms2Info.spectrumId.id).then(function (spectrum) {
                   // we take the moz from the PSM if available
-                  var moz = ms2Info.psm.matchInfo.moz ? ms2Info.psm.matchInfo.moz : spectrum.ref.precursor.moz;
-
+                  var moz = (ms2Info.psm && ms2Info.psm.matchInfo.moz) ? ms2Info.psm.matchInfo.moz : spectrum.ref.precursor.moz;
                   var sp = fishtonifyService.convertSpectrum(spectrum, moz);
+
                   // if there is no psm available, it will be of type 'sp'
                   if(ms2Info.psm){
                     ms2Info.psm.fishTones.spectrum = sp;
@@ -272,8 +273,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
       };
 
       // and get the MS2 spectra
-      var getMs2 = function (searchId, moz) {
-        var uri = '/exp/spectra-ref/' + searchId + '/' + moz + '?tolerance=10.0';
+      var getMs2 = function (searchId, moz, charge) {
+        var uri = '/exp/spectra-ref/' + searchId + '/by-mass/' + moz + '/' + charge + '?tolerance=10.0';
         return httpProxy.get(uri);
       };
 
@@ -301,7 +302,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
         searchIds.forEach(function (searchId) {
           xicBackendCalls.push(getXic(searchId, ms2Info.precMoz));
-          ms2BackendCalls.push(getMs2(searchId, ms2Info.precMoz));
+          ms2BackendCalls.push(getMs2(searchId, ms2Info.precMoz, ms2Info.precCharge));
         });
 
         // get XIC and MS2 info
@@ -356,8 +357,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           psmBackendCalls
         ).then(function(psms) {
             var xicAndPsm = mergeXicAndPsm(xicAndMs2, psms);
-            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId);
-
+            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId, ms2Info.precCharge);
         });
 
       };
