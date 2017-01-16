@@ -165,11 +165,13 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
           var popoverPsm = {title:''};
 
+          var chargeStr = ' (' + precInfo.charge + '+' + ')';
+
           // create the PSM info if available
           if(ms2Info.psm){
             // take moz from matchInfo if available
             var moz = ms2Info.psm.matchInfo.moz ? ms2Info.psm.matchInfo.moz : precInfo.moz;
-            popoverTitle += 'm/z: ' + moz.toFixed(4);
+            popoverTitle += 'm/z: ' + moz.toFixed(4) + chargeStr;
 
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
             ms2Info.psm.fishTones = rs;
@@ -187,10 +189,9 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
             var ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.chargeState, ms2Info.psm.matchInfo.massDiffUnit);
             popoverTitle= popoverTitle + ' massDiff: ' + ppmDiff.toFixed(2) + ' ppm';
           }else{
-            popoverTitle += 'm/z: ' + precInfo.moz.toFixed(4);
+            popoverTitle += 'm/z: ' + precInfo.moz.toFixed(4) + chargeStr;
           }
 
-          popoverTitle += ' (' + precInfo.charge + '+' + ')';
           popoverPsm.title =popoverTitle;
 
           return new fishtones.match.PrecursorPeak({
