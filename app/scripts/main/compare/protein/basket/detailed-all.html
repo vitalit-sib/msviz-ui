@@ -5,10 +5,10 @@
           <button ng-click="zoomSpectrum(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-zoom-in"></span>
           </button>
-          <button ng-click="item.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">
+          <button ng-click="item.spView.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-refresh"></span>
           </button>
-          <button ng-click="zoomAllOther(item.id, 'scalingContext')" showtype="button" class="btn btn-default btn-small">
+          <button ng-click="zoomAllOther(item.id, 'spView')" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-magnet"></span>
           </button>
         </div>
@@ -32,10 +32,10 @@
       </div>
       <div class="col-sm-6">
         <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
-          <button ng-click="item.scalingAreaXic.model.reset()" showtype="button" class="btn btn-default btn-small">
+          <button ng-click="item.xicView.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-refresh"></span>
           </button>
-          <button ng-click="zoomAllOther(item.id, 'scalingContextXic')" showtype="button" class="btn btn-default btn-small">
+          <button ng-click="zoomAllOther(item.id, 'xicView')" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-magnet"></span>
           </button>
         </div>

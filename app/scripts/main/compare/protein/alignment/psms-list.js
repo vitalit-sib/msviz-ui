@@ -24,8 +24,7 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       });
       view.render();
 
-      _this.scalingArea = view.scalingArea;
-      _this.scalingContext = view.scalingContext;
+      _this.spView = view;
 
       return _this;
     };
@@ -46,8 +45,8 @@ angular.module('matches-psms-list', ['thirdparties', 'environment', 'fishtones-w
       var currentId = scope.$parent.selectedItemsId;
 
       if(scope.$parent.$parent.selectedItems) {
-        _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingArea = view.scalingArea;
-        _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId}).scalingContext = view.scalingContext;
+        var selEntry = _.findWhere(scope.$parent.$parent.selectedItems, {id: currentId});
+        selEntry.spView = view.spView;
       }
 
       return view;

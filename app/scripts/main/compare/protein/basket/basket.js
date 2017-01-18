@@ -162,11 +162,16 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
     };
 
     $scope.zoomAllOther = function(id, target){
-      var xDomain = _.findWhere($scope.selectedItems, {id: id})[target]._xDomain;
+      var selItem = _.findWhere($scope.selectedItems, {id: id})[target];
+      var xDomain = selItem.scalingContext._xDomain;
 
       $scope.selectedItems.forEach(function(item){
         if(item.id !== id){
-          item[target].xDomain(xDomain);
+          if(item[target].zoomX){
+            item[target].zoomX(xDomain);
+          }else{
+            item[target].scalingContext.xDomain(xDomain);
+          }
         }
       });
     };

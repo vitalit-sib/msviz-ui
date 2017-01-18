@@ -94,8 +94,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
         // we don't care about the XIC zoom when in the spectra zoom view
         if(scope.$parent.selectedItems){
-          _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingAreaXic = view.scalingArea;
-          _.findWhere(scope.$parent.selectedItems, {id: view.localId}).scalingContextXic = view.scalingContext;
+          var selItems = _.findWhere(scope.$parent.selectedItems, {id: view.localId});
+          selItems.xicView = view;
         }
 
         scope.xicModel.on('change', function () {
