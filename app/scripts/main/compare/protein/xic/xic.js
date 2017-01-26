@@ -209,6 +209,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
                   // if there is no psm available, it will be of type 'sp'
                   if(ms2Info.psm){
                     ms2Info.psm.fishTones.spectrum = sp;
+                    ms2Info.psm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(ms2Info.psm.matchInfo, 1);
                     scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
                   } else {
                     var onlySp = spectrum.ref;
