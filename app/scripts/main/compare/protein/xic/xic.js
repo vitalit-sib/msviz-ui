@@ -170,7 +170,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           // create the PSM info if available
           if(ms2Info.psm){
             // take moz from matchInfo if available
-            var moz = ms2Info.psm.matchInfo.moz ? ms2Info.psm.matchInfo.moz : precInfo.moz;
+            var moz = ms2Info.psm.matchInfo.correctedMoz ? ms2Info.psm.matchInfo.correctedMoz : precInfo.moz;
             popoverTitle += 'm/z: ' + moz.toFixed(4) + chargeStr;
 
             var rs = fishtonifyService.buildRichSeq(ms2Info.psm);
@@ -203,7 +203,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
               // create object to send to basket
                 spectrumService.findSpByRunIdAndId(ms2Info.spectrumId.runId, ms2Info.spectrumId.id).then(function (spectrum) {
                   // we take the moz from the PSM if available
-                  var moz = (ms2Info.psm && ms2Info.psm.matchInfo.moz) ? ms2Info.psm.matchInfo.moz : spectrum.ref.precursor.moz;
+                  var moz = (ms2Info.psm && ms2Info.psm.matchInfo.correctedMoz) ? ms2Info.psm.matchInfo.correctedMoz : spectrum.ref.precursor.moz;
                   var sp = fishtonifyService.convertSpectrum(spectrum, moz);
 
                   // if there is no psm available, it will be of type 'sp'
