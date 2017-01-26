@@ -210,6 +210,12 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
                   if(ms2Info.psm){
                     ms2Info.psm.fishTones.spectrum = sp;
                     ms2Info.psm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(ms2Info.psm.matchInfo, 1);
+
+                    ms2Info.psm.prevAA = (_.first(ms2Info.psm.proteinList)).previousAA.toString();
+                    ms2Info.psm.nxtAA= (_.first(ms2Info.psm.proteinList)).nextAA.toString();
+
+                    ms2Info.psm.ppmDiff = psmService.convertToPpm(ms2Info.psm.pep.molMass, ms2Info.psm.matchInfo.massDiff, ms2Info.psm.matchInfo.chargeState, ms2Info.psm.matchInfo.massDiffUnit);
+
                     scope.$emit('basket-add', {type: 'psm', bean: ms2Info.psm});
                   } else {
                     var onlySp = spectrum.ref;

@@ -115,7 +115,6 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
         'startPos':item.firstPsm.proteinList[0].startPos,
         'endPos':item.firstPsm.proteinList[0].endPos,
         'searchIds':sortedSearchId.join(','),
-        //'searchIds':$scope.searchIds.join(','),
         'spectrumId': item.firstPsm.spectrumId,
         'score': item.firstPsm.matchInfo.score.mainScore,
         'localizationScore': item.firstPsm.matchInfo.score.scoreMap['Mascot:delta score'],
