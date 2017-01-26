@@ -13,18 +13,18 @@ angular.module('spectrum-tab', ['thirdparties', 'environment','matches-basket','
       });
 
       var addSelectedPSM = function(pvizPsmList){
-
         var pvizPsm;
 
         // if there are  psms found
         if(pvizPsmList.length >= 1){
           pvizPsm = pvizPsmList[0];
+          pvizPsm = _.find(pvizPsmList, function(x){ return x.matchInfo.rank === 1; });
           pvizPsm.matchInfo.posScore = psmConvertionService.posScoreFromMatchInfo(pvizPsm.matchInfo, 1);
         }
 
         spectrumService.findSpByRunIdAndId(runId, spectrumId).then(function (spectrum) {
           // we take the moz from the PSM if available
-          var moz = pvizPsm.matchInfo.correctedMoz ? pvizPsm.matchInfo.correctedMoz : spectrum.ref.precursor.moz;
+          var moz = (pvizPsm && pvizPsm.matchInfo.correctedMoz) ? pvizPsm.matchInfo.correctedMoz : spectrum.ref.precursor.moz;
 
           var fishtonesSp = fishtonifyService.convertSpectrum(spectrum, moz);
 
