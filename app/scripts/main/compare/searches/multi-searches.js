@@ -73,15 +73,12 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
         var protIdents = _this.getProteinIdents.apply(undefined, [data, ac, searchIds]);
 
         var scoreSum = 0;
-        var source = null;
+        var source = {};
 
         protIdents.protIdents.forEach(function(oneProtIdent){
           if(oneProtIdent){
             scoreSum += oneProtIdent.mainProt.score.mainScore;
-            //scoreSum += oneProtIdent.mainProt.nrPsms;
-          }
-          if(!source && oneProtIdent){
-            source = oneProtIdent.mainProt.source;
+            source[oneProtIdent.searchId] = oneProtIdent.mainProt.source;
           }
         });
 
@@ -168,8 +165,6 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
     //Create searchInfo list containing searchIds, titles, index
     $scope.listSearchInfo = [];
     var searchInfo= {} ;
-
-
 
     $scope.dragControlListeners = {
         orderChanged: function() {$scope.searchIdList = _.pluck($scope.listSearchInfo, 'searchId');}
