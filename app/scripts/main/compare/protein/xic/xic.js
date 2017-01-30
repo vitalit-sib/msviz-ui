@@ -80,11 +80,11 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
     var link = function (scope, elm) {
 
-      var updateXics = function (xics, retentionTime, searchId, charge) {
+      var updateXics = function (xics, retentionTime, searchId, charge, scanNr) {
 
         // the new id should be the one just added
-        var newId = _.max(scope.$parent.selectedItems, function (x) {
-          return x.id;
+        var newId = _.find(scope.$parent.selectedItems, function (x) {
+          return x.ms2Info.scanNr === scanNr && x.ms2Info.searchId === searchId;
         }).id;
 
         // and we pass the id to the view
@@ -365,7 +365,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           psmBackendCalls
         ).then(function(psms) {
             var xicAndPsm = mergeXicAndPsm(xicAndMs2, psms);
-            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId, ms2Info.precCharge);
+            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId, ms2Info.precCharge, ms2Info.scanNr);
         });
 
       };
