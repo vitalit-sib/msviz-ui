@@ -33,12 +33,17 @@ angular
     'uploads-controller',
     'as.sortable',
     'svg-export',
-    'table-expand-service'
+    'table-expand-service',
+    'about-msviz'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         redirectTo: '/searches'
+      })
+      .when('/about', {
+        templateUrl: 'scripts/main/about-msviz.html',
+        controller: 'AboutCtrl'
       })
       .when('/searches', {
         templateUrl: 'scripts/main/searches/searches-list.html',

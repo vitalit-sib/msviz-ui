@@ -32,20 +32,18 @@
   <!-- Add your site or application content here -->
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 
-    <ul class="nav nav-pills pull-left">
-      <li>
-          <span class="navbar-brand" style='padding: 10px 15px 8px 15px'>
-					<a href="http://www.isb-sib.ch/" target="_blank"><img src="images/sib_logo.png" height="42" alt="SIB"></a>
-				</span>
-      </li>
-      <li><a href='#/'
-             class='linkTitle'>MsViz
-        <small>1.0.1</small>
-      </a></li>
-    </ul>
-
-
     <ul class="nav navbar-nav navbar-left">
+      <li>
+        <div style='padding-top: 10px; padding-left: 10px;'>
+        <span>
+          <a href="http://www.isb-sib.ch/" target="_blank"><img src="images/sib_logo_2.png" height="30" alt="SIB"></a>
+          <!--<a href="http://www.isb-sib.ch/" target="_blank"><img src="images/unil.png" height="30" alt="SIB"></a>-->
+        </span>
+        </div>
+      </li>
+      <li>
+        <a class="navbar-brand" href="#/about">MsViz</a>
+      </li>
       <li><a href="#/searches">Searches</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Upload <span
@@ -65,8 +63,6 @@
         <ul class="dropdown-menu" role="menu">
           <li><a href="docs/index.html">javaScript API</a></li>
           <li swagger-doc></li>
-          <li class="divider"></li>
-          <li><a href="#/about">about</a></li>
         </ul>
       </li>
     </ul>
@@ -74,9 +70,9 @@
 
   <div ng-view="" style="margin-top: 80px"></div>
 
+  <hr>
   <div class="footer">
-    <p>shaped with <span class="glyphicon glyphicon-heart" style="color:red"></span> by the Computational Proteomics
-      team (Vital-IT/PAF @ SIB)</p>
+    <p>This software is brought to you by <a href="http://www.isb-sib.ch/"><img src="images/sib_logo_2.png" height="18"></a> <a href="http://www.vital-it.ch/">Vital-IT</a> and <a href="http://unil.ch"><img src="images/unil.png" height="18"></a> <a href="https://www.unil.ch/paf/home.html">PAF</a></p>
   </div>
 </div>
 
@@ -160,6 +156,7 @@
 <script src="scripts/main/databases/databases-services.js"></script>
 <script src="scripts/main/databases/databases-controller.js"></script>
 <script src="scripts/main/uploads/uploads-controller.js"></script>
+<script src="scripts/main/about-msviz.js"></script>
 <!-- endbuild -->
 
 
