@@ -9,5 +9,4 @@ angular.module('about-msviz', ['environment'])
       $scope.backendVersion = data;
     });
 
-
   });

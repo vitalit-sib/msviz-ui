@@ -32,8 +32,10 @@ describe('searches', function () {
         var pm = new ProteinMatch(mockProtMatch.prot, mockProtMatch.psms, {targetModification: 'Phospho'});
         var pvizView = new ProteinMatchesGlobalPvizView(undefined, pm);
         pvizView._selPsmPos = 229;
-        expect(pvizView.getFeaturesPSMs()).not.toBeUndefined();
-        expect(pvizView.getFeaturesPSMs().length).toEqual(2);
+
+        var featurePsms = pvizView.getFeaturesPSMs();
+        expect(featurePsms).not.toBeUndefined();
+        expect(featurePsms.length).toEqual(2);
     });
 
 

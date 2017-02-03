@@ -12,6 +12,14 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
     // pviz.FeatureDisplayer.trackHeightPerCategoryType.psms = 8;
 
+    /**
+     * create the pviz objects
+     * @param elm
+     * @param protMatch
+     * @param searchIdOrder
+     * @returns {ProteinMatchesGlobalPvizView}
+     * @constructor
+     */
     var ProteinMatchesGlobalPvizView = function (elm, protMatch, searchIdOrder) {
 
       var _this = this;
@@ -38,7 +46,9 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       return _this;
     };
 
-
+    /**
+     * refresh the pviz view
+     */
     ProteinMatchesGlobalPvizView.prototype.refreshView = function () {
       var _this = this;
       // first we clear the view
@@ -50,6 +60,189 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
       _this.seqEntry.addFeatures(_this.getFeaturesPSMs());
     };
 
+
+
+    var parseMXQPsmList = function(psmList, tModif){
+      // for MQ we have no conflicts
+      var psm = psmList[0];
+      var prot = psm.proteinList[0];
+      addSpectrumTitles(psm);
+
+      // currently we assume there is only one modification per position
+      var modifs = [];
+
+      _.each(psm.matchInfo.modificationInfos, function(ptms, modif) {
+        var sortedModifs = (modif === tModif) ? (_.sortBy(ptms, function (m) {
+            return -m.modifProb;
+          })) : (ptms);
+
+        var mainProb;
+
+        var ptmList = _.map(sortedModifs, function(m){
+
+          var modifRank = '';
+          var selectedModif = false;
+
+          if(modif === tModif){
+            selectedModif = true;
+
+            if(m.status === 'MAIN'){
+              mainProb = m.modifProb;
+              modifRank = 'first';
+            }else{
+              // if the difference is less than 0.1
+              if(mainProb - m.modifProb < 0.1){ modifRank = 'firstWithConflict'; }
+
+            }
+          }
+
+          // get position
+          var len = prot.endPos - prot.startPos + 1;
+          var x = Math.max(-0.3, m.position - 1);
+          x = Math.min(len - 0.7, x);
+          var currentPos = x + prot.startPos - 1;
+
+          return {
+            pos: currentPos,
+            modifNames: modif,
+            text: modif,
+            modifRank: modifRank,
+            selectedModif: selectedModif
+          };
+        });
+
+        modifs = modifs.concat(ptmList);
+      });
+
+
+      return {
+        groupSet: psm.searchId,
+        category: 'psms',
+        categoryName: '',
+        type: 'psm',
+        start: prot.startPos - 1,
+        end: prot.endPos - 1,
+        data: psm,
+        modif: modifs
+      };
+
+    };
+
+
+    /**
+     *
+     * @param sortedPsm
+     */
+    var addSpectrumTitles = function(psm){
+      // we can add the spectrum title here
+      //we change runId by searchId to make it compatible with MaxQuant
+      spectrumService.findSpRefByRunIdAndId(psm.searchId, psm.spectrumId.id).then(function (ref) {
+
+        // take moz from matchInfo if available
+        var moz = psm.matchInfo.correctedMoz ? psm.matchInfo.correctedMoz : ref.precursor.moz;
+
+        var spTitle = 'scan: ' + ref.scanNumber +
+          ' (' + (ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
+          'm/z: ' +
+          moz.toFixed(4) + ' (' + ref.precursor.charge + '+' +
+          ') ' +
+          ' massDiff: ' + psm.ppmDiff.toFixed(2) + ' ppm';
+        psm.spTitle = spTitle;
+
+        psm.prevAA= (_.first(psm.proteinList)).previousAA.toString();
+        psm.nxtAA= (_.first(psm.proteinList)).nextAA.toString();
+      });
+    };
+
+    /**
+     *
+     * @param psmList
+     * @param tModif
+     * @returns {{groupSet, category: string, categoryName: string, type: string, start: number, end: number, data: *, modif: Array}}
+     */
+    var parseDefaultPsmList = function(psmList, tModif){
+
+      // sort by rank
+      var sortedPsm = _.sortBy(psmList, function(psm){
+        return psm.matchInfo.rank;
+      });
+
+      // look for spectrumTitles
+      var firstPsm = sortedPsm[0];
+      var prot = firstPsm.proteinList[0];
+      addSpectrumTitles(firstPsm);
+
+      // count each score to see if first one appears multiple times
+      var scoreMap = _.countBy(sortedPsm, function(psm){
+        return psm.matchInfo.score.mainScore;
+      });
+
+      var bestScore = _.max(_.map(scoreMap, function(num, key) {return parseFloat(key);}));
+
+      // create list of modifs
+      var modifs = [];
+      _.each(sortedPsm, function(psm){
+        // proteinList should always be 1 (we filtered it before)
+        var prot = psm.proteinList[0];
+
+        var len = prot.endPos - prot.startPos + 1;
+
+        _.each(psm.pep.modificationNames, function (mods, i) {
+
+          if (_.size(mods) === 0) {
+            return;
+          }
+
+          // get position
+          var x = Math.max(-0.3, i - 1);
+          x = Math.min(len - 0.7, x);
+
+          // get modif rank @TODO is mods ever bigger than 1 ??
+          var modifRank = '';
+          var selectedMod= (mods[0] === tModif ) ? true : false;
+          if(mods.length > 1){
+            console.log('protein-matches-pviz-view - l121 :  mods is bigger than 1 => ' + mods.length);
+          }
+
+          if(psm.matchInfo.score.mainScore === bestScore){
+
+            if(psm.matchInfo.rank === 1 ){
+              modifRank = 'first';
+            }else{
+              modifRank = 'firstWithConflict';
+            }
+            // we keep lower hits only for selected modifs
+          }else if(! selectedMod){
+            return;
+          }
+
+          // we add the modif only once per position
+          var currentPos = x + prot.startPos - 1;
+          if(!(_.findWhere(modifs, {pos: currentPos}))){
+            modifs.push({
+              pos: currentPos,
+              modifNames: mods,
+              text: mods.join(','),
+              modifRank: modifRank,
+              selectedModif: selectedMod
+            });
+          }
+
+        });
+
+      });
+
+      return {
+        groupSet: firstPsm.searchId,
+        category: 'psms',
+        categoryName: '',
+        type: 'psm',
+        start: prot.startPos - 1,
+        end: prot.endPos - 1,
+        data: firstPsm,
+        modif: modifs
+      };
+    };
 
     /**
      * @ngdoc object
@@ -82,104 +275,14 @@ angular.module('protein-matches-pviz-view', ['pviz-custom-psm', 'thirdparties', 
 
         // transform into PVIZ psm object
         .map(function(psmList) {
+          var pvizObj;
+          if(psmList.length === 1 && psmList[0].matchInfo.modificationProbabilities){
+            pvizObj = parseMXQPsmList(psmList, tModif);
+          }else{
+            pvizObj = parseDefaultPsmList(psmList, tModif);
+          }
 
-          // sort by rank
-          var sortedPsm = _.sortBy(psmList, function(psm){
-            return psm.matchInfo.rank;
-          });
-
-          // count each score to see if first one appears multiple times
-          var scoreMap = _.countBy(sortedPsm, function(psm){
-             return psm.matchInfo.score.mainScore;
-          });
-
-          var bestScore = _.max(_.map(scoreMap, function(num, key) {return parseFloat(key);}));
-
-          // create list of modifs
-          var modifs = [];
-          _.each(sortedPsm, function(psm){
-            // proteinList should always be 1 (we filtered it before)
-            var prot = psm.proteinList[0];
-
-            var len = prot.endPos - prot.startPos + 1;
-
-            _.each(psm.pep.modificationNames, function (mods, i) {
-
-              if (_.size(mods) === 0) {
-                return;
-              }
-
-              // get position
-              var x = Math.max(-0.3, i - 1);
-              x = Math.min(len - 0.7, x);
-
-              // get modif rank @TODO is mods ever bigger than 1 ??
-              var modifRank = '';
-              var selectedMod= (mods[0] === tModif ) ? true : false;
-              if(mods.length > 1){console.log(mods.length);}
-
-              if(psm.matchInfo.score.mainScore === bestScore){
-
-                if(psm.matchInfo.rank === 1 ){
-                  modifRank = 'first';
-                }else{
-                  modifRank = 'firstWithConflict';
-                }
-                // we keep lower hits only for selected modifs
-              }else if(! selectedMod){
-                return;
-              }
-
-              // we add the modif only once per position
-              var currentPos = x + prot.startPos - 1;
-              if(!(_.findWhere(modifs, {pos: currentPos}))){
-                modifs.push({
-                  pos: currentPos,
-                  modifNames: mods,
-                  text: mods.join(','),
-                  modifRank: modifRank,
-                  selectedModif: selectedMod
-                });
-              }
-
-            });
-
-          });
-
-          var psm = sortedPsm[0];
-          var prot = psm.proteinList[0];
-
-
-          // we can add the spectrum title here
-          //we change runId by searchId to make it compatible with MaxQuant
-          spectrumService.findSpRefByRunIdAndId(psm.searchId, psm.spectrumId.id).then(function (ref) {
-
-            // take moz from matchInfo if available
-            var moz = psm.matchInfo.correctedMoz ? psm.matchInfo.correctedMoz : ref.precursor.moz;
-
-            var spTitle = 'scan: ' + ref.scanNumber +
-                          ' (' + (ref.precursor.retentionTime / 60).toFixed(1) + 'min) ' +
-                          'm/z: ' +
-                          moz.toFixed(4) + ' (' + ref.precursor.charge + '+' +
-                          ') ' +
-                          ' massDiff: ' + psm.ppmDiff.toFixed(2) + ' ppm';
-            psm.spTitle = spTitle;
-
-            psm.prevAA= (_.first(psm.proteinList)).previousAA.toString();
-            psm.nxtAA= (_.first(psm.proteinList)).nextAA.toString();
-          });
-
-
-          return {
-            groupSet: psm.searchId,
-            category: 'psms',
-            categoryName: '',
-            type: 'psm',
-            start: prot.startPos - 1,
-            end: prot.endPos - 1,
-            data: psm,
-            modif: modifs
-          };
+          return pvizObj;
 
         })
         // remove empty entries
