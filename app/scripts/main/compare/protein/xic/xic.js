@@ -83,9 +83,12 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
       var updateXics = function (xics, retentionTime, searchId, charge, scanNr) {
 
         // the new id should be the one just added
-        var newId = _.find(scope.$parent.selectedItems, function (x) {
+        var newIdSearch = _.find(scope.$parent.selectedItems, function (x) {
           return x.ms2Info.scanNr === scanNr && x.ms2Info.searchId === searchId;
-        }).id;
+        });
+
+        // newIdSearch will be empty for xic in the detailed view, so we set it to arbitrary 1
+        var newId = (newIdSearch) ? newIdSearch.id : 1;
 
         // and we pass the id to the view
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope, charge);
