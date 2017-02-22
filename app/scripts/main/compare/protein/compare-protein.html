@@ -1,9 +1,72 @@
+<script type="text/ng-template" id="pvizPopoverTemplate.html">
+  <h5>Legend</h5>
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="1" y="8" width="16" height="8" style="fill:green"/>
+        </svg>
+        protein coverage
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="1" y="10" width="16" height="1" style="fill:grey"/>
+        </svg>
+        PSM
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <circle r="6" cx="8" cy="10" style="fill:blue;opacity: .5;"/>
+        </svg>
+        PTM spectral count
+        </span>
+    </li>
+    <li>
+
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <circle r="4" cx="8" cy="12" style="fill:red"/>
+        </svg>
+        most probable PTM position
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <circle r="4" cx="8" cy="12" style="fill:orange"/>
+        ¨</svg>
+        conflicting PTM position
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <circle r="4" cx="8" cy="12" style="fill:grey"/>
+        ¨</svg>
+        less probable PTM position
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="6" y="12" width="6" height="4" style="fill:black"/>
+        </svg>
+        other PTMs than selected one
+        </span>
+    </li>
+  </ul>
+</script>
+
+
 <div ng-if="dbNotFound" class="alert alert-danger">
   <p>Could not load protein <em>{{proteinNotFound}}</em> from database <em>{{dbNotFound}}</em>.</p>
   <p>Please load missing database <strong>{{dbNotFound}}</strong>.</p>
   <p>If the database is already loaded, please make sure you use the correct protein identifiers.</p>
 </div>
-
 <div>
   <div class="row">
     <div class="col-xs-3"><h3>{{proteinAC}}</h3></div>
@@ -13,6 +76,9 @@
   <br>
   <div class="row">
     <div class="col-sm-6" ng-mouseleave="removePvizPopover();">
+      <button id="pviz-info-button" class="btn btn-default btn-xs pull-right">
+        <span><img src="images/info-icon.png" height="18"></span>
+      </button>
       <div class="btn-group pull-right">
         <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
@@ -22,14 +88,12 @@
           <li><a href ng-click="exportSvg('png');">PNG</a></li>
         </ul>
       </div>
-
       <matches-one-liner ng-controller="detailedMatchCtrl"></matches-one-liner>
       <matches-psm-pviz></matches-psm-pviz>
     </div>
     <div class="col-sm-6">
       <matches-basket-details-all ng-controller="MatchesBasketCtrl"></matches-basket-details-all>
     </div>
-
   </div>
 
 </div>

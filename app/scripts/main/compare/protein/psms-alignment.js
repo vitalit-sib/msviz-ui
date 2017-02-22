@@ -2,7 +2,17 @@
 angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'svg-export'])
 
 
-  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, d3, svgExport) {
+  .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, d3, svgExport, $templateCache) {
+
+    // activate popover
+    angular.element('#pviz-info-button').popover(
+      {
+        html: true,
+        trigger: 'hover',
+        placement: 'right',
+        content: function(){return $templateCache.get("pvizPopoverTemplate.html");}
+      }
+    );
 
     $scope.exportSvg = function(fileType){
 
@@ -29,8 +39,14 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
 
     };
 
-    $scope.removePvizPopover = function(){
-      angular.element('#detailInfoPopover').hide();
+    $scope.mouseoverPvizInfo = function(){
+      console.log("over pviz");
+      angular.element('#pvizInfoPopover').show();
+    };
+
+    $scope.mouseoutPvizPopover = function(){
+      console.log("out of pviz");
+      angular.element('#pvizInfoPopover').hide();
     };
 
     $scope.searchIds = $routeParams.searchIds.split(',');
