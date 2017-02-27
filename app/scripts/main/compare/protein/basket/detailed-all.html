@@ -1,3 +1,80 @@
+<script type="text/ng-template" id="xicPopoverTemplate.html">
+  <h5>Legend</h5>
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#e41a1c"/>
+        </svg>
+        selected MS2 spectrum
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#4daf4a"/>
+        </svg>
+        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor m/z and charge
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#984ea3"/>
+        </svg>
+        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor mass and different charge
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:silver"/>
+        </svg>
+        unidentified MS2 spectrum
+        </span>
+    </li>
+  </ul>
+</script>
+
+<script type="text/ng-template" id="spPopoverTemplate.html">
+  <h5>Legend</h5>
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:blue"/>
+        </svg>
+        b-ions
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:red"/>
+        </svg>
+        y-ions
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:orange"/>
+        </svg>
+        phospho neutral losses
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:grey"/>
+        </svg>
+        unmatched peaks
+        </span>
+    </li>
+  </ul>
+</script>
+
+
 <div ng-repeat="item in selectedItems" class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
@@ -21,6 +98,9 @@
             <li><a href ng-click="exportSvg(item.id, 'sp', 'png');">PNG</a></li>
           </ul>
         </div>
+        <button class="btn btn-default btn-xs pull-right" ng-if="$first" sp-button-directive>
+          <span><img src="images/info-icon.png" height="18"></span>
+        </button>
         <div ng-if="item.type === 'psm'">
           <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
           <div style="height:30px;"/>
@@ -42,13 +122,6 @@
           <div ng-if="item.type === 'psm'">
             <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
               <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
-              <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a href ng-click="exportSvg(item.id, 'xic', 'svg');">SVG</a></li>
-                <li><a href ng-click="exportSvg(item.id, 'xic', 'png');">PNG</a></li>
-              </ul>
               <button ng-click="addToResults(item)" showtype="button"
                       class="btn btn-default btn-small">
                 <span class="glyphicon glyphicon-shopping-cart"></span>
@@ -58,6 +131,18 @@
                 <span class="glyphicon glyphicon-remove"></span>
               </button>
             </div>
+            <div class="btn-group pull-right">
+              <button class="btn btn-default btn-xs dropdown-toggle pull-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href ng-click="exportSvg(item.id, 'xic', 'svg');">SVG</a></li>
+                <li><a href ng-click="exportSvg(item.id, 'xic', 'png');">PNG</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-default btn-xs pull-right" ng-if="$first" xic-button-directive>
+              <span><img src="images/info-icon.png" height="18"></span>
+            </button>
           </div>
           <div ng-if="item.type === 'sp'">
             <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
@@ -73,6 +158,9 @@
                 <span class="glyphicon glyphicon-remove"></span>
               </button>
           </div>
+            <button class="btn btn-default btn-xs pull-right" ng-if="$first" xic-button-directive>
+              <span><img src="images/info-icon.png" height="18"></span>
+            </button>
         </div>
         <div ng-controller="XicController">
           <xic-popover my-id="{{item.id}}"></xic-popover>

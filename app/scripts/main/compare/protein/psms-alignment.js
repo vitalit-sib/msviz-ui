@@ -10,7 +10,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
         html: true,
         trigger: 'hover',
         placement: 'right',
-        content: function(){return $templateCache.get("pvizPopoverTemplate.html");}
+        content: function(){return $templateCache.get('pvizPopoverTemplate.html');}
       }
     );
 
@@ -40,12 +40,10 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     };
 
     $scope.mouseoverPvizInfo = function(){
-      console.log("over pviz");
       angular.element('#pvizInfoPopover').show();
     };
 
     $scope.mouseoutPvizPopover = function(){
-      console.log("out of pviz");
       angular.element('#pvizInfoPopover').hide();
     };
 

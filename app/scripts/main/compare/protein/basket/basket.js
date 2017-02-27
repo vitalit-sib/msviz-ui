@@ -87,7 +87,6 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
         newEntry = {id: $scope.selectedItemsId, type:item.type, fishTones: {spectrum: item.bean.spectrum}, ms2Info: ms2Info};
         $scope.selectedItems.push(newEntry);
       }
-
     };
 
     /**
@@ -214,4 +213,31 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
     };
   })
 
+  .directive('xicButtonDirective', function($templateCache) {
+    return function(scope, el) {
+
+      el.popover(
+        {
+          html: true,
+          trigger: 'hover',
+          placement: 'left',
+          content: function(){return $templateCache.get('xicPopoverTemplate.html');}
+        }
+      );
+    };
+  })
+
+  .directive('spButtonDirective', function($templateCache) {
+    return function(scope, el) {
+
+      el.popover(
+        {
+          html: true,
+          trigger: 'hover',
+          placement: 'right',
+          content: function(){return $templateCache.get('spPopoverTemplate.html');}
+        }
+      );
+    };
+  })
 ;
