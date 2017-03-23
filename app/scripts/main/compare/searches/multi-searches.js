@@ -82,9 +82,14 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
           }
         });
 
+        // if there are not sources for all proteinIds available we add a default one
+        var mainSource = Object.values(source)[0];
+
+
         var oneProtInfo = {
           ac: ac,
           source: source,
+          mainSource: mainSource,
           score: scoreSum,
           datatable: protIdents.datatable
         };
@@ -157,7 +162,7 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
     return new MultiSearchService();
   })
 
-  .controller('MultiSearchListCtrl', function($scope,$routeParams,$location, multiSearchService, ModifFilter) {
+  .controller('MultiSearchListCtrl', function($scope,$routeParams,$location, multiSearchService, ModifFilter, _) {
     $scope.searchIds = $routeParams.searchIds.split(',');
     $scope.titles =$location.search().param.split(',');
     $scope.searchIdList = $scope.searchIds;
