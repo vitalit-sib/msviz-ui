@@ -1,4 +1,18 @@
 <script type="text/ng-template" id="xicPopoverTemplate.html">
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="80" height="20">
+          <rect x="8" y="4" width="35" height="16" style="fill:lightgrey;stroke:darkgrey;stroke-width:2"/>
+          <text x="14" y="16" fill="black" font-size="10" font-weight="bold">shift</text>
+          <line x1="50" y1="8" x2="50" y2="16" stroke="black" stroke-width="1"/>
+          <line x1="46" y1="12" x2="54" y2="12" stroke="black" stroke-width="1"/>
+          <polygon points="5,0 10,0 10,8 16,5 8,20 0,5 5,8" fill="black" stroke="black" stroke-width="0" transform="rotate(160 8 10) scale(0.6 0.6) translate(-76 -26)"></polygon>
+        </svg>
+          <p>hold down <strong><em>shift</em></strong> while selecting an area<br>to quantify XIC peaks.</p>
+        </span>
+    </li>
+  </ul>
   <h5>Legend</h5>
   <ul class="list-unstyled">
     <li>
@@ -6,7 +20,7 @@
         <svg width="16" height="16">
           <rect x="8" y="4" width="3" height="16" style="fill:#e41a1c"/>
         </svg>
-        selected MS2 spectrum
+        selected MS2 spectrum.
         </span>
     </li>
     <li>
@@ -14,7 +28,7 @@
         <svg width="16" height="16">
           <rect x="8" y="4" width="3" height="16" style="fill:#4daf4a"/>
         </svg>
-        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor m/z and charge
+        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor m/z and charge.
         </span>
     </li>
     <li>
@@ -22,7 +36,7 @@
         <svg width="16" height="16">
           <rect x="8" y="4" width="3" height="16" style="fill:#984ea3"/>
         </svg>
-        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor mass and different charge
+        MS2 spectrum of same precursor<br> <svg width="16" height="16"></svg>mass and different charge.
         </span>
     </li>
     <li>
@@ -30,7 +44,7 @@
         <svg width="16" height="16">
           <rect x="8" y="4" width="3" height="16" style="fill:silver"/>
         </svg>
-        unidentified MS2 spectrum
+        unidentified MS2 spectrum.
         </span>
     </li>
   </ul>
@@ -98,8 +112,8 @@
             <li><a href ng-click="exportSvg(item.id, 'sp', 'png');">PNG</a></li>
           </ul>
         </div>
-        <button class="btn btn-default btn-xs pull-right" ng-if="$first" sp-button-directive>
-          <span><img src="images/info-icon.png" height="18"></span>
+        <button class="btn btn-info btn-xs pull-right" ng-if="$first" sp-button-directive>
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
         </button>
         <div ng-if="item.type === 'psm'">
           <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
@@ -140,8 +154,8 @@
                 <li><a href ng-click="exportSvg(item.id, 'xic', 'png');">PNG</a></li>
               </ul>
             </div>
-            <button class="btn btn-default btn-xs pull-right" ng-if="$first" xic-button-directive>
-              <span><img src="images/info-icon.png" height="18"></span>
+            <button class="btn btn-info btn-xs pull-right" ng-if="$first" xic-button-directive>
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             </button>
           </div>
           <div ng-if="item.type === 'sp'">
@@ -158,8 +172,8 @@
                 <span class="glyphicon glyphicon-remove"></span>
               </button>
           </div>
-            <button class="btn btn-default btn-xs pull-right" ng-if="$first" xic-button-directive>
-              <span><img src="images/info-icon.png" height="18"></span>
+            <button class="btn btn-info btn-xs pull-right" ng-if="$first" xic-button-directive>
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             </button>
         </div>
         <div ng-controller="XicController">

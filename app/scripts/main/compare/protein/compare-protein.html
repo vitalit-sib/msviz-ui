@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="pvizPopoverTemplate.html">
   <h5>Legend</h5>
   <ul class="list-unstyled">
+
     <li>
         <span style="white-space:nowrap">
         <svg width="16" height="16">
@@ -84,8 +85,8 @@
           <li><a href ng-click="exportSvg('png');">PNG</a></li>
         </ul>
       </div>
-      <button id="pviz-info-button" class="btn btn-default btn-xs pull-right">
-        <span><img src="images/info-icon.png" height="18"></span>
+      <button id="pviz-info-button" class="btn btn-info btn-xs pull-right">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
       </button>
       <matches-one-liner ng-controller="detailedMatchCtrl"></matches-one-liner>
       <matches-psm-pviz></matches-psm-pviz>
