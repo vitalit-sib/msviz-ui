@@ -58,7 +58,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     });
 
     var showProtein = function () {
-      sequenceService.getSource($scope.searchIds[0], $scope.database).then(function(source) {
+      sequenceService.getSource($scope.searchIds, $scope.database).then(function(source) {
 
         $q.all(
           [
@@ -71,7 +71,6 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
           }, function(){
             $scope.proteinNotFound = $scope.proteinAC;
             $scope.dbNotFound = source;
-
           });
 
       });

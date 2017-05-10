@@ -5,7 +5,7 @@ angular.module('sequences', ['thirdparties', 'environment'])
  * @description
  * Access sequence definition (from AC/source to sequence)
  *
- */.service('sequenceService', function (httpProxy) {
+ */.service('sequenceService', function (httpProxy, $q) {
     'use strict';
 
     var SequenceService = function () {
@@ -32,14 +32,26 @@ angular.module('sequences', ['thirdparties', 'environment'])
      * @description get the protein sequence
      * @returns {httpPromise} of an object
      */
-    SequenceService.prototype.getSource = function (searchId, database) {
-      return httpProxy.get('/search/' + searchId).then(function(searchInfos){
+    SequenceService.prototype.getSource = function (searchIds, database) {
 
-        var sourceList = searchInfos.database.filter(function (oneInfo){
-          return oneInfo.id === database;
+      var httpRequests = _.map(searchIds, function(searchId){
+        return httpProxy.get('/search/' + searchId);
+      });
+
+      return $q.all(httpRequests).then(function(searchInfos){
+
+        var sourceList = _.map(searchInfos, function(s) {
+          var dbList = s.database;
+          return dbList.filter(function (oneInfo) {
+            return oneInfo.id === database;
+          });
         });
 
-        var databaseName = (sourceList[0].version) ? sourceList[0].version : database;
+        var dbSource = _.find(sourceList, function(s){
+          return s.length > 0;
+        });
+
+        var databaseName = (dbSource[0].version) ? dbSource[0].version : database;
         return databaseName;
       });
     };
