@@ -24,7 +24,9 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
 
       _this._searchIds = opts.searchIds;
 
-      _this.init();
+      if(_this._searchIds){
+        _this.init();
+      }
 
       return _this;
 
@@ -53,6 +55,12 @@ angular.module('matches-modif-filter', ['thirdparties', 'searches-list'])
           });
           _this._availableModifications = tmp;
         });
+    };
+
+
+    ModifFilter.prototype.setModifList = function (modifList) {
+      var _this = this;
+      _this._availableModifications = modifList;
     };
 
     /**

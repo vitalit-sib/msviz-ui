@@ -9,7 +9,7 @@
         <ui-select-match placeholder="">
           {{$select.selected.name}}</small></ui-select-match>
         <ui-select-choices repeat="modif in filter._availableModifications">
-          <span>{{modif.name}}</span>
+          <span>{{modif.name}} <!--<span ng-if="modif.count">({{modif.count}})</span>--></span>
         </ui-select-choices>
       </ui-select>
     </form>

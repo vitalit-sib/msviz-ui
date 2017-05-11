@@ -115,6 +115,10 @@ angular.module('matches-protein', ['thirdparties', 'environment', 'matches-psm-i
       return this._targetModification;
     };
 
+    ProteinMatch.prototype.setTargetModification = function (targetModifications) {
+      this._targetModification = targetModifications;
+    };
+
 
     /**
      * @ngdoc method

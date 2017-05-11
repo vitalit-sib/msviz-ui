@@ -57,6 +57,31 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
 
     });
 
+
+    var getModifList = function(psms){
+      var uniqueModifs = {};
+
+      _.each(psms, function(psm){
+        if(! psm.matchInfo.isRejected && psm.matchInfo.rank === 1){
+          var modifArrays = _.filter(psm.pep.modificationNames, function(modif){
+            return modif.length > 0;
+          });
+
+          // we assume there is only one modif per position
+          _.each(modifArrays, function(modif){
+            uniqueModifs[modif[0]] = (! uniqueModifs[modif[0]]) ? (1) : (uniqueModifs[modif[0]] + 1);
+          });
+        }
+      });
+
+      var modifObjs =  _.map(uniqueModifs, function(v, k){
+        return { name: k, value: k, count: v};
+      });
+
+      return [{ name: 'None', value: undefined, count: undefined}].concat(modifObjs);
+
+    };
+
     var showProtein = function () {
       sequenceService.getSource($scope.searchIds, $scope.database).then(function(source) {
 
@@ -67,6 +92,9 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
           ]
         )
           .then(function (args) {
+            var modifList = getModifList(args[1]);
+            $scope.modifFilter.setModifList(modifList);
+
             $scope.proteinMatch = new ProteinMatch(args[0], args[1], {targetModification: $scope.modifFilter.getSelectedModification()});
           }, function(){
             $scope.proteinNotFound = $scope.proteinAC;

@@ -74,11 +74,13 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
 
         var scoreSum = 0;
         var source = {};
+        var isContaminant = false;
 
         protIdents.protIdents.forEach(function(oneProtIdent){
           if(oneProtIdent){
             scoreSum += oneProtIdent.mainProt.score.mainScore;
             source[oneProtIdent.searchId] = oneProtIdent.mainProt.source;
+            isContaminant = (oneProtIdent.mainProt.isContaminant && oneProtIdent.mainProt.isContaminant === true)?(true):(isContaminant || false);
           }
         });
 
@@ -91,7 +93,8 @@ angular.module('multi-searches', ['thirdparties', 'environment','matches-modif-f
           source: source,
           mainSource: mainSource,
           score: scoreSum,
-          datatable: protIdents.datatable
+          datatable: protIdents.datatable,
+          isContaminant: isContaminant
         };
 
         infos.push(oneProtInfo);
