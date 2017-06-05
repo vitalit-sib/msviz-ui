@@ -48,7 +48,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     };
 
     $scope.searchIds = $routeParams.searchIds.split(',');
-    var acSourcePair = $routeParams.proteinAC.split(':');
+    var acSourcePair = $routeParams.proteinAC.split('::');
     $scope.proteinAC = acSourcePair[0];
     $scope.database = acSourcePair[1];
 

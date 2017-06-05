@@ -25,7 +25,7 @@
     <tbody>
      <tr ng-repeat="prot in proteins['proteinInfos'] | orderBy:'-score' track by $index">
       <td>
-        <a href="/#/compare/{{searchIdList.join(',')}}/protein/{{prot.ac}}:{{(prot.source[searchIdList[0]])?(prot.source[searchIdList[0]]):(prot.mainSource)}}" target="_blank">{{prot.ac}}</a>
+        <a href="/#/compare/{{searchIdList.join(',')}}/protein/{{prot.ac}}::{{(prot.source[searchIdList[0]])?(prot.source[searchIdList[0]]):(prot.mainSource)}}" target="_blank">{{prot.ac}}</a>
         <span ng-if="prot.isContaminant"><small><em>(contaminant)</em></small></span>
       </td>
        <td ng-repeat="values in prot['datatable'] track by $index">
