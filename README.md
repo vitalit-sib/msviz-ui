@@ -23,15 +23,15 @@ Launch the web app with auto reloading:
     
     
 ## Credits
-###Maintainer
+### Maintainer
 Roman Mylonas (roman.mylonas@sib.swiss)
 
-###Developers
+### Developers
 * Trinidad Martín
 * Alexandre Masselot
 * Roman Mylonas
 
-###Institutions
+### Institutions
 * Vital-IT, [SIB Swiss Institute of Bioinformatics](http://www.sib.swiss)
 * Protein Analysis Facility, [University of Lausanne](https://www.unil.ch/central/en/home.html)
 
