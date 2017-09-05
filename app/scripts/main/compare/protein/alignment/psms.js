@@ -52,7 +52,6 @@ angular.module('matches-psms', ['protein-matches-pviz-view', 'psm-service', 'thi
       });
 
       scope.$watch('proteinMatch', function (protMatch) {
-
         if (protMatch === undefined) {
           return;
         }
