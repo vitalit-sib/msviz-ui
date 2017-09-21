@@ -75,6 +75,7 @@ module.exports = function(config) {
     // Local settings:
     plugins: [
       'karma-chrome-launcher',
+      //'karma-firefox-launcher',
       'karma-jasmine'
     ],
 
@@ -82,6 +83,7 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //browsers: ['PhantomJS'], //'XXChrome'
     browsers: ['Chrome'],
+    //  browsers: ['Firefox'],
     // Local setting stops here
     // ###########################
     */
