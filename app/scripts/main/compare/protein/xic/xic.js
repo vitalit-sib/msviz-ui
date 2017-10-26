@@ -285,7 +285,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
       // and get the MS2 spectra
       var getMs2 = function (searchId, moz, charge) {
-        var uri = '/exp/spectra-ref/' + searchId + '/by-mass/' + moz + '/' + charge + '?tolerance=10.0';
+        var massUri = (charge) ? ('by-mass/' + moz + '/' + charge) : (moz);
+        var uri = '/exp/spectra-ref/' + searchId + '/' + massUri + '?tolerance=10.0';
         return httpProxy.get(uri);
       };
 
@@ -314,6 +315,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         searchIds.forEach(function (searchId) {
           xicBackendCalls.push(getXic(searchId, ms2Info.precMoz));
           ms2BackendCalls.push(getMs2(searchId, ms2Info.precMoz, ms2Info.precCharge));
+
         });
 
         // get XIC and MS2 info
@@ -398,7 +400,6 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         }
         return xicAndMs2;
       };
-
 
       /**
        * Start the XIC creation

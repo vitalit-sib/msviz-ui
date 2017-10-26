@@ -40,14 +40,30 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
 
     $scope.$on('basket-add', function (event, item) {
 
-      // we only add elements to the basket if they're not already there
-      var newRunAndSpUniqueId = item.bean.spectrumId.runId + item.bean.spectrumId.id;
-      if(! _.find($scope.runAndSpUniqueIds, function(x){ return x === newRunAndSpUniqueId; })) {
-        $scope.runAndSpUniqueIds.push(newRunAndSpUniqueId);
-        $scope.addSelected(item);
+      // we only add spectra elements to the basket if they're not already there
+      if(item.type === 'xic'){
+        $scope.addManualXic(item);
+      }else{
+        var newRunAndSpUniqueId = item.bean.spectrumId.runId + item.bean.spectrumId.id;
+        if(! _.find($scope.runAndSpUniqueIds, function(x){ return x === newRunAndSpUniqueId; })) {
+          $scope.runAndSpUniqueIds.push(newRunAndSpUniqueId);
+          $scope.addSelected(item);
+        }
       }
 
     });
+
+
+    /**
+     * add a XIC with a given MOZ
+     */
+    $scope.addManualXic = function(item) {
+      $scope.selectedItemsId ++;
+
+      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: null, otherPsms: [], ms2Info: {precMoz: item.moz}};
+      $scope.selectedItems.push(newEntry);
+    };
+
 
     /**
      * add a new element to the basket

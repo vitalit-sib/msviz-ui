@@ -14,6 +14,14 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
       }
     );
 
+    // manually add a XIC to the basket
+    $scope.extractXic = function(){
+      if($scope.extractXicMoz){
+        $scope.$broadcast('basket-add', {type: 'xic', moz: $scope.extractXicMoz});
+      }
+    };
+
+    // save the pviz plot as a SVG
     $scope.exportSvg = function(fileType){
 
       var svg = d3.select('.pviz')[0][0];
@@ -54,9 +62,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
 
     $scope.$on('show-xic-emit', function (undefined, args) {
       $scope.$broadcast('show-xic-broadcast', args);
-
     });
-
 
     var getModifList = function(psms){
       var uniqueModifs = {};
