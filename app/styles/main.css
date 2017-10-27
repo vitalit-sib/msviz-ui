@@ -15,3 +15,11 @@ form.search-results-filter div.ui-select-container{
 div.psm-one-liner.rejected{
   text-decoration: line-through;
 }
+
+#xic-input {
+  width: 100px;
+}
+
+#xic-input-group .form-control {
+  float: right;
+}

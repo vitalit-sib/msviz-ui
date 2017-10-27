@@ -191,28 +191,43 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
       });
     };
 
-    $scope.removeSelectedPSM = function (searchId, scanNr) {
-      $scope.removeSelectedSp(searchId, scanNr);
-
+    var removeItemFromPsmList = function (item) {
       var psmInfo = {
         // rank: psm.matchInfo.rank,
-        searchId: searchId,
-        spNr: scanNr
+        searchId: item.ms2Info.searchId,
+        spNr: item.ms2Info.scanNr
       };
       $scope.$emit('basket-remove', psmInfo);
     };
 
-    $scope.removeSelectedSp = function(searchId, scanNr) {
-      // remove the items in the basket
+    var removeItemFromSelectedItems = function(item) {
       $scope.selectedItems = _.filter($scope.selectedItems, function (e) {
-        return (e.ms2Info.spectrumId !== searchId && e.ms2Info.scanNr !== scanNr);
+        return (e.id !== item.id);
       });
+    };
 
-      // remove the list of unique id's
-      var runAndSpUniqueId = searchId + scanNr;
+    var removeItemFromRunAndSpUniqueIds = function(item) {
+      var runAndSpUniqueId = item.ms2Info.searchId + item.ms2Info.scanNr;
       $scope.runAndSpUniqueIds = _.filter($scope.runAndSpUniqueIds, function(e) {
         return e !== runAndSpUniqueId;
       });
+    };
+
+    $scope.removeSelectedItem = function(item) {
+      switch(item.type){
+        case 'psm':
+          removeItemFromSelectedItems(item);
+          removeItemFromRunAndSpUniqueIds(item);
+          removeItemFromPsmList(item);
+          break;
+        case 'xic':
+          removeItemFromSelectedItems(item);
+          break;
+        case 'sp':
+          removeItemFromSelectedItems(item);
+          removeItemFromRunAndSpUniqueIds(item);
+          break;
+      }
     };
 
   })
