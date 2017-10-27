@@ -20,6 +20,7 @@ div.psm-one-liner.rejected{
   width: 100px;
 }
 
-#xic-input-group .form-control {
-  float: right;
+#xic-input-button {
+  float: left;
 }
+
