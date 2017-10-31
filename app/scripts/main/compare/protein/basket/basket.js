@@ -60,7 +60,7 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
     $scope.addManualXic = function(item) {
       $scope.selectedItemsId ++;
 
-      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: null, otherPsms: [], ms2Info: {precMoz: item.moz}};
+      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: null, otherPsms: [], ms2Info: {precMoz: item.moz, xicTolerance: item.xicTolerance}};
       $scope.selectedItems.push(newEntry);
     };
 

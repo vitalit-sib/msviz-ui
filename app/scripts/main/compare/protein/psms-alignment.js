@@ -1,7 +1,6 @@
 'use strict';
 angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'sequences', 'matches-psms', 'thirdparties', 'environment', 'svg-export'])
 
-
   .controller('PsmsAlignmentCtrl', function($scope, $routeParams, $q, psmService, sequenceService, ProteinMatch, ModifFilter, d3, svgExport, $templateCache) {
 
     // activate popover
@@ -14,10 +13,18 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
       }
     );
 
+    // stop propagation to keep the dropdown menu open
+    $scope.stopPropagation = function(event){
+      event.stopPropagation();
+    };
+
+    // set default xic extraction threshold
+    $scope.xicTolerance = 10;
+
     // manually add a XIC to the basket
     $scope.extractXic = function(){
       if($scope.extractXicMoz){
-        $scope.$broadcast('basket-add', {type: 'xic', moz: $scope.extractXicMoz});
+        $scope.$broadcast('basket-add', {type: 'xic', moz: $scope.extractXicMoz, xicTolerance: $scope.xicTolerance});
       }
     };
 

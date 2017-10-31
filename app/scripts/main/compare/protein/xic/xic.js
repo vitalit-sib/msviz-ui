@@ -278,15 +278,17 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
        **/
 
       // get the MS1 peaks
-      var getXic = function (searchId, moz) {
-        var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=10.0&rtTolerance=10.0';
+      var getXic = function (searchId, moz, xicTolerance) {
+        var tolString = xicTolerance ? xicTolerance : '10.0';
+        var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=' + tolString + '&rtTolerance=10.0';
         return httpProxy.get(uri);
       };
 
       // and get the MS2 spectra
-      var getMs2 = function (searchId, moz, charge) {
+      var getMs2 = function (searchId, moz, charge, xicTolerance) {
+        var tolString = xicTolerance ? xicTolerance : '10.0';
         var massUri = (charge) ? ('by-mass/' + moz + '/' + charge) : (moz);
-        var uri = '/exp/spectra-ref/' + searchId + '/' + massUri + '?tolerance=10.0';
+        var uri = '/exp/spectra-ref/' + searchId + '/' + massUri + '?tolerance=' + tolString;
         return httpProxy.get(uri);
       };
 
@@ -313,8 +315,8 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
         var ms2BackendCalls = [];
 
         searchIds.forEach(function (searchId) {
-          xicBackendCalls.push(getXic(searchId, ms2Info.precMoz));
-          ms2BackendCalls.push(getMs2(searchId, ms2Info.precMoz, ms2Info.precCharge));
+          xicBackendCalls.push(getXic(searchId, ms2Info.precMoz, ms2Info.xicTolerance));
+          ms2BackendCalls.push(getMs2(searchId, ms2Info.precMoz, ms2Info.precCharge, ms2Info.xicTolerance));
 
         });
 
