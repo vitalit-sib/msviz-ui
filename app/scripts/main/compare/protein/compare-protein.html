@@ -73,8 +73,7 @@
     <div class="col-sm-4"><modif-filter filter="modifFilter"></modif-filter></div>
     <div class="col-sm-2  pull-left">
       <div id="xic-input-group" class="input-group">
-        <input id="xic-input" class="form-control" ng-model="extractXicMoz">
-        <span  id="xic-input-button" class="input-group-btn">
+        <span class="input-group-btn">
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
             <ul class="dropdown-menu">
               <li>
@@ -88,7 +87,10 @@
                 </div>
               </li>
             </ul>
-            <button class="btn btn-default" ng-click="extractXic()">Extract XIC</button>
+        </span>
+        <input id="xic-input" class="form-control" ng-model="extractXicMoz">
+        <span id="xic-input-button" class="input-group-btn">
+          <button class="btn btn-default" ng-click="extractXic()">XIC</button>
         </span>
       </div>
     </div>
