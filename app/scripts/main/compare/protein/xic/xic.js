@@ -279,16 +279,14 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
       // get the MS1 peaks
       var getXic = function (searchId, moz, xicTolerance) {
-        var tolString = xicTolerance ? xicTolerance : '10.0';
-        var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=' + tolString + '&rtTolerance=10.0';
+        var uri = '/exp/xic/' + searchId + '/' + moz + '?tolerance=' + xicTolerance + '&rtTolerance=10.0';
         return httpProxy.get(uri);
       };
 
       // and get the MS2 spectra
       var getMs2 = function (searchId, moz, charge, xicTolerance) {
-        var tolString = xicTolerance ? xicTolerance : '10.0';
         var massUri = (charge) ? ('by-mass/' + moz + '/' + charge) : (moz);
-        var uri = '/exp/spectra-ref/' + searchId + '/' + massUri + '?tolerance=' + tolString;
+        var uri = '/exp/spectra-ref/' + searchId + '/' + massUri + '?tolerance=' + xicTolerance;
         return httpProxy.get(uri);
       };
 

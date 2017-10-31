@@ -24,7 +24,7 @@ angular.module('psms-alignment', ['matches-modif-filter','matches-protein', 'seq
     // manually add a XIC to the basket
     $scope.extractXic = function(){
       if($scope.extractXicMoz){
-        $scope.$broadcast('basket-add', {type: 'xic', moz: $scope.extractXicMoz, xicTolerance: $scope.xicTolerance});
+        $scope.$broadcast('basket-add', {type: 'xic', moz: parseFloat($scope.extractXicMoz), xicTolerance: $scope.xicTolerance});
       }
     };
 

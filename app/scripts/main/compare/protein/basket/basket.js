@@ -60,7 +60,13 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
     $scope.addManualXic = function(item) {
       $scope.selectedItemsId ++;
 
-      var newEntry = {id: $scope.selectedItemsId, type:item.type, firstPsm: null, otherPsms: [], ms2Info: {precMoz: item.moz, xicTolerance: item.xicTolerance}};
+      var newEntry = {
+        id: $scope.selectedItemsId,
+        type:item.type,
+        firstPsm: null,
+        otherPsms: [],
+        ms2Info: {precMoz: item.moz, xicTolerance: item.xicTolerance}
+      };
       $scope.selectedItems.push(newEntry);
     };
 
@@ -73,7 +79,15 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
       $scope.selectedItemsId ++;
 
       var sp = (item.bean.fishTones) ? (item.bean.fishTones.spectrum.attributes) : (item.bean.spectrum.attributes);
-      var ms2Info = {precCharge: sp.precCharge, precIntensity: sp.precIntensity, precMoz: sp.precMoz, retentionTime: sp.retentionTime, searchId: item.bean.spectrumId.runId, scanNr: item.bean.spectrumId.id};
+      var ms2Info = {
+        precCharge: sp.precCharge,
+        precIntensity: sp.precIntensity,
+        precMoz: sp.precMoz,
+        xicTolerance: 10,
+        retentionTime: sp.retentionTime,
+        searchId: item.bean.spectrumId.runId,
+        scanNr: item.bean.spectrumId.id
+      };
 
       // construct info for XIC
       // check wether psm info is available
