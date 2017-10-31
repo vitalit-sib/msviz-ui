@@ -80,15 +80,12 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
 
     var link = function (scope, elm) {
 
-      var updateXics = function (xics, retentionTime, searchId, charge, scanNr) {
+      var updateXics = function (xics, retentionTime, searchId, charge) {
 
         // the new id should be the one just added
-        var newIdSearch = _.find(scope.$parent.selectedItems, function (x) {
-          return x.ms2Info.scanNr === scanNr && x.ms2Info.searchId === searchId;
-        });
-
-        // newIdSearch will be empty for xic in the detailed view, so we set it to arbitrary 1
-        var newId = (newIdSearch) ? newIdSearch.id : 1;
+        var newId = _.find(scope.$parent.selectedItems, function (x) {
+          return x.id === id;
+        }).id;
 
         // and we pass the id to the view
         var view = xicFishtonesView(elm, xics, scope.searchIds, retentionTime, searchId, newId, scope, charge);
@@ -370,7 +367,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
           psmBackendCalls
         ).then(function(psms) {
             var xicAndPsm = mergeXicAndPsm(xicAndMs2, psms);
-            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId, ms2Info.precCharge, ms2Info.scanNr);
+            updateXics(xicAndPsm, ms2Info.retentionTime, ms2Info.searchId, ms2Info.precCharge, ms2Info.scanNr, id);
         });
 
       };
@@ -406,6 +403,7 @@ angular.module('xic', ['thirdparties', 'environment', 'fishtones-wrapper', 'expe
        *
        */
       var ms2Info = scope.item.ms2Info;
+      var id = scope.item.id;
       createXics(scope.searchIds);
 
     };

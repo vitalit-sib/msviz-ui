@@ -192,6 +192,7 @@ angular.module('matches-basket', ['thirdparties', 'environment', 'searches-list'
     $scope.zoomAllOther = function(id, target){
 
       var selItem = _.findWhere($scope.selectedItems, {id: id})[target];
+
       var xDomain = selItem.scalingContext._xDomain;
 
       $scope.selectedItems.forEach(function(item){
