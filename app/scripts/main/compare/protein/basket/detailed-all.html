@@ -133,8 +133,8 @@
           <button ng-click="zoomAllOther(item.id, 'xicView')" showtype="button" class="btn btn-default btn-small">
             <span class="glyphicon glyphicon-magnet"></span>
           </button>
+          <span>&nbsp;{{item.ms2Info.precMoz.toFixed(4) + ' +/- ' + item.ms2Info.xicTolerance + ' ppm'}}</span>
         </div>
-        <span>{{item.ms2Info.precMoz.toFixed(4) + 'Da +/- ' + item.ms2Info.xicTolerance + 'ppm'}}</span>
           <div>
             <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
               <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
