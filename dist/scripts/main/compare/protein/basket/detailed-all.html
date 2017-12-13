@@ -1,0 +1,174 @@
+<script type="text/ng-template" id="xicPopoverTemplate.html">
+  <ul class="list-unstyled">
+    <li>
+      <div class="alert alert-warning">
+        <span style="white-space:nowrap">
+        <svg width="80" height="20">
+          <rect x="8" y="4" width="35" height="16" style="fill:lightgrey;stroke:darkgrey;stroke-width:2"/>
+          <text x="14" y="16" fill="black" font-size="10" font-weight="bold">shift</text>
+          <line x1="50" y1="8" x2="50" y2="16" stroke="black" stroke-width="1"/>
+          <line x1="46" y1="12" x2="54" y2="12" stroke="black" stroke-width="1"/>
+          <polygon points="5,0 10,0 10,8 16,5 8,20 0,5 5,8" fill="black" stroke="black" stroke-width="0" transform="rotate(160 8 10) scale(0.6 0.6) translate(-76 -26)"></polygon>
+        </svg>
+          <p>hold down <strong><em>shift</em></strong> while selecting <br>an area to quantify XIC peaks<br>(peak height).</p>
+        </span>
+      </div>
+    </li>
+  </ul>
+  <h5>Legend</h5>
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#e41a1c"/>
+        </svg>
+        selected MS2 spectrum.
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#4daf4a"/>
+        </svg>
+        MS2 spectrum of same<br> <svg width="16" height="16"></svg>precursor m/z and charge.
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:#984ea3"/>
+        </svg>
+        MS2 spectrum of same precursor<br> <svg width="16" height="16"></svg>mass and different charge.
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:silver"/>
+        </svg>
+        unidentified MS2 spectrum.
+        </span>
+    </li>
+  </ul>
+</script>
+
+<script type="text/ng-template" id="spPopoverTemplate.html">
+  <h5>Legend</h5>
+  <ul class="list-unstyled">
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:blue"/>
+        </svg>
+        b-ions
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:red"/>
+        </svg>
+        y-ions
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:orange"/>
+        </svg>
+        phospho neutral losses
+        </span>
+    </li>
+    <li>
+        <span style="white-space:nowrap">
+        <svg width="16" height="16">
+          <rect x="8" y="4" width="3" height="16" style="fill:grey"/>
+        </svg>
+        unmatched peaks
+        </span>
+    </li>
+  </ul>
+</script>
+
+<div ng-repeat="item in selectedItems" class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+          <div ng-if="item.type !== 'xic'" class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+            <button ng-click="zoomSpectrum(item.ms2Info.searchId, item.ms2Info.scanNr)" showtype="button" class="btn btn-default btn-small">
+              <span class="glyphicon glyphicon-zoom-in"></span>
+            </button>
+            <button ng-click="item.spView.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <button ng-click="zoomAllOther(item.id, 'spView')" showtype="button" class="btn btn-default btn-small">
+              <span class="glyphicon glyphicon-magnet"></span>
+            </button>
+          </div>
+          <div ng-if="item.type !== 'xic'" class="btn-group pull-right">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href ng-click="exportSvg(item.id, 'sp', 'svg');">SVG</a></li>
+              <li><a href ng-click="exportSvg(item.id, 'sp', 'png');">PNG</a></li>
+            </ul>
+          </div>
+        <button class="btn btn-info btn-xs pull-right" ng-if="$first" sp-button-directive>
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        </button>
+        <div ng-if="item.type === 'psm'">
+          <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.firstPsm.fishTones" style="height:150px" />
+          <div style="height:30px;"/>
+          <matches-psm-box psm="item.firstPsm" itemid="item.id"></matches-psm-box>
+        </div>
+        <div ng-if="item.type === 'sp'">
+          <div ng-attr-id="{{'sp_' + item.id}}" matches-fishtones-psm-spectrum fishtonespsm="item.fishTones" style="height:150px" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="pull-left btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+          <button ng-click="item.xicView.scalingArea.model.reset()" showtype="button" class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-refresh"></span>
+          </button>
+          <button ng-click="zoomAllOther(item.id, 'xicView')" showtype="button" class="btn btn-default btn-small">
+            <span class="glyphicon glyphicon-magnet"></span>
+          </button>
+          <span>&nbsp;{{item.ms2Info.precMoz.toFixed(4) + ' +/- ' + item.ms2Info.xicTolerance + ' ppm'}}</span>
+        </div>
+          <div>
+            <div class="pull-right btn-group matches-selected-buttons btn-group-xs" role="group" style="height:22px">
+              <button class="btn btn-default btn-small" style="border:0 none"><span class="label label-success" ng-if="item.showAddedLabel">result added ..</span></button>
+                <button ng-if="item.type === 'psm'" ng-click="addToResults(item)" showtype="button"
+                        class="btn btn-default btn-small">
+                  <span class="glyphicon glyphicon-shopping-cart"></span>
+                </button>
+              <button ng-click="removeSelectedItem(item)" showtype="button"
+                      class="btn btn-default btn-small">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn btn-default btn-xs dropdown-toggle pull-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href ng-click="exportSvg(item.id, 'xic', 'svg');">SVG</a></li>
+                <li><a href ng-click="exportSvg(item.id, 'xic', 'png');">PNG</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-info btn-xs pull-right" ng-if="$first" xic-button-directive>
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div ng-controller="XicController">
+            <xic-popover my-id="{{item.id}}"></xic-popover>
+            <div ng-attr-id="{{'xic_' + item.id}}" xic-fishtones style="height:150px"></div>
+            <div style="height:30px;"/>
+            <div ng-if="item.type === 'psm'">
+              <xic-table></xic-table>
+            </div>
+          </div>
+        </div>
+    </div>
+    <hr style="margin-top: 0; margin-bottom: 3px">
+</div>

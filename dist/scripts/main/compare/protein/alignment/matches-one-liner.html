@@ -1,0 +1,14 @@
+
+
+ <div class="match-one-liner popover right" id="detailInfoPopover">
+    <h3 class="popover-title" >{{psm.spTitle}}</h3>
+    <div class="popover-content">
+      <p style="word-wrap:break-word;">{{psm.prevAA}}.{{psm.fishTones.richSeq.toString()}}.{{psm.nxtAA}}</p>
+      <div><small>Main score: <strong>{{psm.matchInfo.score.mainScore | number:0}}</strong></small></div>
+      <div ng-if="psm.matchInfo.posScore">
+        <small>Localisation score: <strong>{{psm.matchInfo.posScore}}</strong></small></p>
+      </div>
+    </div>
+ </div>
+
+

@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-11"><h3>{{searchId}}</h3></div>
+  <div class="col-md-1 text-right">
+    <button type="button" class="btn btn-primary" ng-click="downloadTsv()">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th></th>
+    <th>ProteinAC</th>
+    <th>Peptide</th>
+    <th>Scan<br>number</th>
+    <th>Rt</th>
+    <th>Moz</th>
+    <th>Charge</th>
+    <th>Score</th>
+    <th>Localization<br>score</th>
+    <th>Match diff<br>[ppm]</th>
+    <th ng-repeat="id in searchIds">{{id}}<br>Rt</th>
+    <th ng-repeat="id in searchIds">{{id}}<br>Int</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="e in entries | orderBy:['proteinAC','startPos']">
+    <td></thd><button ng-click="deleteEntry(e._id)" showtype="button" class="btn btn-default btn-xs">
+      <span class="glyphicon glyphicon-trash"></span>
+    </button></td>
+    <td>{{e.proteinAC}}</td>
+    <td>{{e.prevAA + '.' + e.peptideSeq + '.' + e.nextAA}}</td>
+    <td>{{e.scanNr}}</td>
+    <td>{{e.precRt.toFixed(2)}}</td>
+    <td>{{e.precMoz.toFixed(2)}}</td>
+    <td>{{e.precCharge}}</td>
+    <td>{{e.score.toFixed(0)}}</td>
+    <td>{{e.localizationScore.toFixed(0)}}</td>
+    <td>{{e.ppmDiff.toFixed(2)}}</td>
+    <td ng-repeat="p in e.xicPeaks">{{p.rt}}</td>
+    <td ng-repeat="p in e.xicPeaks">{{p.intensity.toExponential(2)}}</td>
+  </tr>
+  </tbody>
+</table>
+

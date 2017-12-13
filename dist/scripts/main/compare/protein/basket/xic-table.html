@@ -1,0 +1,17 @@
+<table ng-if="!tableExpanded && xicPeaks.length" class="table">
+  <thead>
+  <tr>
+    <th>SearchId</th>
+    <th>Rt</th>
+    <th>Intensity</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!--<tr ng-repeat="xic in xicPeaks track by $index">-->
+  <tr ng-repeat="xic in xicPeaks">
+    <td>{{xic.searchId}}</td>
+    <td>{{xic.rt}}</td>
+    <td>{{xic.int}}</td>
+  </tr>
+  </tbody>
+</table>

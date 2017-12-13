@@ -1,0 +1,45 @@
+<h1><code ng:non-bindable="">psmService</code>
+<div><span class="hint">service in module <code ng:non-bindable="">matches</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="matches-service-page matches-service-psmservice-page"><p>Access to PSMS</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_addfishtonesobjects">addFishtonesObjects(psms)</h3>
+<div class="addfishtonesobjects"><div class="matches-service-page matches-service-psmservice-addfishtonesobjects-page"><p>add fishTones property with richRSeq &amp; co</p>
+</div><h5 id="methods_addfishtonesobjects_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>psms</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-service-page matches-service-psmservice-addfishtonesobjects-page"><p>a list of PSM</p>
+</div></td></tr></tbody></table><h5 id="methods_addfishtonesobjects_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-service-page matches-service-psmservice-addfishtonesobjects-page"><p>the same list of psms</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_findallbysearchidandspectrumid">findAllBySearchIdAndSpectrumId(searchId, spectrumId)</h3>
+<div class="findallbysearchidandspectrumid"><div class="matches-service-page matches-service-psmservice-findallbysearchidandspectrumid-page"><p>get the list of PSMS for one searchId and a spectrumId</p>
+</div><h5 id="methods_findallbysearchidandspectrumid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>searchId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidandspectrumid-page"><p>one search id</p>
+</div></td></tr><tr><td>spectrumId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidandspectrumid-page"><p>unique specrtum id</p>
+</div></td></tr></tbody></table><h5 id="methods_findallbysearchidandspectrumid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-httppromise">httpPromise</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidandspectrumid-page"><p>of a list of PSMs</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_findallbysearchidsandproteinid">findAllBySearchIdsAndProteinId(searchIds, proteinId)</h3>
+<div class="findallbysearchidsandproteinid"><div class="matches-service-page matches-service-psmservice-findallbysearchidsandproteinid-page"><p>get the list of PSMS for one protein on a list of searchId</p>
+</div><h5 id="methods_findallbysearchidsandproteinid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>searchIds</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidsandproteinid-page"><p>a list of search ids</p>
+</div></td></tr><tr><td>proteinId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidsandproteinid-page"><p>the protein Id</p>
+</div></td></tr></tbody></table><h5 id="methods_findallbysearchidsandproteinid_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-httppromise">httpPromise</a></td><td><div class="matches-service-page matches-service-psmservice-findallbysearchidsandproteinid-page"><p>of a list of PSMs</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_findallmodificationsbysearchids">findAllModificationsBySearchIds(searchIds)</h3>
+<div class="findallmodificationsbysearchids"><div class="matches-service-page matches-service-psmservice-findallmodificationsbysearchids-page"><p>get a count of modifications for a set of searchIds</p>
+</div><h5 id="methods_findallmodificationsbysearchids_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>searchIds</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-service-page matches-service-psmservice-findallmodificationsbysearchids-page"><p>a list of search ids</p>
+</div></td></tr></tbody></table><h5 id="methods_findallmodificationsbysearchids_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-httppromise">httpPromise</a></td><td><div class="matches-service-page matches-service-psmservice-findallmodificationsbysearchids-page"><p>of a map modifName -&gt; count</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_findallproteinrefsbysearchids">findAllProteinRefsBySearchIds(searchIds, withModif)</h3>
+<div class="findallproteinrefsbysearchids"><div class="matches-service-page matches-service-psmservice-findallproteinrefsbysearchids-page"><p>get the list of protein based on a list of searchIds and evenutally with a modification</p>
+</div><h5 id="methods_findallproteinrefsbysearchids_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>searchIds</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-service-page matches-service-psmservice-findallproteinrefsbysearchids-page"><p>a list of search ids</p>
+</div></td></tr><tr><td>withModif</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="matches-service-page matches-service-psmservice-findallproteinrefsbysearchids-page"><p>optional modification name</p>
+</div></td></tr></tbody></table><h5 id="methods_findallproteinrefsbysearchids_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-httppromise">httpPromise</a></td><td><div class="matches-service-page matches-service-psmservice-findallproteinrefsbysearchids-page"><p>of a list of PSMs</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>

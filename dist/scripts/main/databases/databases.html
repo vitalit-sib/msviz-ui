@@ -1,0 +1,65 @@
+<h3>Databases</h3>
+
+
+  <div ng-if="databaseFound" class="alert alert-danger">
+    <p>Could not load database <em>{{databaseFound}}</em> because it already exist.</p>
+    <p>Please load  database with different name if necessary.</p>
+  </div>
+
+  <div ng-if="databaseUploadError" class="alert alert-danger" role="alert">There was an error while loading your database. Please verify your FASTA file and the parsing rules.</div>
+
+  <div ng-if="databaseUploaded" class="alert alert-success" role="alert">The database {{databaseUploaded}} was successfully inserted.</div>
+
+  <div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="file1">FASTA file</label>
+        <input type="file" id="file1" name="file" multiple
+               ng-files="getTheFiles($files)" />
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="checkbox" ng-model="parsingRule.activated" ng-change="changeParsingRuleStyle()">
+          <label for="repeatSelect" ng-style="parsingRule.style">Parsing rule for FASTA headers</label>&nbsp;&nbsp;
+          <select name="repeatSelect" id="repeatSelect" ng-model="parsingRuleSelected" ng-disabled="!parsingRule.activated">
+            <option ng-repeat="option in parsingRuleDefaults" value="{{option.regexp}}">{{option.name}}</option>
+          </select>
+          <input ng-model="parsingRuleSelected" type="text" class="form-control" id="parsingregexp" ng-disabled="!parsingRule.activated">
+        </div>
+        <div class="form-group">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p>
+      <input type="button" class="btn btn-default" ng-click="uploadFiles()" value="Upload" />
+      <img src="images/Loading_icon.b98a016d.gif"  height="45" alt="IsPogressing" ng-hide="hideProgressBar">
+  </p>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Database</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="res in databasesList | orderBy:'-rawLastModif'">
+      <td></thd><button ng-click="deleteEntry(res)" showtype="button" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button></td>
+      <td>{{res}}</td>
+    </tr>
+    </tbody>
+  </table>
+

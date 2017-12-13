@@ -1,0 +1,56 @@
+<h1><code ng:non-bindable="">ProteinMatch</code>
+<div><span class="hint">object in module <code ng:non-bindable="">proteinMatches</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-page"><p>a match with a protein decription and a list of PSM</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">ProteinMatch(protein, psms, optional);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>protein</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-page"><p>the protein AC + sequence</p>
+</div></td></tr><tr><td>psms</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-page"><p>the list of PSM</p>
+</div></td></tr><tr><td>optional</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-page"><p>parameters</p>
+<ul>
+<li>targetModification as a string eventually pointing to the modificaiton to be enhanced</li>
+</ul>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getaminoacidinfo">getAminoAcidInfo()()</h3>
+<div class="getaminoacidinfo"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getaminoacidinfo--page"><p>For each amino acid covered by a PSM, get the position, coverage depth, the list of psms, eventually the selectedModification</p>
+</div><h5 id="methods_getaminoacidinfo_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getaminoacidinfo--page"><p>a list of amino acid</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getmybestpsms">getMyBestPSMs()()</h3>
+<div class="getmybestpsms"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getmybestpsms--page"><p>get only the best and valid PSMs.
+Tweak them and keep only the proteinRef that match the protein&#39;s one</p>
+</div><h5 id="methods_getmybestpsms_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getmybestpsms--page"><p>of psms</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getmypsms">getMyPSMs()()</h3>
+<div class="getmypsms"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getmypsms--page"><p>get the PSMs, but tweak them and keep only the proteinRef that match the protein&#39;s one</p>
+</div><h5 id="methods_getmypsms_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getmypsms--page"><p>of psms</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getpsms">getPSMs()()</h3>
+<div class="getpsms"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getpsms--page"><p>get the PSMs</p>
+</div><h5 id="methods_getpsms_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getpsms--page"><p>of psms</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getprotein">getProtein()()</h3>
+<div class="getprotein"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-getprotein--page"><p>{Object} get the matched protein</p>
+</div></div>
+</li>
+<li><h3 id="methods_gettargetaminoacidwithtargetmodif">getTargetAminoAcidWithTargetModif()</h3>
+<div class="gettargetaminoacidwithtargetmodif"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-gettargetaminoacidwithtargetmodif-page"><p>get a list of amino acid info for all amino acid where the targeted modif has been found</p>
+</div><h5 id="methods_gettargetaminoacidwithtargetmodif_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-gettargetaminoacidwithtargetmodif-page"><p>of objects</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_gettargetmodification">getTargetModification()()</h3>
+<div class="gettargetmodification"><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-gettargetmodification--page"><p>if ever this proteinMatch has a target modification</p>
+</div><h5 id="methods_gettargetmodification_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="proteinmatches-object-page proteinmatches-object-proteinmatch-gettargetmodification--page"><p>modification name</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>

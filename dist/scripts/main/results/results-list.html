@@ -1,0 +1,21 @@
+<h3>Results</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th></th>
+    <th>SearchId</th>
+    <th>Last modification</th>
+    <th>Creation time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="res in resultList | orderBy:'-rawLastModif'">
+    <td></thd><button ng-click="deleteBySearchIds(res.searchId)" showtype="button" class="btn btn-default btn-xs">
+      <span class="glyphicon glyphicon-trash"></span>
+    </button></td>
+    <td><a href="#/result/{{res.searchId}}">{{res.searchId}}</a></td>
+    <td>{{res.lastModif.toDateString()}}</td>
+    <td>{{res.firstModif.toDateString()}}</td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,61 @@
+<h1><code ng:non-bindable="">PSMIsoModif</code>
+<div><span class="hint">object in module <code ng:non-bindable="">matches</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="matches-object-page matches-object-psmisomodif-page"><p>contains a list of psms who have the same sequence and set of modifications</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">PSMIsoModif(args);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>args</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="matches-object-page matches-object-psmisomodif-page"><p>compulsory  properties, containing</p>
+<ul>
+<li>{Array} psms the underlying PSM</li>
+<li>{Map} fixModif a map of modifications appearing across all peptides, in the format modif -&gt; {pos: [i1,...]}</li>
+<li>{Map} varModif a map of modifications appearing in peptides, but at different position, in the format modif -&gt; {count:n, pos:[i1, i2, ...]}. Here the</li>
+</ul>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_countpsm">countPSM()</h3>
+<div class="countpsm"><div class="matches-object-page matches-object-psmisomodif-countpsm-page"><p>get the number of PSM used to build</p>
+</div><h5 id="methods_countpsm_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="matches-object-page matches-object-psmisomodif-countpsm-page"><p>nb PSM</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getdescription">getDescription()()</h3>
+<div class="getdescription"><div class="matches-object-page matches-object-psmisomodif-getdescription--page"><p>return the built in description</p>
+</div><h5 id="methods_getdescription_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="matches-object-page matches-object-psmisomodif-getdescription--page"><p>a description</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getfixmodif">getFixModif()</h3>
+<div class="getfixmodif"><div class="matches-object-page matches-object-psmisomodif-getfixmodif-page"><p>modification present on all PSMS</p>
+</div><h5 id="methods_getfixmodif_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="matches-object-page matches-object-psmisomodif-getfixmodif-page"><p>a map {modif -&gt; {pos:[i1,...]}}</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getmypsmisomodif">getMyPSMIsoModif()</h3>
+<div class="getmypsmisomodif"><div class="matches-object-page matches-object-psmisomodif-getmypsmisomodif-page"><p>the list PSM grouped by Iso Modif (same set of modif by sequence</p>
+</div><h5 id="methods_getmypsmisomodif_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-object-page matches-object-psmisomodif-getmypsmisomodif-page"><p>list of PSMIsoModif</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getpsms">getPSMs()</h3>
+<div class="getpsms"><div class="matches-object-page matches-object-psmisomodif-getpsms-page"><p>the list of underlying PSM</p>
+</div><h5 id="methods_getpsms_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="matches-object-page matches-object-psmisomodif-getpsms-page"><p>list of PSM</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getvarmodif">getVarModif()</h3>
+<div class="getvarmodif"><div class="matches-object-page matches-object-psmisomodif-getvarmodif-page"><p>modification present on all PSMS, but with different positions combinations</p>
+</div><h5 id="methods_getvarmodif_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="matches-object-page matches-object-psmisomodif-getvarmodif-page"><p>a map {modif -&gt; {count:n, pos:[i1,i2,...]}} where n is of course lower than the number of potential positions</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_hasuniquepsm">hasUniquePSM()</h3>
+<div class="hasuniquepsm"><div class="matches-object-page matches-object-psmisomodif-hasuniquepsm-page"><p>check if there only on psms</p>
+</div><h5 id="methods_hasuniquepsm_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-psm">PSM</a></td><td><div class="matches-object-page matches-object-psmisomodif-hasuniquepsm-page"><p>undefined if multiple PSMS are contained, or the one if there is only one</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_proteinlist">proteinList()</h3>
+<div class="proteinlist"><div class="matches-object-page matches-object-psmisomodif-proteinlist-page"><p>get the proteinList (the proteinList of the first PSM, as they should all be equivalent)</p>
+</div><h5 id="methods_proteinlist_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">Number</a></td><td><div class="matches-object-page matches-object-psmisomodif-proteinlist-page"><p>nb PSM</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>
