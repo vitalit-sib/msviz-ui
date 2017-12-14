@@ -6,3 +6,4 @@ msviz-ui.iml
 .idea
 .gitattributes
 .DS_Store
+dist/
